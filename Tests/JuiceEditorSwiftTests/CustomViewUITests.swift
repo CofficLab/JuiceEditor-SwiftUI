@@ -13,7 +13,7 @@ final class CustomViewUITests: XCTestCase {
         let text = "Test"
         let backgroundColor = Color.green
         
-        let customView = CustomView(text: text, backgroundColor: backgroundColor)
+        let customView = DebugView(text: text, backgroundColor: backgroundColor)
         
         #if canImport(UIKit)
         let hostingController = UIHostingController(rootView: customView)

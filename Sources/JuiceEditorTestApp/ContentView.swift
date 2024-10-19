@@ -1,8 +1,13 @@
 import SwiftUI
 import JuiceEditorSwift
+import os
 
 public struct ContentView: View {
     @State private var serverStarted = false
+    @State private var port = 8080
+    @State private var actualPort: Int?
+    
+    private let logger = Logger(subsystem: "com.yourcompany.JuiceEditorTestApp", category: "ContentView")
     
     public var body: some View {
         VStack(spacing: 20) {
@@ -10,28 +15,8 @@ public struct ContentView: View {
                 .font(.largeTitle)
                 .foregroundColor(.blue)
             
-            CustomView(text: "Hello from JuiceEditor Test App!")
-            
-            Button(serverStarted ? "Server Running" : "Start Server") {
-                if !serverStarted {
-                    CustomView.startServer(isDevMode: true)
-                    serverStarted = true
-                }
-            }
-            .padding()
-            .background(Color.green)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .disabled(serverStarted)
-            
-            if serverStarted {
-                Text("Server is running. Check the console for details.")
-                    .foregroundColor(.green)
-            }
+            DebugView()
         }
-        .padding()
-        .frame(width: 300, height: 400)
-        .background(Color.yellow.opacity(0.2))
     }
 }
 

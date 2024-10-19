@@ -7,7 +7,7 @@ final class CustomViewTests: XCTestCase {
         let text = "Test"
         let backgroundColor = Color.red
         
-        let customView = CustomView(text: text, backgroundColor: backgroundColor)
+        let customView = DebugView(text: text, backgroundColor: backgroundColor)
         
         XCTAssertEqual(customView.text, text)
         XCTAssertEqual(customView.backgroundColor, backgroundColor)
@@ -16,7 +16,7 @@ final class CustomViewTests: XCTestCase {
     func testCustomViewDefaultBackgroundColor() {
         let text = "Test"
         
-        let customView = CustomView(text: text)
+        let customView = DebugView(text: text)
         
         XCTAssertEqual(customView.backgroundColor, .blue)
     }
