@@ -4,19 +4,29 @@ import PackageDescription
 let package = Package(
     name: "JuiceEditorSwift",
     platforms: [
-        .iOS(.v14),
-        .macOS(.v11)
+        .macOS(.v12)
     ],
     products: [
         .library(
             name: "JuiceEditorSwift",
             targets: ["JuiceEditorSwift"]),
+        .executable(
+            name: "JuiceEditorTestApp",
+            targets: ["JuiceEditorTestApp"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
+    ],
     targets: [
         .target(
             name: "JuiceEditorSwift",
-            dependencies: []),
+            dependencies: [
+                .product(name: "Vapor", package: "vapor")
+            ]),
+        .executableTarget(
+            name: "JuiceEditorTestApp",
+            dependencies: ["JuiceEditorSwift"],
+            path: "Sources/JuiceEditorTestApp"),
         .testTarget(
             name: "JuiceEditorSwiftTests",
             dependencies: ["JuiceEditorSwift"]),

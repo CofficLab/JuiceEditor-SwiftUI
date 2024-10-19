@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:JuiceEditorSwift}",
+            "name": "Debug JuiceEditorTestApp",
+            "program": "${workspaceFolder:JuiceEditorSwift}/.build/debug/JuiceEditorTestApp",
+            "preLaunchTask": "swift: Build Debug JuiceEditorTestApp"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:JuiceEditorSwift}",
+            "name": "Release JuiceEditorTestApp",
+            "program": "${workspaceFolder:JuiceEditorSwift}/.build/release/JuiceEditorTestApp",
+            "preLaunchTask": "swift: Build Release JuiceEditorTestApp"
+        }
+    ]
+}
