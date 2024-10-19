@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "magickit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CofficLab/MagicKit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7019b6e4900b11a00c77c081b8bca642139ffe8a"
+      }
+    },
+    {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
