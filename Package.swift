@@ -22,6 +22,9 @@ let package = Package(
             name: "JuiceEditorSwift",
             dependencies: [
                 .product(name: "Vapor", package: "vapor")
+            ],
+            resources: [
+                .copy("../../WebApp")
             ]),
         .executableTarget(
             name: "JuiceEditorTestApp",

@@ -18,15 +18,18 @@ public struct CustomView: SwiftUI.View {
             .cornerRadius(10)
     }
     
-    public static func startServer(directoryPath: String, isDevMode: Bool = false) {
+    public static func startServer(isDevMode: Bool = false) {
+        let currentDirectoryPath = FileManager.default.currentDirectoryPath
+        let webAppPath = currentDirectoryPath + "/WebApp"
+        
         #if DEBUG
         print("Attempting to start server in debug mode")
-        print("Directory path: \(directoryPath)")
+        print("WebApp path: \(webAppPath)")
         print("Dev mode: \(isDevMode)")
         #endif
         
         do {
-            let server = try HTTPServer(directoryPath: directoryPath, isDevMode: isDevMode)
+            let server = try HTTPServer(directoryPath: webAppPath, isDevMode: isDevMode)
             try server.start()
         } catch {
             #if DEBUG
