@@ -5,7 +5,7 @@ import JuiceEditorSwift
 struct JuiceEditorTestApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DebugView()
                 .onAppear {
                     if let window = NSApplication.shared.windows.first {
                         window.makeKeyAndOrderFront(nil)
