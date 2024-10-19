@@ -14,7 +14,7 @@ public struct ContentView: View {
             
             Button(serverStarted ? "Server Running" : "Start Server") {
                 if !serverStarted {
-                    CustomView.startServer(directoryPath: "/path/to/your/project", isDevMode: true)
+                    CustomView.startServer(isDevMode: true)
                     serverStarted = true
                 }
             }
