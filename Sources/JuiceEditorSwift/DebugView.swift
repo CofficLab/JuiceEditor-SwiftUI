@@ -90,7 +90,7 @@ public struct DebugView: SwiftUI.View {
 
         let server: HTTPServer
         do {
-            server = try HTTPServer(directoryPath: webAppPath, port: port, isDevMode: isDevMode)
+            server = try HTTPServer(directoryPath: webAppPath)
         } catch {
             logManager.addLog("Failed to initialize server: \(error.localizedDescription)")
             return nil
