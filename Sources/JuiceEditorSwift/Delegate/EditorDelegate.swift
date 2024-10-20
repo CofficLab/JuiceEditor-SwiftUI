@@ -1,6 +1,6 @@
 import Foundation
 
 public protocol EditorDelegate {
-    func getNode() -> Void
+    func getHtml(_ uuid: String) -> String?
     func onReady() -> Void
 }

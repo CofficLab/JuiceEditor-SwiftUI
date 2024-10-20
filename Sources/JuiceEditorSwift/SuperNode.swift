@@ -24,8 +24,8 @@ public protocol SuperNode: Hashable, Equatable, SuperLog, SuperThread {
 // MARK: Title
 
 extension SuperNode {
-    var titleWithEmoji: String { emoji + " " + title }
-    var titleWithEmojiIfDebug: String {
+    public var titleWithEmoji: String { emoji + " " + title }
+    public var titleWithEmojiIfDebug: String {
         #if DEBUG
             titleWithEmoji
         #else
@@ -46,71 +46,71 @@ extension SuperNode {
 
 extension SuperNode {
     /// equal to: uuid + type
-    var idWithType: String {
+    public var idWithType: String {
         self.uuid + self.type.rawValue
     }
 
-    var isPrivateRoot: Bool {
+    public var isPrivateRoot: Bool {
         false
     }
 
-    var isPublicRoot: Bool {
+    public var isPublicRoot: Bool {
         false
     }
 
-    var isNotPrivateRoot: Bool {
+    public var isNotPrivateRoot: Bool {
         !isPrivateRoot
     }
 
-    var isNotChildOfPrivateRoot: Bool {
+    public var isNotChildOfPrivateRoot: Bool {
         false
     }
 
-    var isRoot: Bool {
+    public var isRoot: Bool {
         isPrivateRoot || isPublicRoot || isWebRoot
     }
 
-    var isNotRoot: Bool {
+    public var isNotRoot: Bool {
         !isRoot
     }
 
-    var createdAtString: String {
+    public var createdAtString: String {
         createdAt.string
     }
 
-    var updatedAtString: String {
+    public var updatedAtString: String {
         updatedAt.string
     }
 
-    var isCloud: Bool {
+    public var isCloud: Bool {
         self is CKRecord
     }
 
-    var isLocal: Bool {
+    public var isLocal: Bool {
         false
     }
 
-    var isNotLocal: Bool {
+    public var isNotLocal: Bool {
         !isLocal
     }
 
-    var isWeb: Bool {
+    public var isWeb: Bool {
         false
     }
 
-    var isWebRoot: Bool {
+    public var isWebRoot: Bool {
         false
     }
 
-    var isNotWebRoot: Bool {
+    public var isNotWebRoot: Bool {
         !isWebRoot
     }
 
-    var isNotBook: Bool {
+    public var isNotBook: Bool {
         !isBook
     }
 
-    var emoji: String {
+    public var emoji: String {
         ""
     }
 }

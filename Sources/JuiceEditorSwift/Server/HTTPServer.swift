@@ -12,9 +12,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public let isDevMode = true
     public var port: Int = 49493
     public let vueDevServerURL = "http://localhost:5173"
-    public var onGetNode: () -> Void = {
-        os_log("GETNODE")
-    }
+    public var delegate: EditorDelegate
     
     @Published public var isRunning: Bool = false
     @Published public var currentPort: Int?
@@ -25,9 +23,9 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     public let logger = Logger(subsystem: "com.yourcompany.JuiceEditorSwift", category: "HTTPServer")
 
-    public init(directoryPath: String, onGetNode: @escaping () -> Void) {
+    public init(directoryPath: String, delegate: EditorDelegate) {
         self.directoryPath = directoryPath
-        self.onGetNode = onGetNode
+        self.delegate = delegate
     }
 
     private func configureRoutes(app: Application) throws {

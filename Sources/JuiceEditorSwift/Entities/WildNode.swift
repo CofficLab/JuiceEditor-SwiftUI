@@ -1,12 +1,12 @@
 import Foundation
 
 public struct WildNode: Codable {
-    var type: String = SuperNodeType.root.rawValue
-    var html: String? = nil
-    var text: String? = nil
-    var attrs: [String: AttributeValue]?
+    public var type: String = SuperNodeType.root.rawValue
+    public var html: String? = nil
+    public var text: String? = nil
+    public var attrs: [String: AttributeValue]?
 
-    var uuid: String {
+    public var uuid: String {
         if let attrs = self.attrs {
             return attrs["uuid"]?.stringValue ?? ""
         }
@@ -14,7 +14,7 @@ public struct WildNode: Codable {
         return ""
     }
 
-    var parentId: String? {
+    public var parentId: String? {
         if let attrs = self.attrs {
             return attrs["parent"]?.stringValue ?? nil
         }
@@ -22,7 +22,7 @@ public struct WildNode: Codable {
         return nil
     }
 
-    var title: String {
+    public var title: String {
         if let attrs = self.attrs {
             return attrs["title"]?.stringValue ?? ""
         }
@@ -30,19 +30,19 @@ public struct WildNode: Codable {
         return ""
     }
 
-    func isDoc() -> Bool {
+    public func isDoc() -> Bool {
         return self.type == "doc"
     }
     
-    func isRoot() -> Bool {
+    public func isRoot() -> Bool {
         return self.type == "root"
     }
 
-    func isP() -> Bool {
+    public func isP() -> Bool {
         return self.type == "p"
     }
 
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case type, html, text, attrs
     }
 
@@ -54,7 +54,7 @@ public struct WildNode: Codable {
         try container.encodeIfPresent(attrs, forKey: .attrs)
     }
     
-    init(type: SuperNodeType) {
+    public init(type: SuperNodeType) {
         self.type = type.rawValue
     }
 
@@ -66,7 +66,7 @@ public struct WildNode: Codable {
         attrs = try container.decodeIfPresent([String: AttributeValue].self, forKey: .attrs)
     }
 
-    func toJSON() -> String {
+    public func toJSON() -> String {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         do {
@@ -82,23 +82,23 @@ public struct WildNode: Codable {
 // MARK: Set
 
 extension WildNode {
-    mutating func setType(_ type: String) {
+    public mutating func setType(_ type: String) {
         self.type = type
     }
 
-    mutating func setAttrs(_ attrs: [String: AttributeValue]) {
+    public mutating func setAttrs(_ attrs: [String: AttributeValue]) {
         self.attrs = attrs
     }
 
-    mutating func setText(_ text: String) {
+    public mutating func setText(_ text: String) {
         self.text = text
     }
 
-    mutating func setHtml(_ html: String?) {
+    public mutating func setHtml(_ html: String?) {
         self.html = html
     }
     
-    mutating func setUUID(_ uuid: String?) {
+    public mutating func setUUID(_ uuid: String?) {
         if let uuid = uuid {
             if self.attrs == nil {
                 self.attrs = [:]
@@ -110,7 +110,7 @@ extension WildNode {
         }
     }
 
-    mutating func setParentId(_ parentId: String?) -> Self     {
+    public mutating func setParentId(_ parentId: String?) -> Self     {
         if let parentId = parentId {
             if self.attrs == nil {
                 self.attrs = [:]
@@ -124,7 +124,7 @@ extension WildNode {
         return self
     }
 
-    mutating func setTitle(_ title: String) {
+    public mutating func setTitle(_ title: String) {
         if self.attrs == nil {
             self.attrs = [:]
         }
@@ -136,7 +136,7 @@ extension WildNode {
 // MARK: Parent
 
 extension WildNode {
-    func appendTo(_ parentId: String) -> WildNode {
+    public func appendTo(_ parentId: String) -> WildNode {
         var newNode = self
         newNode = newNode.setParentId(parentId)
         if newNode.uuid == "" {
@@ -150,7 +150,7 @@ extension WildNode {
 // MARK: File
 
 extension WildNode {
-    static func fromFile(_ url: URL) throws -> WildNode {
+    public static func fromFile(_ url: URL) throws -> WildNode {
         var node = WildNode(type: .root)
 
 //        let data = try Data(contentsOf: url)

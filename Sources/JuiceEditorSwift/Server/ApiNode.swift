@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 import Vapor
 
 extension HTTPServer {
@@ -8,9 +9,7 @@ extension HTTPServer {
                 throw Abort(.badRequest)
             }
 
-            self.onGetNode()
-
-            return "hi"
+            return self.delegate.getHtml(id) ?? ""
         }
     }
 }

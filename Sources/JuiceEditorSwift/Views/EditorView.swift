@@ -14,7 +14,7 @@ public struct EditorView: SwiftUI.View, SuperLog {
 
     public init(delegate:  EditorDelegate = EditorView.defaultDelegate) {
         self.delegate = delegate
-        self.server = HTTPServer(directoryPath: AppConfig.webAppPath, onGetNode: delegate.getNode)
+        self.server = HTTPServer(directoryPath: AppConfig.webAppPath, delegate: delegate)
     }
 
     public var body: some View {
