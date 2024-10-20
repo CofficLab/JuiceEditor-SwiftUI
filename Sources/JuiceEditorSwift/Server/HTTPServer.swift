@@ -7,12 +7,12 @@ import MagicKit
 
 public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     let emoji = "📺"
-    private var app: Application?
-    private let directoryPath: String
-    private let isDevMode = true
-    private var port: Int = 49493
-    private let vueDevServerURL = "http://localhost:5173"
-    private var onGetNode: () -> Void = {
+    public var app: Application?
+    public let directoryPath: String
+    public let isDevMode = true
+    public var port: Int = 49493
+    public let vueDevServerURL = "http://localhost:5173"
+    public var onGetNode: () -> Void = {
         os_log("GETNODE")
     }
     
@@ -23,7 +23,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         return URL(string: "http://localhost:\(currentPort ?? port)")!
     }
 
-    private let logger = Logger(subsystem: "com.yourcompany.JuiceEditorSwift", category: "HTTPServer")
+    public let logger = Logger(subsystem: "com.yourcompany.JuiceEditorSwift", category: "HTTPServer")
 
     public init(directoryPath: String, onGetNode: @escaping () -> Void) {
         self.directoryPath = directoryPath
@@ -39,50 +39,13 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         app.middleware.use(LoggingMiddleware(logger: logger))
 
         if isDevMode {
-            // 明确定义根路径路由
-            app.get { req -> ClientResponse in
-                self.logger.info("Processing root request in dev mode")
-                return try await self.handleDevModeRequest(req, path: "/index.html")
-            }
-
-            // 定义通配符路由
-            app.get("**") { req -> ClientResponse in
-                self.logger.info("Processing wildcard request in dev mode: \(req.url.string)")
-                return try await self.handleDevModeRequest(req, path: req.url.path)
-            }
+            self.dev(app: app)
         } else {
-            // 生产模式：提供静态文件
-            app.middleware.use(FileMiddleware(publicDirectory: directoryPath + "/dist"))
-
-            app.get { req -> Response in
-                self.logger.info("Received request for root, redirecting to index.html")
-                return req.redirect(to: "/index.html")
-            }
+            self.prod(app: app)
         }
         
-        app.get("api", "node", ":id", "html") { req async throws -> String in
-            guard let id = req.parameters.get("id") else {
-                throw Abort(.badRequest)
-            }
-
-            self.onGetNode()
-            
-            return "hi"
-        }
-    }
-
-    // 添加一个辅助方法来处理开发模式的请求
-    private func handleDevModeRequest(_ req: Request, path: String) async throws -> ClientResponse {
-        let client = req.client
-        var url = self.vueDevServerURL + path
-        if let query = req.url.query {
-            url += "?" + query
-        }
-        if let fragment = req.url.fragment {
-            url += "#" + fragment
-        }
-        self.logger.info("Forwarding to: \(url)")
-        return try await client.get(URI(string: url))
+        self.getNode(app: app)
+        self.translate(app: app)
     }
 
     public func start() throws {

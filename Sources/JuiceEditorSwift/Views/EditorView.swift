@@ -12,7 +12,9 @@ public struct EditorView: SwiftUI.View, SuperLog {
         os_log("GetNode")
     }
 
-    public init(onGetNode: @escaping () -> Void) {
+    public init(onGetNode: @escaping () -> Void = {
+        os_log("editor view get node")
+    }) {
         self.server = HTTPServer(directoryPath: AppConfig.webAppPath, onGetNode: onGetNode)
     }
 
