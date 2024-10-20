@@ -49,9 +49,11 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          NEW_VERSION=$(cd Sources/JuiceEditorSwift/WebApp && npm version patch -m "👷 CI: Upgrade to v%s")
-          git push origin main
-          git push origin $NEW_VERSION
+          cd Sources/JuiceEditorSwift/WebApp
+          NEW_VERSION=$(npm version patch)
+          git add package.json
+          git commit -m "👷 CI: Upgrade to v$NEW_VERSION"
+          git push origin main --tags
       - name: 读取版本，写入文件
         run: |
           version=$(cd Sources/JuiceEditorSwift/WebApp && node -p "require('./package.json').version")
