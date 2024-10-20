@@ -12,6 +12,9 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     private let isDevMode = true
     private var port: Int = 49493
     private let vueDevServerURL = "http://localhost:5173"
+    private var onGetNode: () -> Void = {
+        os_log("GETNODE")
+    }
     
     @Published public var isRunning: Bool = false
     @Published public var currentPort: Int?
@@ -22,8 +25,9 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     private let logger = Logger(subsystem: "com.yourcompany.JuiceEditorSwift", category: "HTTPServer")
 
-    public init(directoryPath: String) {
+    public init(directoryPath: String, onGetNode: @escaping () -> Void) {
         self.directoryPath = directoryPath
+        self.onGetNode = onGetNode
     }
 
     private func configureRoutes() throws {
@@ -55,6 +59,16 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 return req.redirect(to: "/index.html")
             }
         }
+        
+        app.get("api", "node", ":id", "html") { req async throws -> String in
+            guard let id = req.parameters.get("id") else {
+                throw Abort(.badRequest)
+            }
+
+            self.onGetNode()
+            
+            return "hi"
+        }
     }
 
     // 添加一个辅助方法来处理开发模式的请求
@@ -85,6 +99,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 try configureRoutes()
                 
                 app.http.server.configuration.port = currentPort
+                app.environment.arguments = [app.environment.arguments[0]]
                 try app.start()
                 serverStarted = true
                 
@@ -206,8 +221,4 @@ extension HTTPServer {
     public func emitStarted() {
         NotificationCenter.default.post(name: .httpServerStarted, object: nil)
     }
-}
-
-#Preview {
-    DebugView()
 }

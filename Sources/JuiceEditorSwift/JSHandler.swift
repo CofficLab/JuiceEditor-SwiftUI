@@ -9,7 +9,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     let notification = NotificationCenter.default
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let verbose = false
+        let verbose = true
 
         if message.name == "updateHtml" {
             let html = message.body as! String
