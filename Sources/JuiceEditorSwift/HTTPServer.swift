@@ -6,6 +6,7 @@ import Vapor
 import MagicKit
 
 public class HTTPServer: ObservableObject, SuperLog, SuperThread {
+    let emoji = "📺"
     private var app: Application?
     private let directoryPath: String
     private let isDevMode = true
@@ -88,6 +89,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 serverStarted = true
                 
                 self.main.async {
+                    self.emitStarted()
                     self.port = currentPort
                     self.isRunning = true
                 }
@@ -191,6 +193,7 @@ struct LoggingMiddleware: Middleware {
 
 extension Notification.Name {
     static let httpServerLog = Notification.Name("httpServerLog")
+    static let httpServerStarted = Notification.Name("httpServerStarted")
 }
 
 // MARK: Emitter 
@@ -198,6 +201,10 @@ extension Notification.Name {
 extension HTTPServer {
     public func emitLog(_ log: String) {
         NotificationCenter.default.post(name: .httpServerLog, object: log)
+    }
+
+    public func emitStarted() {
+        NotificationCenter.default.post(name: .httpServerStarted, object: nil)
     }
 }
 

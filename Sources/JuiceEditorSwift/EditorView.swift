@@ -5,6 +5,7 @@ import Foundation
 public struct EditorView: SwiftUI.View {
     @StateObject private var server = HTTPServer(directoryPath: AppConfig.webAppPath)
     @State private var showDebugView = false
+    @State private var isServerStarted = false
 
     let view = JSConfig.makeView(url: "about:blank")
     
@@ -17,7 +18,7 @@ public struct EditorView: SwiftUI.View {
             }
 
             Group {
-                if server.isRunning {
+                if isServerStarted {
                     view
                         .onAppear {
                             view.goto(server.baseURL)
@@ -28,6 +29,9 @@ public struct EditorView: SwiftUI.View {
                             server.startServer(isDevMode: true)
                         }
                 }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted)) { _ in
+                isServerStarted = true
             }
         }
         .popover(isPresented: $showDebugView) {
