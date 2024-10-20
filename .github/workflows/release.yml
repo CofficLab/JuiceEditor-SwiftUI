@@ -83,15 +83,16 @@ jobs:
         run: |
           # Check if the dev branch exists
           if git ls-remote --exit-code --heads origin dev; then
-            git fetch origin dev:refs/remotes/origin/dev
+            git fetch origin dev
             git checkout -b dev origin/dev
             git rebase origin/main
+            git push origin dev --force
           else
-            echo "Dev branch does not exist. Skipping rebase."
+            echo "Dev branch does not exist. Creating dev branch from main."
+            git checkout -b dev
+            git push origin dev
           fi
         continue-on-error: true
-      - name: Push the rebased dev branch
-        run: git push origin dev:dev --force
 
   release:
     runs-on: ubuntu-latest
