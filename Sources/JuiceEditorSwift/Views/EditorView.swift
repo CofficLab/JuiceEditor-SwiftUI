@@ -4,6 +4,8 @@ import SwiftUI
 import MagicKit
 
 public struct EditorView: SwiftUI.View, SuperLog {
+    let emoji = "📄"
+    
     public static let defaultDelegate = DefaultDelegate()
     
     @State private var server: HTTPServer
@@ -27,7 +29,7 @@ public struct EditorView: SwiftUI.View, SuperLog {
             } else {
                 Text("Starting server...")
                     .task {
-                        server.startServer(isDevMode: true)
+                        server.startServer()
                     }
             }
         }

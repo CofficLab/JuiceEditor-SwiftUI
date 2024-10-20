@@ -7,7 +7,7 @@ extension HTTPServer {
         app.middleware.use(FileMiddleware(publicDirectory: directoryPath + "/dist"))
 
         app.get { req -> Response in
-            self.logger.info("Received request for root, redirecting to index.html")
+            self.logger.info("\(self.t)Received request for root, redirecting to ➡️ index.html")
             return req.redirect(to: "/index.html")
         }
     }

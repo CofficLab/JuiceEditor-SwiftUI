@@ -3,6 +3,7 @@ import OSLog
 import SwiftData
 import SwiftUI
 import WebKit
+import Foundation
 
 struct AppConfig {
     private var fileManager = FileManager.default
@@ -81,16 +82,19 @@ struct AppConfig {
 
         return url
     }
-    
-    var isDebug: Bool {
-        #if DEBUG
-        true
-        #else
-        false
-        #endif
-    }
-
 
     static var currentDirectoryPath = FileManager.default.currentDirectoryPath
-    static var webAppPath = currentDirectoryPath + "/WebApp"
+    
+    static var webAppPath: String = {
+        let settingsURL = Bundle.module.url(forResource: "WebApp", withExtension: nil)
+
+        if let settingsURL = settingsURL {
+            return settingsURL.absoluteURL.path()
+        }
+        
+        fatalError("WebApp directory not found")
+    }()
+
+    // 用于获取当前包的 Bundle 的辅助类
+    private class BundleToken {}
 }

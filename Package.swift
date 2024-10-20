@@ -26,7 +26,7 @@ let package = Package(
                 .product(name: "MagicKit", package: "MagicKit")
             ],
             resources: [
-                .copy("../../WebApp")
+                .copy("./WebApp")
             ]),
         .executableTarget(
             name: "JuiceEditorTestApp",

@@ -9,7 +9,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     let emoji = "📺"
     public var app: Application?
     public let directoryPath: String
-    public let isDevMode = true
+    public let isDevMode = false
     public var port: Int = 49493
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
@@ -45,17 +45,19 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
         while !serverStarted && currentPort < port + 100 { // Try 100 ports
             do {
-                let env = Environment(name: "prod", arguments: ["vapor --log error"])
-                self.app = Application(env)
+                self.app = Application(.production)
                 
                 guard let app = self.app else {
                     throw HTTPServerError.appNotInitialized
                 }
                 
+                // Set the log level to critical
+                app.logger.logLevel = .critical
+                app.environment.arguments = ["vapor"]
+                
                 try configureRoutes(app: app)
                 
                 app.http.server.configuration.port = currentPort
-                app.environment.arguments = [app.environment.arguments[0]]
                 
                 try app.start()
                 serverStarted = true
@@ -94,29 +96,13 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         self.isRunning = false // Set isRunning to false when server shuts down
     }
 
-    public func startServer(isDevMode: Bool = false) {
+    public func startServer() {
         let currentDirectoryPath = FileManager.default.currentDirectoryPath
         let webAppPath = currentDirectoryPath + "/WebApp"
 
         emitLog("Attempting to start server in debug mode")
         emitLog("WebApp path: \(webAppPath)")
         emitLog("Dev mode: \(isDevMode)")
-
-        if !isDevMode {
-            // 构建 Vue 项目
-            let task = Process()
-            task.currentDirectoryPath = webAppPath
-            task.launchPath = "/usr/bin/env"
-            task.arguments = ["npm", "run", "build"]
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-            } catch {
-                logger.error("Failed to build Vue project: \(error.localizedDescription)")
-                return
-            }
-        }
         
         Task {
             do {

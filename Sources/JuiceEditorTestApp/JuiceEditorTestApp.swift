@@ -24,8 +24,9 @@ extension JuiceEditorTestApp: EditorDelegate {
         "Hi from JuiceEditorTestApp"
     }
 
-    func onReady() { Task {
-        try? await self.editorView?.setHtmlByRequest("1")
-    }
+    func onReady() {
+        Task {
+            try? await self.editorView?.setHtmlByRequest("1")
+        }
     }
 }
