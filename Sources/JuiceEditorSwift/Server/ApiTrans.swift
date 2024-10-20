@@ -13,7 +13,7 @@ public extension HTTPServer {
 
             let req = try req.content.decode(TranslateRequest.self)
 
-            return self.delegate.translate(req.text, language: req.lang)
+            return await self.delegate.translate(req.text, language: req.lang)
         }
     }
 }
