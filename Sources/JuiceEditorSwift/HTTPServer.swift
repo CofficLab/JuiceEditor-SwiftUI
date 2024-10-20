@@ -3,22 +3,26 @@ import NIOCore
 import os
 import SwiftUI
 import Vapor
+import MagicKit
 
-public class HTTPServer: ObservableObject {
+public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     private var app: Application?
     private let directoryPath: String
     private let isDevMode = true
-    private let vueDevServerURL: String
-    private var port: Int = 8088
+    private var port: Int = 49493
+    private let vueDevServerURL = "http://localhost:5173"
     
     @Published public var isRunning: Bool = false
     @Published public var currentPort: Int?
 
+    var baseURL: URL {
+        return URL(string: "http://localhost:\(currentPort ?? port)")!
+    }
+
     private let logger = Logger(subsystem: "com.yourcompany.JuiceEditorSwift", category: "HTTPServer")
 
-    public init(directoryPath: String, vueDevServerURL: String = "http://localhost:5173") {
+    public init(directoryPath: String) {
         self.directoryPath = directoryPath
-        self.vueDevServerURL = vueDevServerURL
     }
 
     private func configureRoutes() throws {
@@ -50,8 +54,6 @@ public class HTTPServer: ObservableObject {
                 return req.redirect(to: "/index.html")
             }
         }
-
-        // 这里可以添加其他 API 路由
     }
 
     // 添加一个辅助方法来处理开发模式的请求
@@ -84,11 +86,15 @@ public class HTTPServer: ObservableObject {
                 app.http.server.configuration.port = currentPort
                 try app.start()
                 serverStarted = true
-                self.port = currentPort
-                self.isRunning = true
-                logger.info("Server started on port \(currentPort)")
+                
+                self.main.async {
+                    self.port = currentPort
+                    self.isRunning = true
+                }
+                
+                os_log("\(self.t)Server started on port \(currentPort)")
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
-                logger.warning("Port \(currentPort) is in use, trying next port")
+                logger.warning("\(self.t)Port \(currentPort) is in use, trying next port")
                 currentPort += 1
                 self.app?.shutdown()
                 self.app = nil
@@ -141,13 +147,13 @@ public class HTTPServer: ObservableObject {
         Task {
             do {
                 try await self.startAsync(port: port)
-                DispatchQueue.main.async {
+                self.main.async {
                     self.isRunning = true
                     self.currentPort = self.port
                 }
             } catch {
                 emitLog("Failed to start server: \(error.localizedDescription)")
-                DispatchQueue.main.async {
+                self.main.async {
                     self.isRunning = false
                     self.currentPort = nil
                 }

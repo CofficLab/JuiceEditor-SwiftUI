@@ -6,7 +6,7 @@ public struct EditorView: SwiftUI.View {
     @StateObject private var server = HTTPServer(directoryPath: AppConfig.webAppPath)
     @State private var showDebugView = false
 
-    let view = JSConfig.makeView(url: "http://127.0.0.1:8081/index.html")
+    let view = JSConfig.makeView(url: "about:blank")
     
     public init() {}
     
@@ -20,7 +20,7 @@ public struct EditorView: SwiftUI.View {
                 if server.isRunning {
                     view
                         .onAppear {
-                            view.goto(URL(string: "http://127.0.0.1:8088/index.html")!)
+                            view.goto(server.baseURL)
                         }
                 } else {
                     Text("Starting server...")
