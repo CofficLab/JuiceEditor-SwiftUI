@@ -46,6 +46,7 @@ extension EditorView {
     func onJSReady(_ n: Notification) {
         Task {
             try await self.setBaseUrl(server.baseURL.absoluteString)
+            try await self.setTranslateApi(server.translateApiURL)
 
             self.emitJuiceEditorReady()
             self.delegate.onReady()

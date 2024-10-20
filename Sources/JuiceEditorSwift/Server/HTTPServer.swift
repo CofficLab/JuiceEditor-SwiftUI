@@ -13,6 +13,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public var port: Int = 49493
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
+    public var translateApiURL: String = "http://127.0.0.1"
     
     @Published public var isRunning: Bool = false
     @Published public var currentPort: Int?

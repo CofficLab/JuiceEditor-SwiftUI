@@ -21,7 +21,7 @@ struct JuiceEditorTestApp: App {
 
 extension JuiceEditorTestApp: EditorDelegate {
     func getHtml(_ uuid: String) -> String? {
-        "Hi from JuiceEditorTestApp"
+        "<h1>Hi from JuiceEditorTestApp</h1><p>hi</p><p>你好</p>"
     }
 
     func onReady() {
