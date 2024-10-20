@@ -2,7 +2,7 @@ import Foundation
 import OSLog
 import MagicKit
 
-extension EditorView {
+public extension EditorView {
     func run(_ script: String) async throws -> Any {
         try await self.webView.content.run(script)
     }
