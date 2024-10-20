@@ -30,8 +30,10 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     private func configureRoutes(app: Application) throws {
         if isDevMode {
+            os_log("\(self.t)Dev Mode")
             self.dev(app: app)
         } else {
+            os_log("\(self.t)Prod Mode")
             self.prod(app: app)
         }
         
@@ -97,6 +99,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     }
 
     public func startServer() {
+        os_log("\(self.t)Starting server with mode: \(self.isDevMode ? "Dev" : "Prod")")
         let currentDirectoryPath = FileManager.default.currentDirectoryPath
         let webAppPath = currentDirectoryPath + "/WebApp"
 

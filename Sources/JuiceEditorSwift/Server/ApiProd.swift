@@ -1,14 +1,18 @@
 import Vapor
 import Foundation
+import OSLog
 
 extension HTTPServer {
     public func prod(app: Application) {
-        // 生产模式：提供静态文件
-        app.middleware.use(FileMiddleware(publicDirectory: directoryPath + "/dist"))
-
+        let publicDirectory = directoryPath + "dist/"
+        
+        os_log("\(self.t)Public Directory -> \(publicDirectory)")
+        
+        app.middleware.use(FileMiddleware(publicDirectory: publicDirectory))
+        
+        // 添加根路径路由
         app.get { req -> Response in
-            self.logger.info("\(self.t)Received request for root, redirecting to ➡️ index.html")
-            return req.redirect(to: "/index.html")
+            return req.fileio.streamFile(at: publicDirectory + "index.html")
         }
     }
 }

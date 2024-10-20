@@ -89,7 +89,7 @@ struct AppConfig {
         let settingsURL = Bundle.module.url(forResource: "WebApp", withExtension: nil)
 
         if let settingsURL = settingsURL {
-            return settingsURL.absoluteURL.path()
+            return settingsURL.path(percentEncoded: false)
         }
         
         fatalError("WebApp directory not found")
