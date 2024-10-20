@@ -30,14 +30,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         self.onGetNode = onGetNode
     }
 
-    private func configureRoutes() throws {
-        guard let app = self.app else {
-            throw HTTPServerError.appNotInitialized
-        }
-        
-        // 首先添加日志中间件，确保所有请求都被记录
-        app.middleware.use(LoggingMiddleware(logger: logger))
-
+    private func configureRoutes(app: Application) throws {
         if isDevMode {
             self.dev(app: app)
         } else {
@@ -54,15 +47,18 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
         while !serverStarted && currentPort < port + 100 { // Try 100 ports
             do {
-                self.app = Application(.development)
+                let env = Environment(name: "prod", arguments: ["vapor --log error"])
+                self.app = Application(env)
+                
                 guard let app = self.app else {
                     throw HTTPServerError.appNotInitialized
                 }
                 
-                try configureRoutes()
+                try configureRoutes(app: app)
                 
                 app.http.server.configuration.port = currentPort
                 app.environment.arguments = [app.environment.arguments[0]]
+                
                 try app.start()
                 serverStarted = true
                 
@@ -72,7 +68,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                     self.isRunning = true
                 }
                 
-                os_log("\(self.t)Server started on port \(currentPort)")
+                os_log("\(self.t)Server started on port \(currentPort) 🎉🎉🎉")
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
                 logger.warning("\(self.t)Port \(currentPort) is in use, trying next port")
                 currentPort += 1
@@ -156,15 +152,6 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 enum HTTPServerError: Error {
     case noAvailablePort
     case appNotInitialized
-}
-
-struct LoggingMiddleware: Middleware {
-    let logger: os.Logger
-
-    func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
-        logger.info("Received \(request.method.string) request for \(request.url.path)")
-        return next.respond(to: request)
-    }
 }
 
 // MARK: Event Name
