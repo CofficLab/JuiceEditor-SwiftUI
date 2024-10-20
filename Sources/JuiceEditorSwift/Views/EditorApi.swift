@@ -2,13 +2,13 @@ import Foundation
 import OSLog
 import MagicKit
 
-public extension EditorView {
+extension EditorView {
     func run(_ script: String) async throws -> Any {
-        try await self.view.content.run(script)
+        try await self.webView.content.run(script)
     }
 
     func evaluateJavaScript(_ script: String) async throws -> Any {
-        try await self.view.content.evaluateJavaScript(script)
+        try await self.webView.content.evaluateJavaScript(script)
     }
     
     // MARK: DEBUG
@@ -86,24 +86,25 @@ public extension EditorView {
     // MARK: Get
 
     func getMarkdown() -> String {
-        dispatchPrecondition(condition: .onQueue(.main))
-
-        var result: String?
-
-        self.view.content.evaluateJavaScript("api.app.getMarkdown()") { response, error in
-            if error != nil {
-                result = ""
-                return
-            }
-
-            result = response as? String ?? ""
-        }
-
-        while result == nil {
-            RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.01))
-        }
-
-        return result ?? ""
+        return ""
+//        dispatchPrecondition(condition: .onQueue(.main))
+//
+//        var result: String?
+//
+//        evaluateJavaScript("api.app.getMarkdown()") { response, error in
+//            if error != nil {
+//                result = ""
+//                return
+//            }
+//
+//            result = response as? String ?? ""
+//        }
+//
+//        while result == nil {
+//            RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.01))
+//        }
+//
+//        return result ?? ""
     }
 
     // MARK: 插入节点

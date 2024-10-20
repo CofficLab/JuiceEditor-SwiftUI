@@ -4,26 +4,25 @@ import SwiftUI
 import MagicKit
 
 public struct EditorView: SwiftUI.View, SuperLog {
+    public static let defaultDelegate = DefaultDelegate()
+    
     @State private var server: HTTPServer
     @State private var isServerStarted = false
 
-    public let view = JSConfig.makeView(url: "about:blank")
-    public var onGetNode: () -> Void = {
-        os_log("GetNode")
-    }
+    public let webView = JSConfig.makeView(url: "about:blank")
+    public let delegate: EditorDelegate
 
-    public init(onGetNode: @escaping () -> Void = {
-        os_log("editor view get node")
-    }) {
-        self.server = HTTPServer(directoryPath: AppConfig.webAppPath, onGetNode: onGetNode)
+    public init(delegate:  EditorDelegate = EditorView.defaultDelegate) {
+        self.delegate = delegate
+        self.server = HTTPServer(directoryPath: AppConfig.webAppPath, onGetNode: delegate.getNode)
     }
 
     public var body: some View {
         Group {
             if isServerStarted {
-                view
+                webView
                     .onAppear {
-                        view.goto(server.baseURL)
+                        webView.goto(server.baseURL)
                     }
             } else {
                 Text("Starting server...")
@@ -44,9 +43,10 @@ public struct EditorView: SwiftUI.View, SuperLog {
 extension EditorView {
     func onJSReady(_ n: Notification) {
         Task {
-            try? await self.setBaseUrl(server.baseURL.absoluteString)
+            try await self.setBaseUrl(server.baseURL.absoluteString)
 
             self.emitJuiceEditorReady()
+            self.delegate.onReady()
         }
     }
 }
@@ -66,7 +66,5 @@ extension EditorView {
 }
 
 #Preview {
-    EditorView(onGetNode: {
-        os_log("xxx")
-    })
+    EditorView()
 }
