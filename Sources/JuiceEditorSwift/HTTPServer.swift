@@ -99,9 +99,9 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 self.app?.shutdown()
                 self.app = nil
             } catch {
-                logger.error("Unexpected error: \(error.localizedDescription)")
-                logger.error("Error type: \(type(of: error))")
-                logger.error("Error details: \(String(describing: error))")
+                logger.error("\(self.t)Unexpected error: \(error.localizedDescription)")
+                logger.error("\(self.t)Error type: \(type(of: error))")
+                logger.error("\(self.t)Error details: \(String(describing: error))")
                 throw error
             }
         }

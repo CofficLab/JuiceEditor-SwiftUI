@@ -24,7 +24,7 @@ public struct EditorView: SwiftUI.View {
                         }
                 } else {
                     Text("Starting server...")
-                        .onAppear {
+                        .task {
                             server.startServer(isDevMode: true)
                         }
                 }
