@@ -1,11 +1,3 @@
-//
-//  JobRunCode.swift
-//  JuiceEditorSwift
-//
-//  Created by Angel on 2024/10/19.
-//
-
-
 import CloudKit
 import Foundation
 import OSLog
@@ -14,13 +6,13 @@ import SwiftUI
 import MagicKit
 
 class JobRunCode: SuperLog {
-    var runnerDir = AppConfig().getRunnerDir()
-    var tempDir = AppConfig().getTempDir()
-    var sandboxPrivateKeyURL = AppConfig().sandboxPrivateKeyURL
+    var runnerDir = Config().getRunnerDir()
+    var tempDir = Config().getTempDir()
+    var sandboxPrivateKeyURL = Config().sandboxPrivateKeyURL
     
     private var envPath = "PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH"
     private var setEnv: String { "export \(envPath)" }
-    private var knownHostsURL: URL { AppConfig().getKnownHostsURL() }
+    private var knownHostsURL: URL { Config().getKnownHostsURL() }
     private var sshOption: String {
         "-o 'StrictHostKeyChecking no' -o UserKnownHostsFile=\(knownHostsURL.path())"
     }

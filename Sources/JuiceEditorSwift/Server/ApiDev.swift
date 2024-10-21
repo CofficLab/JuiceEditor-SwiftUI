@@ -1,4 +1,5 @@
 import Vapor
+import OSLog
 
 extension HTTPServer {
      public func dev(app: Application) {
@@ -12,7 +13,7 @@ extension HTTPServer {
              let verbose = false
 
              if verbose {
-                 self.logger.info("\(self.t)Processing wildcard request in dev mode: \(req.url.string)")
+                 os_log("\(self.t)Processing wildcard request in dev mode: \(req.url.string)")
              }
              return try await self.handleDevModeRequest(req, path: req.url.path)
          }
@@ -32,7 +33,7 @@ extension HTTPServer {
          }
         
          if verbose {
-             self.logger.info("\(self.t)➡️ Forwarding to: \(url)")
+             os_log("\(self.t)➡️ Forwarding to: \(url)")
          }
         
          return try await client.get(URI(string: url))

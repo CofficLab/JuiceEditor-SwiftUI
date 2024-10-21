@@ -1,12 +1,13 @@
 import Foundation
+import MagicKit
 import NIOCore
 import os
 import SwiftUI
 import Vapor
-import MagicKit
 
 public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     let emoji = "📺"
+
     public var app: Application?
     public let directoryPath: String
     public let isDevMode = false
@@ -14,15 +15,13 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
     public var translateApiURL: String = "http://127.0.0.1"
-    
+
     @Published public var isRunning: Bool = false
     @Published public var currentPort: Int?
 
-    var baseURL: URL {
-        return URL(string: "http://localhost:\(currentPort ?? port)")!
-    }
+    var baseURL: URL { URL(string: "http://localhost:\(currentPort ?? port)")! }
 
-    public let logger = Logger(subsystem: "com.yourcompany.JuiceEditorSwift", category: "HTTPServer")
+    public let logger = Config.makeLogger("HttpServer")
 
     public init(directoryPath: String, delegate: EditorDelegate) {
         self.directoryPath = directoryPath
@@ -31,13 +30,11 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     private func configureRoutes(app: Application) throws {
         if isDevMode {
-            os_log("\(self.t)Dev Mode")
             self.dev(app: app)
         } else {
-            os_log("\(self.t)Prod Mode")
             self.prod(app: app)
         }
-        
+
         self.getNode(app: app)
         self.translate(app: app)
     }
@@ -49,28 +46,27 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         while !serverStarted && currentPort < port + 100 { // Try 100 ports
             do {
                 self.app = Application(.production)
-                
+
                 guard let app = self.app else {
                     throw HTTPServerError.appNotInitialized
                 }
-                
-                // Set the log level to critical
+
                 app.logger.logLevel = .critical
                 app.environment.arguments = ["vapor"]
-                
+
                 try configureRoutes(app: app)
-                
+
                 app.http.server.configuration.port = currentPort
-                
+
                 try app.start()
                 serverStarted = true
-                
+
                 self.main.async {
                     self.emitStarted()
                     self.port = currentPort
                     self.isRunning = true
                 }
-                
+
                 os_log("\(self.t)Server started on port \(currentPort) 🎉🎉🎉")
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
                 logger.warning("\(self.t)Port \(currentPort) is in use, trying next port")
@@ -100,14 +96,6 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     }
 
     public func startServer() {
-        os_log("\(self.t)Starting server with mode: \(self.isDevMode ? "Dev" : "Prod")")
-        let currentDirectoryPath = FileManager.default.currentDirectoryPath
-        let webAppPath = currentDirectoryPath + "/WebApp"
-
-        emitLog("Attempting to start server in debug mode")
-        emitLog("WebApp path: \(webAppPath)")
-        emitLog("Dev mode: \(isDevMode)")
-        
         Task {
             do {
                 try await self.startAsync(port: port)
@@ -116,7 +104,6 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                     self.currentPort = self.port
                 }
             } catch {
-                emitLog("Failed to start server: \(error.localizedDescription)")
                 self.main.async {
                     self.isRunning = false
                     self.currentPort = nil
@@ -149,7 +136,7 @@ extension Notification.Name {
     static let httpServerStarted = Notification.Name("httpServerStarted")
 }
 
-// MARK: Emitter 
+// MARK: Emitter
 
 extension HTTPServer {
     public func emitLog(_ log: String) {

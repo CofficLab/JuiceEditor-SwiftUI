@@ -6,6 +6,7 @@ public protocol EditorDelegate {
     func getHtml(_ uuid: String) -> String?
     func onReady() -> Void
     func translate(_ text: String, language: String) async -> String
+    func onUpdateDoc(_ html: String) -> Void
 }
 
 extension EditorDelegate {
@@ -20,8 +21,10 @@ extension EditorDelegate {
     public func translate(_ text: String, language: String) async -> String {
         return text + "(translated by default delegate)"
     }
+
+    public func onUpdateDoc(_ html: String) -> Void {
+        os_log("Editor Doc Updated -> \(html)")
+    }
 }
 
-public struct DefaultDelegate: EditorDelegate {
-    let emoji = "👮"
-}
+public struct DefaultDelegate: EditorDelegate {}

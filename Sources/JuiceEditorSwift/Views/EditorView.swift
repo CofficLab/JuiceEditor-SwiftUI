@@ -16,7 +16,7 @@ public struct EditorView: SwiftUI.View, SuperLog {
 
     public init(delegate:  EditorDelegate = EditorView.defaultDelegate) {
         self.delegate = delegate
-        self.server = HTTPServer(directoryPath: AppConfig.webAppPath, delegate: delegate)
+        self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate)
     }
 
     public var body: some View {
@@ -33,10 +33,9 @@ public struct EditorView: SwiftUI.View, SuperLog {
                     }
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted)) { _ in
-            isServerStarted = true
-        }
+        .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted), perform: onServerStarted)
         .onReceive(NotificationCenter.default.publisher(for: .jsReady), perform: onJSReady)
+        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateDoc), perform: onJSCallUpdateDoc)
     }
 }
 
@@ -50,6 +49,18 @@ extension EditorView {
 
             self.emitJuiceEditorReady()
             self.delegate.onReady()
+        }
+    }
+
+    func onServerStarted(_ n: Notification) {
+        isServerStarted = true
+    }
+
+    func onJSCallUpdateDoc(_ n: Notification) {
+        let html = n.userInfo?["html"] as? String
+        
+        if let html = html {
+            delegate.onUpdateDoc(html)
         }
     }
 }

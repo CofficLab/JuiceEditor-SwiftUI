@@ -5,13 +5,15 @@ import SwiftUI
 import WebKit
 import Foundation
 
-struct AppConfig {
+struct Config {
     private var fileManager = FileManager.default
-    
-    var label = "com.yueyi.kuaiyizhi"
     
     var sandboxPrivateKeyURL: URL {
         getRunnerDir().appending(component: "private_key")
+    }
+    
+    static func makeLogger(_ category: String) -> Logger {
+        Logger(subsystem: "JuiceEditorSwift", category: category)
     }
     
     func getDocumentsURL() -> URL {
@@ -94,7 +96,4 @@ struct AppConfig {
         
         fatalError("WebApp directory not found")
     }()
-
-    // 用于获取当前包的 Bundle 的辅助类
-    private class BundleToken {}
 }

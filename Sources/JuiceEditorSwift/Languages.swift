@@ -1,11 +1,3 @@
-//
-//  languages.swift
-//  JuiceEditorSwift
-//
-//  Created by Angel on 2024/10/19.
-//
-
-
 import Foundation
 
 enum languages {

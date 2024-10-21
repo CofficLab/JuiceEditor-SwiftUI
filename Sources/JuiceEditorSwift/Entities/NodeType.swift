@@ -1,7 +1,5 @@
 import Foundation
 
-// MARK: 节点类型
-
 public enum NodeType: Equatable {
     case paragraph
     case heading1

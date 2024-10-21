@@ -1,9 +1,12 @@
 import JuiceEditorSwift
 import OSLog
 import SwiftUI
+import MagicKit
 
 @main
-struct JuiceEditorTestApp: App {
+struct JuiceEditorTestApp: App, SuperLog {
+    let emoji = "🍎"
+    
     @State var editorView: EditorView?
 
     var body: some Scene {
@@ -28,5 +31,9 @@ extension JuiceEditorTestApp: EditorDelegate {
         Task {
             try? await self.editorView?.setHtmlByRequest("1")
         }
+    }
+    
+    func onUpdateDoc(_ html: String) {
+        os_log("\(t)OnUpdateDoc: \(html)")
     }
 }
