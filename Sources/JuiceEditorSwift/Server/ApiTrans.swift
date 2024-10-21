@@ -3,8 +3,6 @@ import Vapor
 
 public extension HTTPServer {
     func translate(app: Application) {
-        self.translateApiURL = self.baseURL.absoluteString + "/api/translate"
-        
         app.post("api", "translate") { req async throws -> String in
             struct TranslateRequest: Content {
                 let lang: String

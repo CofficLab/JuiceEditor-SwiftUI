@@ -249,8 +249,12 @@ public extension EditorView {
     }
 
     @discardableResult
-    func setTranslateApi(_ s: String) async throws -> Any {
-        try await run("api.config.setTranslateApi(`\(s)`)")
+    func setTranslateApi(_ s: String, verbose: Bool = false) async throws -> Any {
+        if verbose {
+            os_log("\(self.t)setTranslateApi 🛜🛜🛜 -> \(s)")
+        }
+
+        return try await run("api.config.setTranslateApi(`\(s)`)")
     }
     
     // MARK: SetDrawLink
@@ -302,8 +306,7 @@ public extension EditorView {
     }
     
     @discardableResult
-    func setHtmlByRequest(_ id: String) async throws -> Any {
-        let verbose = true
+    func setHtmlByRequest(_ id: String, verbose: Bool = false) async throws -> Any {
         if verbose {
             os_log("\(self.t)setHtmlByRequest 🛜🛜🛜 -> \(id)")
         }

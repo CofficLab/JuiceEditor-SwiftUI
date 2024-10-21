@@ -10,7 +10,9 @@ enum eventName {
     case updateCurrentDocUUID
     case updateNode
     case message
+    case loading
     case pageLoaded
+    case configChanged
     case downloadFile
     case runCode
     case updateSelectionType
@@ -40,6 +42,10 @@ enum eventName {
             return .message
         case "updateCurrentDocUUID":
             return .updateCurrentDocUUID
+        case "configChanged":
+            return .configChanged
+        case "loading":
+            return .loading
         default:
             return .unknown(s)
         }

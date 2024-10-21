@@ -5,6 +5,7 @@ import MagicKit
 
 public struct EditorView: SwiftUI.View, SuperLog {
     let emoji = "📄"
+    let logger = Config.makeLogger("EditorView")
     
     public static let defaultDelegate = DefaultDelegate()
     
@@ -36,6 +37,8 @@ public struct EditorView: SwiftUI.View, SuperLog {
         .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted), perform: onServerStarted)
         .onReceive(NotificationCenter.default.publisher(for: .jsReady), perform: onJSReady)
         .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateDoc), perform: onJSCallUpdateDoc)
+        .onReceive(NotificationCenter.default.publisher(for: .jsCallConfigChanged), perform: onConfigChanged)
+        .onReceive(NotificationCenter.default.publisher(for: .jsLoading), perform: onLoading)
     }
 }
 
@@ -47,7 +50,6 @@ extension EditorView {
             try await self.setBaseUrl(server.baseURL.absoluteString)
             try await self.setTranslateApi(server.translateApiURL)
 
-            self.emitJuiceEditorReady()
             self.delegate.onReady()
         }
     }
@@ -57,25 +59,28 @@ extension EditorView {
     }
 
     func onJSCallUpdateDoc(_ n: Notification) {
-        let html = n.userInfo?["html"] as? String
-        
-        if let html = html {
-            delegate.onUpdateDoc(html)
+        let data = n.userInfo as? [String: Any]
+
+        guard let data = data else {
+            logger.warning("\(self.t)No Data")
+            return
         }
+
+        delegate.onUpdateDoc(data)
     }
-}
 
-// MARK: Event Name
+    func onConfigChanged(_ n: Notification) {
+        delegate.onConfigChanged()
+    }
 
-extension Notification.Name {
-    public static let JuiceEditorReady = Notification.Name("JuiceEditorReady")
-}
-
-// MARK: Event Emitter
-
-extension EditorView {
-    func emitJuiceEditorReady() {
-        NotificationCenter.default.post(name: .JuiceEditorReady, object: nil)
+    func onLoading(_ n: Notification) {
+        let data = n.userInfo as? [String: Any]
+        
+        guard let data = data else {
+            return
+        }
+        
+        delegate.onLoading(data["reason"] as! String)
     }
 }
 

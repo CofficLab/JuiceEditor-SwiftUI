@@ -1,4 +1,4 @@
-# Swift Package: Rich Text Editor View
+# JuiceEditorSwift
 
 这个 Swift 包提供了一个视图，其中展示了一个富文本编辑器。
 
@@ -22,6 +22,7 @@
 在你的 SwiftUI 视图中导入包并使用：
 
 ```swift
+import SwiftUI
 import JuiceEditorSwift
 
 struct ContentView: View {

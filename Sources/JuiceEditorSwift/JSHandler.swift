@@ -9,7 +9,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     let notification = NotificationCenter.default
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let verbose = true
+        let verbose = false
 
         if message.name == "updateHtml" {
             let html = message.body as! String
@@ -24,6 +24,10 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
             }
 
             switch channel {
+            case .loading:
+                loading(message: message)
+            case .configChanged:
+                configChanged(message: message)
             case .downloadFile:
                 downloadFile(message: message)
             case .pageLoaded:
@@ -56,6 +60,16 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     // MARK: Handler
+
+    private func loading(message: WKScriptMessage) {
+        let data = message.body as! [String: Any]
+        self.notification.post(name: .jsLoading, object: nil, userInfo: data)
+    }
+
+    private func configChanged(message: WKScriptMessage) {
+        let data = message.body as! [String: Any]
+        self.notification.post(name: .jsCallConfigChanged, object: nil, userInfo: data)
+    }
 
     private func updateNode(message: WKScriptMessage) {
         let verbose = true
@@ -128,7 +142,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         self.notification.post(name: .jsCallUpdateSelectionType, object: nil, userInfo: data)
     }
 
-    private func pageLoaded(message: WKScriptMessage, verbose: Bool = false) {
+    private func pageLoaded(message: WKScriptMessage, verbose: Bool = true) {
         if verbose {
             os_log("\(self.t)JS Said: Ready")
         }
@@ -212,6 +226,8 @@ extension JSHandler {
 
 extension Notification.Name {
   static let jsReady = Notification.Name("jsReady")
+  static let jsLoading = Notification.Name("jsLoading")
+  static let jsCallConfigChanged = Notification.Name("jsCallConfigChanged")
   static let jsCallUpdateDoc = Notification.Name("jsCallUpdateDoc")
   static let jsCallUpdateHtml = Notification.Name("jsCallUpdateHtml")
   static let jsCallUpdateDocWithNode = Notification.Name("jsCallUpdateDocWithNode")

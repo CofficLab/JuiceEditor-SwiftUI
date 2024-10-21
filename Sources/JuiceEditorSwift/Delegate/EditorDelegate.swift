@@ -6,7 +6,8 @@ public protocol EditorDelegate {
     func getHtml(_ uuid: String) -> String?
     func onReady() -> Void
     func translate(_ text: String, language: String) async -> String
-    func onUpdateDoc(_ html: String) -> Void
+    func onUpdateDoc(_ data: [String: Any]) -> Void
+    func onLoading(_ reason: String) -> Void
 }
 
 extension EditorDelegate {
@@ -22,8 +23,16 @@ extension EditorDelegate {
         return text + "(translated by default delegate)"
     }
 
-    public func onUpdateDoc(_ html: String) -> Void {
-        os_log("Editor Doc Updated -> \(html)")
+    public func onUpdateDoc(_ data: [String: Any]) -> Void {
+        os_log("Editor Doc Updated -> \(data)")
+    }
+
+    public func onConfigChanged() -> Void {
+        os_log("Editor Config Changed")
+    }
+
+    public func onLoading(_ reason: String) -> Void {
+        os_log("Editor Loading -> \(reason)")
     }
 }
 

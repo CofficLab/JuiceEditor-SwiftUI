@@ -14,12 +14,11 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public var port: Int = 49493
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
-    public var translateApiURL: String = "http://127.0.0.1"
+    public var translateApiURL: String = ""
 
     @Published public var isRunning: Bool = false
-    @Published public var currentPort: Int?
 
-    var baseURL: URL { URL(string: "http://localhost:\(currentPort ?? port)")! }
+    var baseURL: URL { URL(string: "http://localhost:\(port)")! }
 
     public let logger = Config.makeLogger("HttpServer")
 
@@ -40,6 +39,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     }
 
     public func start() throws {
+        let verbose = true
         var currentPort = port
         var serverStarted = false
 
@@ -62,8 +62,9 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 serverStarted = true
 
                 self.main.async {
-                    self.emitStarted()
                     self.port = currentPort
+                    self.translateApiURL = self.baseURL.absoluteString + "/api/translate"
+                    self.emitStarted()
                     self.isRunning = true
                 }
 
@@ -98,21 +99,19 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public func startServer() {
         Task {
             do {
-                try await self.startAsync(port: port)
+                try await self.startAsync()
                 self.main.async {
                     self.isRunning = true
-                    self.currentPort = self.port
                 }
             } catch {
                 self.main.async {
                     self.isRunning = false
-                    self.currentPort = nil
                 }
             }
         }
     }
 
-    private func startAsync(port: Int) async throws {
+    private func startAsync() async throws {
         return try await withCheckedThrowingContinuation { continuation in
             do {
                 try self.start()
@@ -132,17 +131,12 @@ enum HTTPServerError: Error {
 // MARK: Event Name
 
 extension Notification.Name {
-    static let httpServerLog = Notification.Name("httpServerLog")
     static let httpServerStarted = Notification.Name("httpServerStarted")
 }
 
 // MARK: Emitter
 
 extension HTTPServer {
-    public func emitLog(_ log: String) {
-        NotificationCenter.default.post(name: .httpServerLog, object: log)
-    }
-
     public func emitStarted() {
         NotificationCenter.default.post(name: .httpServerStarted, object: nil)
     }
