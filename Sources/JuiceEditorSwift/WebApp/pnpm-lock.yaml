@@ -11,6 +11,9 @@ importers:
       '@coffic/juice-editor':
         specifier: ^0.9.85
         version: 0.9.85(@lezer/common@1.2.3)(postcss@8.4.47)(typescript@5.6.3)
+      '@coffic/juice-editor-draw':
+        specifier: ^0.2.7
+        version: 0.2.7
     devDependencies:
       typescript:
         specifier: ^5.6.3
@@ -66,6 +69,9 @@ packages:
 
   '@codemirror/view@6.34.1':
     resolution: {integrity: sha512-t1zK/l9UiRqwUNPm+pdIT0qzJlzuVckbTEMVNFhfWkGiBQClstzg+78vedCvLSX0xJEZ6lwZbPpnljL7L6iwMQ==}
+
+  '@coffic/juice-editor-draw@0.2.7':
+    resolution: {integrity: sha512-tcEoq1+1TXx26faWRhOlqmlSDYp8TRqnbFn4asUZJcrmb3KoH+Rv3VXoGI5H7K1cf7GIXmxGrKqyen9xV0faZQ==}
 
   '@coffic/juice-editor@0.9.85':
     resolution: {integrity: sha512-sXfJu7HmnnzdBPabh4uYTAj4X3v8+cHFBAdjZFFvyBml+g5LBKVoJGMmMWcEXG2VydMDHjdUTfxKiiWd/lN/Qg==}
@@ -1274,6 +1280,8 @@ snapshots:
       '@codemirror/state': 6.4.1
       style-mod: 4.1.2
       w3c-keyname: 2.2.8
+
+  '@coffic/juice-editor-draw@0.2.7': {}
 
   '@coffic/juice-editor@0.9.85(@lezer/common@1.2.3)(postcss@8.4.47)(typescript@5.6.3)':
     dependencies:

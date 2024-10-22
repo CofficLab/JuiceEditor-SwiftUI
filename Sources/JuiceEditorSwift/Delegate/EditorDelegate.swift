@@ -24,7 +24,7 @@ extension EditorDelegate {
     }
 
     public func onUpdateDoc(_ data: [String: Any]) -> Void {
-        os_log("Editor Doc Updated -> \(data)")
+        os_log("Editor Doc Updated")
     }
 
     public func onConfigChanged() -> Void {

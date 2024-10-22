@@ -260,7 +260,7 @@ public extension EditorView {
     // MARK: SetDrawLink
 
     func setDrawLink(_ link: String) async throws {
-        _ = try await run("api.doc.setDrawLink('\(link)')")
+        _ = try await run("api.config.setDrawIoLink('\(link)')")
     }
 
     // MARK: SetBaseUrl

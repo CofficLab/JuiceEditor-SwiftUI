@@ -47,8 +47,15 @@ public struct EditorView: SwiftUI.View, SuperLog {
 extension EditorView {
     func onJSReady(_ n: Notification) {
         Task {
+            let verbose = true
+            
+            if verbose {
+                os_log("\(self.t)JSReady")
+            }
+            
             try await self.setBaseUrl(server.baseURL.absoluteString)
             try await self.setTranslateApi(server.translateApiURL)
+            try await self.setDrawLink(server.drawIoLink)
 
             self.delegate.onReady()
         }

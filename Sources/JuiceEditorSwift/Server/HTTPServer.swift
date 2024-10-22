@@ -15,6 +15,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
     public var translateApiURL: String = ""
+    public var drawIoLink: String = ""
 
     @Published public var isRunning: Bool = false
 
@@ -64,6 +65,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 self.main.async {
                     self.port = currentPort
                     self.translateApiURL = self.baseURL.absoluteString + "/api/translate"
+                    self.drawIoLink = self.baseURL.absoluteString + "/drawio/webapp/index.html?"
                     self.emitStarted()
                     self.isRunning = true
                 }
