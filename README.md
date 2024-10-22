@@ -1,4 +1,4 @@
-# JuiceEditorSwift
+# JuiceEditor-SwiftUI
 
 This Swift package provides a view that displays a rich text editor.
 
