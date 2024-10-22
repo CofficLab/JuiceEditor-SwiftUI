@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "JuiceEditorSwift",
+    name: "JuiceEditorKit",
     platforms: [
         .macOS(.v14)
     ],
     products: [
         .library(
-            name: "JuiceEditorSwift",
-            targets: ["JuiceEditorSwift"]),
+            name: "JuiceEditorKit",
+            targets: ["JuiceEditorKit"]),
         .executable(
             name: "JuiceEditorTestApp",
             targets: ["JuiceEditorTestApp"])
@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "JuiceEditorSwift",
+            name: "JuiceEditorKit",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "MagicKit", package: "MagicKit")
@@ -30,10 +30,10 @@ let package = Package(
             ]),
         .executableTarget(
             name: "JuiceEditorTestApp",
-            dependencies: ["JuiceEditorSwift"],
+            dependencies: ["JuiceEditorKit"],
             path: "Sources/JuiceEditorTestApp"),
         .testTarget(
-            name: "JuiceEditorSwiftTests",
-            dependencies: ["JuiceEditorSwift"]),
+            name: "JuiceEditorKitTests",
+            dependencies: ["JuiceEditorKit"]),
     ]
 )

@@ -17,6 +17,24 @@
             "name": "Release JuiceEditorTestApp",
             "program": "${workspaceFolder:JuiceEditor-SwiftUI}/.build/release/JuiceEditorTestApp",
             "preLaunchTask": "swift: Build Release JuiceEditorTestApp"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:JuiceEditor-SwiftUI}",
+            "name": "Debug JuiceEditor-TestApp",
+            "program": "${workspaceFolder:JuiceEditor-SwiftUI}/.build/debug/JuiceEditor-TestApp",
+            "preLaunchTask": "swift: Build Debug JuiceEditor-TestApp"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:JuiceEditor-SwiftUI}",
+            "name": "Release JuiceEditor-TestApp",
+            "program": "${workspaceFolder:JuiceEditor-SwiftUI}/.build/release/JuiceEditor-TestApp",
+            "preLaunchTask": "swift: Build Release JuiceEditor-TestApp"
         }
     ]
 }

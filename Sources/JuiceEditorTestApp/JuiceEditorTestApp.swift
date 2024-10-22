@@ -1,4 +1,4 @@
-import JuiceEditorSwift
+import JuiceEditorKit
 import OSLog
 import SwiftUI
 import MagicKit

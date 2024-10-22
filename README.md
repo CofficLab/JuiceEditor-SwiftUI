@@ -1,4 +1,4 @@
-# JuiceEditor-SwiftUI
+# JuiceEditorKit
 
 This Swift package provides a view that displays a rich text editor.
 
@@ -25,7 +25,7 @@ Import the package and use it in your SwiftUI view:
 
 ```swift
 import SwiftUI
-import JuiceEditorSwift
+import JuiceEditorKit
 
 struct ContentView: View {
     var body: some View {

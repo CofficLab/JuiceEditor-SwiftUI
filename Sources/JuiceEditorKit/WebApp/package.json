@@ -4,9 +4,10 @@
   "version": "0.1.22",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run drawio:copy && vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "drawio:copy": "cp -r node_modules/@coffic/juice-editor-draw/drawio public/drawio"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
