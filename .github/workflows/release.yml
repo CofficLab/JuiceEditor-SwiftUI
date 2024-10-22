@@ -27,14 +27,14 @@ jobs:
       - name: 安装PNPM
         run: npm i -g pnpm
       - name: NPM 安装
-        run: cd Sources/JuiceEditorSwift/WebApp && pnpm i
+        run: cd Sources/JuiceEditorKit/WebApp && pnpm i
       - name: NPM 构建
-        run: cd Sources/JuiceEditorSwift/WebApp && pnpm run build
+        run: cd Sources/JuiceEditorKit/WebApp && pnpm run build
       - name: 上传构件
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: Sources/JuiceEditorSwift/WebApp/dist
+          path: Sources/JuiceEditorKit/WebApp/dist
           retention-days: 1
 
   tag:
@@ -50,14 +50,14 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          cd Sources/JuiceEditorSwift/WebApp
+          cd Sources/JuiceEditorKit/WebApp
           NEW_VERSION=$(npm version patch)
           git add package.json
           git commit -m "👷 CI: Upgrade to $NEW_VERSION"
           git push origin main --tags
       - name: 读取版本，写入文件
         run: |
-          version=$(cd Sources/JuiceEditorSwift/WebApp && node -p "require('./package.json').version")
+          version=$(cd Sources/JuiceEditorKit/WebApp && node -p "require('./package.json').version")
           echo $version
           echo "${version}" >> version.txt
       - name: 上传构件
