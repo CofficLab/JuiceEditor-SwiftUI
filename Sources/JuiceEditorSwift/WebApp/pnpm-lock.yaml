@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@coffic/juice-editor':
-        specifier: ^0.9.85
-        version: 0.9.85(@lezer/common@1.2.3)(postcss@8.4.47)(typescript@5.6.3)
+        specifier: ^0.9.86
+        version: 0.9.86(@lezer/common@1.2.3)(postcss@8.4.47)(typescript@5.6.3)
       '@coffic/juice-editor-draw':
         specifier: ^0.2.7
         version: 0.2.7
@@ -73,8 +73,8 @@ packages:
   '@coffic/juice-editor-draw@0.2.7':
     resolution: {integrity: sha512-tcEoq1+1TXx26faWRhOlqmlSDYp8TRqnbFn4asUZJcrmb3KoH+Rv3VXoGI5H7K1cf7GIXmxGrKqyen9xV0faZQ==}
 
-  '@coffic/juice-editor@0.9.85':
-    resolution: {integrity: sha512-sXfJu7HmnnzdBPabh4uYTAj4X3v8+cHFBAdjZFFvyBml+g5LBKVoJGMmMWcEXG2VydMDHjdUTfxKiiWd/lN/Qg==}
+  '@coffic/juice-editor@0.9.86':
+    resolution: {integrity: sha512-dNQYyKBmhXiylv7g8TQnHbPSRm2dRsEAqpMmpWPe1tjbGKKtm03cnUv4XnX3irsAEl5WyJj1R0+6PiFbVHVf2w==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -908,8 +908,8 @@ packages:
     resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
     engines: {node: '>= 0.6'}
 
-  monaco-editor@0.50.0:
-    resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
+  monaco-editor@0.52.0:
+    resolution: {integrity: sha512-OeWhNpABLCeTqubfqLMXGsqf6OmPU6pHM85kF3dhy6kq5hnhuVS1p3VrEW/XhWHc71P2tHyS5JFySD8mgs1crw==}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -1283,7 +1283,7 @@ snapshots:
 
   '@coffic/juice-editor-draw@0.2.7': {}
 
-  '@coffic/juice-editor@0.9.85(@lezer/common@1.2.3)(postcss@8.4.47)(typescript@5.6.3)':
+  '@coffic/juice-editor@0.9.86(@lezer/common@1.2.3)(postcss@8.4.47)(typescript@5.6.3)':
     dependencies:
       '@codemirror/lang-javascript': 6.2.2
       '@tiptap/core': 2.8.0(@tiptap/pm@2.8.0)
@@ -1335,7 +1335,7 @@ snapshots:
       es-drager: 1.2.12(vue@3.5.12(typescript@5.6.3))
       file64: 1.0.4
       fs-extra: 11.2.0
-      monaco-editor: 0.50.0
+      monaco-editor: 0.52.0
       pinia: 2.2.4(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3))
       prosemirror-model: 1.23.0
       prosemirror-state: 1.4.3
@@ -2074,7 +2074,7 @@ snapshots:
     dependencies:
       mime-db: 1.52.0
 
-  monaco-editor@0.50.0: {}
+  monaco-editor@0.52.0: {}
 
   ms@2.1.3: {}
 
