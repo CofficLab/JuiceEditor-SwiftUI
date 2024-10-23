@@ -38,6 +38,12 @@ jobs:
           version=$(cd Sources/JuiceEditorKit/WebApp && node -p "require('./package.json').version")
           echo $version
           echo "${version}" >> version.txt
+      - name: Upload Version
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
+          retention-days: 1
 
   rebase_dev:
     needs:
