@@ -28,6 +28,7 @@ jobs:
         run: |
           git clone https://github.com/CofficLab/JuiceEditor
           cp -f JuiceEditor/docs/hero.png ./docs/hero.png
+          rm -rf JuiceEditor
       - name: Commit
         run: |
           git config --global user.name "GitHub Action"
