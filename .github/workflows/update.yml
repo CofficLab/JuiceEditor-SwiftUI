@@ -19,10 +19,15 @@ jobs:
         run: npm -v
       - name: 安装PNPM
         run: npm i -g pnpm
-      - name: NPM Update
-        run: cd Sources/JuiceEditorKit/WebApp && pnpm update
-      - name: NPM 构建
-        run: cd Sources/JuiceEditorKit/WebApp && pnpm run build
+      - name: Update
+        run: |
+          cd Sources/JuiceEditorKit/WebApp 
+          pnpm update
+          pnpm run build
+      - name: Update Hero Picture
+        run: |
+          git clone https://github.com/CofficLab/JuiceEditor
+          cp -f JuiceEditor/docs/hero.png ./docs/hero.png
       - name: Commit
         run: |
           git config --global user.name "GitHub Action"
