@@ -65,7 +65,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 self.main.async {
                     self.port = currentPort
                     self.translateApiURL = self.baseURL.absoluteString + "/api/translate"
-                    self.drawIoLink = self.baseURL.absoluteString + "/drawio/webapp/index.html?"
+                    self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
                     self.emitStarted()
                     self.isRunning = true
                 }

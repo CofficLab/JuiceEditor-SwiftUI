@@ -7,7 +7,7 @@
     "dev": "npm run drawio:copy && vite",
     "build": "npm run drawio:copy && tsc && vite build",
     "preview": "vite preview",
-    "drawio:copy": "cp -rf node_modules/@coffic/juice-editor-draw/drawio public/drawio"
+    "drawio:copy": "rm -rf public/draw || true && mkdir -p public/draw && cp -rf node_modules/@coffic/juice-editor-draw/drawio/webapp/* public/draw/"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
