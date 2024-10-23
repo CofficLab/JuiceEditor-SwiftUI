@@ -3,7 +3,9 @@ name: 🚀 Release
 
 on:
   workflow_run:
-    workflows: [- "🔨 Build" - "⬆️ Update"]
+    workflows:
+      - '🔨 Build'
+      - '⬆️ Update'
     types:
       - completed
 
