@@ -260,6 +260,12 @@ public extension EditorView {
     // MARK: SetDrawLink
 
     func setDrawLink(_ link: String) async throws {
+        let verbose = true
+        
+        if verbose {
+            os_log("\(self.t)setDrawLink -> \(link)")
+        }
+        
         _ = try await run("api.config.setDrawIoLink('\(link)')")
     }
 

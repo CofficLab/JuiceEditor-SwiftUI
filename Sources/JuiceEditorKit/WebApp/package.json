@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run drawio:copy && vite",
-    "build": "tsc && vite build",
+    "build": "npm run drawio:copy && tsc && vite build",
     "preview": "vite preview",
     "drawio:copy": "cp -r node_modules/@coffic/juice-editor-draw/drawio public/drawio"
   },
