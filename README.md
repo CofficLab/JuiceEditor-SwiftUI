@@ -40,3 +40,7 @@ struct ContentView: View {
 - [JuiceEditor-Draw](https://github.com/CofficLab/JuiceEditor-Draw)
 - [JuiceEditor-Playground](https://github.com/cofficlab/JuiceEditor-Playground)
 - [JuiceEditor-Examples](https://github.com/cofficlab/JuiceEditor-Examples)
+
+## Maintainers
+
+Work for Joy & Live for Love ➡️ <https://github.com/nookery>
