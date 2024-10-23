@@ -1,0 +1,62 @@
+---
+name: 🔨 Build
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - '*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  tag: ${{ github.event.head_commit.id }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Current User
+        run: whoami
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Prepare
+        run: |
+          npm -v
+          npm i -g pnpm
+      - name: Install
+        run: cd Sources/JuiceEditorKit/WebApp && pnpm i
+      - name: Build
+        run: |
+          cd Sources/JuiceEditorKit/WebApp
+          pnpm run build
+      - name: Commit
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "👷 CI: Build and Update WebApp"
+            git push origin main
+          fi
+
+  clear:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Current User
+        run: whoami
+      - name: Clear Artifacts
+        uses: geekyeggo/delete-artifact@v4
+        with:
+          token: ${{ github.token }}
+          name: |
+            dist
+            version
