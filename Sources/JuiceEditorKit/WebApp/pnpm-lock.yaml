@@ -12,8 +12,8 @@ importers:
         specifier: ^0.9.89
         version: 0.9.89(sass@1.80.3)(terser@5.36.0)
       '@coffic/juice-editor-draw':
-        specifier: ^0.2.10
-        version: 0.2.10
+        specifier: ^1.0.1
+        version: 1.0.1
     devDependencies:
       typescript:
         specifier: ^5.6.3
@@ -45,8 +45,8 @@ packages:
     resolution: {integrity: sha512-OwS2CM5KocvQ/k7dFJa8i5bNGJP0hXWfVCfDkqRFP1IreH1JDC7wG6eCYCi0+McbfT8OR/kNqsI0UU0xP9H6PQ==}
     engines: {node: '>=6.9.0'}
 
-  '@coffic/juice-editor-draw@0.2.10':
-    resolution: {integrity: sha512-jDzJG04lmx8SmFvDG8tL91HdoGa4ps76zc3BQyUm3LDEe49r441AVzGVUHCrdWZQXBx8r0TecJWH7FbnMVG6ig==}
+  '@coffic/juice-editor-draw@1.0.1':
+    resolution: {integrity: sha512-6UzjL/gLlleeEKY9kIAZy41uBTyiKdGjuODL3UCrXQ+FP2dTK2txD0xH+4kcPQlCLpkFD4VsRliKZgAj592zqA==}
 
   '@coffic/juice-editor@0.9.89':
     resolution: {integrity: sha512-tPM8CacaeVYvpFpzFwrZvPdIifyL/tfbKhLZtLn9WxaHbTLI8wzXxA1xRBeGyE9aHvrxgskYQvZXqd//PKYZKg==}
@@ -1705,7 +1705,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@coffic/juice-editor-draw@0.2.10': {}
+  '@coffic/juice-editor-draw@1.0.1': {}
 
   '@coffic/juice-editor@0.9.89(sass@1.80.3)(terser@5.36.0)':
     dependencies:
