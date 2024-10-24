@@ -1,7 +1,7 @@
 {
   "name": "webapp",
   "private": true,
-  "version": "0.1.31",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "npm run drawio:copy && vite",
