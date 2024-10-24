@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
-        .package(url: "https://github.com/CofficLab/MagicKit.git", branch: "main")
+        .package(url: "https://github.com/CofficLab/MagicKit.git", from: "1.0.0")
     ],
     targets: [
         .target(
