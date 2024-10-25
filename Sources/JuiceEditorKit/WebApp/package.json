@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@coffic/juice-editor": "^0.9.92",
-    "@coffic/juice-editor-draw": "^1.0.4"
+    "@coffic/juice-editor-draw": "^1.0.5"
   }
 }

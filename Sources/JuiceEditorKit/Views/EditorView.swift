@@ -42,6 +42,14 @@ public struct EditorView: SwiftUI.View, SuperLog {
     }
 }
 
+// MARK: Action
+
+extension EditorView {
+    public func setContent(_ uuid: String) async throws {
+        try await self.setContentFromWeb(self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html", verbose: true)
+    }
+}
+
 // MARK: Event Handler
 
 extension EditorView {
@@ -53,11 +61,16 @@ extension EditorView {
                 os_log("\(self.t)JSReady")
             }
             
-            try await self.setBaseUrl(server.baseURL.absoluteString)
-            try await self.setTranslateApi(server.translateApiURL)
-            try await self.setDrawLink(server.drawIoLink)
-
-            self.delegate.onReady()
+            do {
+                try await self.setTranslateApi(server.translateApiURL)
+                try await self.setDrawLink(server.drawIoLink)
+                
+                
+                self.delegate.onReady()
+            } catch {
+                os_log(.error, "\(self.t)\(error.localizedDescription)")
+                os_log(.error, "\(error)")
+            }
         }
     }
 

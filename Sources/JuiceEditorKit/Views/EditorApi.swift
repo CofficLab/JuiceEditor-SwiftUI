@@ -11,17 +11,6 @@ public extension EditorView {
         try await self.webView.content.evaluateJavaScript(script)
     }
     
-    // MARK: DEBUG
-    
-    func printJSON(_ json: String) async throws -> Any {
-        let verbose = true
-        if verbose {
-            os_log("\(self.t)PrintJSON 🛜🛜🛜 -> \(json)")
-        }
-
-        return try await run("api.doc.printJSON(`\(json)`)")
-    }
-    
     // MARK: GetJSONFromHTML
     
     func getWildNodesFromHTML(_ html: String) async throws -> [WildNode] {
@@ -254,7 +243,7 @@ public extension EditorView {
             os_log("\(self.t)setTranslateApi 🛜🛜🛜 -> \(s)")
         }
 
-        return try await run("api.config.setTranslateApi(`\(s)`)")
+        return try await run("window.editor.setTranslateApi(`\(s)`)")
     }
     
     // MARK: SetDrawLink
@@ -266,20 +255,7 @@ public extension EditorView {
             os_log("\(self.t)setDrawLink -> \(link)")
         }
         
-        _ = try await run("api.config.setDrawIoLink('\(link)')")
-    }
-
-    // MARK: SetBaseUrl
-
-    @discardableResult
-    func setBaseUrl(_ url: String) async throws -> Any {
-        let verbose = false
-        
-        if verbose {
-            os_log("\(self.t)setBaseUrl -> \(url)")
-        }
-        
-        return try await run("api.request.setBaseURL('\(url)')")
+        _ = try await run("window.editor.setDrawLink('\(link)')")
     }
     
     // MARK: SetNode
@@ -312,12 +288,12 @@ public extension EditorView {
     }
     
     @discardableResult
-    func setHtmlByRequest(_ id: String, verbose: Bool = false) async throws -> Any {
+    func setContentFromWeb(_ url: String, verbose: Bool = false) async throws -> Any {
         if verbose {
-            os_log("\(self.t)setHtmlByRequest 🛜🛜🛜 -> \(id)")
+            os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url)")
         }
         
-        return try await run("window.api.node.setHtmlByRequest(`\(id)`)")
+        return try await run("window.editor.setContentFromWeb(`\(url)`)")
     }
 
     func setDocEmpty() async throws -> Any {
