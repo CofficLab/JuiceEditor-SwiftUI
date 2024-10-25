@@ -1,4 +1,10 @@
 import './style.css'
-import { defineJuiceEditor } from '@coffic/juice-editor'
+import editor from '@coffic/juice-editor'
 
-defineJuiceEditor()
+declare global {
+    interface Window {
+        editor: typeof editor;
+    }
+}
+
+window.editor = editor
