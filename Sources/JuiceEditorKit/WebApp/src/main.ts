@@ -8,3 +8,5 @@ declare global {
 }
 
 window.editor = editor
+
+editor.enableWebKit()
