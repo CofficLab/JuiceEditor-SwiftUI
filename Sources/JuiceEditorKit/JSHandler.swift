@@ -50,6 +50,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
                 printMessage(message)
             case .updateCurrentDocUUID:
                 updateCurrentDocUUID(message: message)
+            case .debug:
+                printDebugMessage(message)
             case let .unknown(c):
                 os_log(.error, "\(self.t)JS 消息来自未知通道：\(c)")
                 os_log(.error, "\(data)")
@@ -209,6 +211,13 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         if verbose {
             os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
         }
+    }
+    
+    private func printDebugMessage(_ message: WKScriptMessage) {
+        let data = message.body as! [String: String]
+        let m = data["message"]!
+
+        os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
     }
 }
 

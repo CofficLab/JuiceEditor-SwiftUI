@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@coffic/juice-editor':
-        specifier: ^0.9.93
-        version: 0.9.93(sass@1.80.3)(terser@5.36.0)
+        specifier: ^0.9.95
+        version: 0.9.95(sass@1.80.3)(terser@5.36.0)
       '@coffic/juice-editor-draw':
         specifier: ^1.0.5
         version: 1.0.5
@@ -48,8 +48,8 @@ packages:
   '@coffic/juice-editor-draw@1.0.5':
     resolution: {integrity: sha512-vLmbbXAuIB7yaE2qzufXw3AbvgHphEeFfzNfmaDHz8u1sMmo6y41cRZPIfO+sUZ9b+TT5HpkpJ1RtomP/rueNg==}
 
-  '@coffic/juice-editor@0.9.93':
-    resolution: {integrity: sha512-TuLDOo4l0MTTNrB6Vr/cLAzosUz2IPw9HSGeE3MrGK1IBHPaQwFsogTS6+jbZvpGRvxjqHVlsfo1ly5NQ6mEAQ==}
+  '@coffic/juice-editor@0.9.95':
+    resolution: {integrity: sha512-dIoeza8Fs5rZ5Vh/DLbfxmXJHIWPRXlgjBBkyUesBn++Pb03BCwamVq8wy4Nc5AKDDyBe2CzviQzxfSbHpf4dQ==}
 
   '@csstools/selector-resolve-nested@1.1.0':
     resolution: {integrity: sha512-uWvSaeRcHyeNenKg8tp17EVDRkpflmdyvbE0DHo6D/GdBb6PDnCYYU6gRpXhtICMGMcahQmj2zGxwFM/WC8hCg==}
@@ -847,9 +847,6 @@ packages:
   '@vue/compiler-ssr@3.5.12':
     resolution: {integrity: sha512-eLwc7v6bfGBSM7wZOGPmRavSWzNFF6+PdRhE+VFJhNCgHiF8AM7ccoqcv5kBXA2eWUfigD7byekvf/JsOfKvPA==}
 
-  '@vue/devtools-api@6.6.4':
-    resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
-
   '@vue/language-core@1.8.27':
     resolution: {integrity: sha512-L8Kc27VdQserNaCUNiSFdDl9LWT24ly8Hpwf1ECy3aFb9m6bDhBGQYOujDm21N7EW3moKIOKEanQwe1q5BK+mA==}
     peerDependencies:
@@ -1329,18 +1326,6 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
 
-  pinia@2.2.4:
-    resolution: {integrity: sha512-K7ZhpMY9iJ9ShTC0cR2+PnxdQRuwVIsXDO/WIEV/RnMC/vmSoKDTKW/exNQYPI+4ij10UjXqdNiEHwn47McANQ==}
-    peerDependencies:
-      '@vue/composition-api': ^1.4.0
-      typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.3.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      typescript:
-        optional: true
-
   pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
@@ -1697,17 +1682,6 @@ packages:
       terser:
         optional: true
 
-  vue-demi@0.14.10:
-    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
-    engines: {node: '>=12'}
-    hasBin: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-
   vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}
 
@@ -1765,7 +1739,7 @@ snapshots:
 
   '@coffic/juice-editor-draw@1.0.5': {}
 
-  '@coffic/juice-editor@0.9.93(sass@1.80.3)(terser@5.36.0)':
+  '@coffic/juice-editor@0.9.95(sass@1.80.3)(terser@5.36.0)':
     dependencies:
       '@remixicon/vue': 4.4.0(vue@3.5.12(typescript@5.1.6))
       '@tailwindcss/typography': 0.5.15(tailwindcss@3.4.14)
@@ -1820,7 +1794,6 @@ snapshots:
       daisyui: 4.12.13(postcss@8.4.47)
       html2canvas: 1.4.1
       monaco-editor: 0.52.0
-      pinia: 2.2.4(typescript@5.1.6)(vue@3.5.12(typescript@5.1.6))
       postcss: 8.4.47
       postcss-nesting: 12.1.5(postcss@8.4.47)
       prosemirror-model: 1.23.0
@@ -1835,7 +1808,6 @@ snapshots:
       vue: 3.5.12(typescript@5.1.6)
       vue-tsc: 1.8.27(typescript@5.1.6)
     transitivePeerDependencies:
-      - '@vue/composition-api'
       - debug
       - less
       - lightningcss
@@ -2440,8 +2412,6 @@ snapshots:
       '@vue/compiler-dom': 3.5.12
       '@vue/shared': 3.5.12
 
-  '@vue/devtools-api@6.6.4': {}
-
   '@vue/language-core@1.8.27(typescript@5.1.6)':
     dependencies:
       '@volar/language-core': 1.11.1
@@ -2916,14 +2886,6 @@ snapshots:
 
   pify@2.3.0: {}
 
-  pinia@2.2.4(typescript@5.1.6)(vue@3.5.12(typescript@5.1.6)):
-    dependencies:
-      '@vue/devtools-api': 6.6.4
-      vue: 3.5.12(typescript@5.1.6)
-      vue-demi: 0.14.10(vue@3.5.12(typescript@5.1.6))
-    optionalDependencies:
-      typescript: 5.1.6
-
   pirates@4.0.6: {}
 
   plimit-lit@1.6.1:
@@ -3317,10 +3279,6 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.80.3
       terser: 5.36.0
-
-  vue-demi@0.14.10(vue@3.5.12(typescript@5.1.6)):
-    dependencies:
-      vue: 3.5.12(typescript@5.1.6)
 
   vue-template-compiler@2.7.16:
     dependencies:

@@ -9,4 +9,6 @@ declare global {
 
 window.editor = editor
 
-editor.enableWebKit()
+editor.onCreate(() => {
+    editor.enableWebKit()
+})

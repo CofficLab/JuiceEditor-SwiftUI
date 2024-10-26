@@ -16,6 +16,7 @@ enum eventName {
     case downloadFile
     case runCode
     case updateSelectionType
+    case debug
     case unknown(_ s: String)
 
     static func from(_ s: String) -> Self {
@@ -44,6 +45,8 @@ enum eventName {
             return .updateCurrentDocUUID
         case "configChanged":
             return .configChanged
+        case "debug":
+            return .debug
         case "loading":
             return .loading
         default:
