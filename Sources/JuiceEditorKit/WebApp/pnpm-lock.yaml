@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@coffic/juice-editor':
-        specifier: ^0.9.92
-        version: 0.9.92(sass@1.80.3)(terser@5.36.0)
+        specifier: ^0.9.93
+        version: 0.9.93(sass@1.80.3)(terser@5.36.0)
       '@coffic/juice-editor-draw':
         specifier: ^1.0.5
         version: 1.0.5
@@ -20,7 +20,7 @@ importers:
         version: 5.6.3
       vite:
         specifier: ^5.4.10
-        version: 5.4.10(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0)
+        version: 5.4.10(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0)
 
 packages:
 
@@ -36,8 +36,8 @@ packages:
     resolution: {integrity: sha512-Ed61U6XJc3CVRfkERJWDz4dJwKe7iLmmJsbOGu9wSloNSFttHV0I8g6UAgb7qnK5ly5bGLPd4oXZlxCdANBOWQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.26.0':
-    resolution: {integrity: sha512-aP8x5pIw3xvYr/sXT+SEUwyhrXT8rUJRZltK/qN3Db80dcKpTett8cJxHyjk+xYSVXvNnl2SfcJVjbwxpOSscA==}
+  '@babel/parser@7.26.1':
+    resolution: {integrity: sha512-reoQYNiAJreZNsJzyrDNzFQ+IQ5JFiIzAHJg9bn94S3l+4++J7RsIhNMoB+lgP/9tpmiAQqspv+xfdxTSzREOw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -48,8 +48,8 @@ packages:
   '@coffic/juice-editor-draw@1.0.5':
     resolution: {integrity: sha512-vLmbbXAuIB7yaE2qzufXw3AbvgHphEeFfzNfmaDHz8u1sMmo6y41cRZPIfO+sUZ9b+TT5HpkpJ1RtomP/rueNg==}
 
-  '@coffic/juice-editor@0.9.92':
-    resolution: {integrity: sha512-P2ZCddoIObu3WE1ZgczdhZsUkjHXIRBLyGY0xKaphbY+hZXdayiyjk4kkYnyDTAlH89u+zeNXyrXZ2fuw7+tFA==}
+  '@coffic/juice-editor@0.9.93':
+    resolution: {integrity: sha512-TuLDOo4l0MTTNrB6Vr/cLAzosUz2IPw9HSGeE3MrGK1IBHPaQwFsogTS6+jbZvpGRvxjqHVlsfo1ly5NQ6mEAQ==}
 
   '@csstools/selector-resolve-nested@1.1.0':
     resolution: {integrity: sha512-uWvSaeRcHyeNenKg8tp17EVDRkpflmdyvbE0DHo6D/GdBb6PDnCYYU6gRpXhtICMGMcahQmj2zGxwFM/WC8hCg==}
@@ -810,8 +810,8 @@ packages:
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
-  '@types/node@22.8.0':
-    resolution: {integrity: sha512-84rafSBHC/z1i1E3p0cJwKA+CfYDNSXX9WSZBRopjIzLET8oNt6ht2tei4C7izwDeEiLLfdeSVBv1egOH916hg==}
+  '@types/node@22.8.1':
+    resolution: {integrity: sha512-k6Gi8Yyo8EtrNtkHXutUu2corfDf9su95VYVP10aGYMMROM6SAItZi0w1XszA6RtWTHSVp5OeFof37w0IEqCQg==}
 
   '@types/turndown@5.0.5':
     resolution: {integrity: sha512-TL2IgGgc7B5j78rIccBtlYAnkuv8nUQqhQc+DSYV5j9Be9XOcm/SKOVRuA47xAVI3680Tk9B1d8flK2GWT2+4w==}
@@ -956,8 +956,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  caniuse-lite@1.0.30001669:
-    resolution: {integrity: sha512-DlWzFDJqstqtIVx1zeSpIMLjunf5SmwOw0N2Ck/QSQdS8PLS4+9HrLaYei4w8BIAL7IB/UEDu889d8vhCTPA0w==}
+  caniuse-lite@1.0.30001671:
+    resolution: {integrity: sha512-jocyVaSSfXg2faluE6hrWkMgDOiULBMca4QLtDT39hw1YxaIPHWc1CcTCKkPmHgGH6tKji6ZNbMSmUAvENf2/A==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -1046,8 +1046,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.45:
-    resolution: {integrity: sha512-vOzZS6uZwhhbkZbcRyiy99Wg+pYFV5hk+5YaECvx0+Z31NR3Tt5zS6dze2OepT6PCTzVzT0dIJItti+uAW5zmw==}
+  electron-to-chromium@1.5.47:
+    resolution: {integrity: sha512-zS5Yer0MOYw4rtK2iq43cJagHZ8sXN0jDHDKzB+86gSBSAI4v07S97mcq+Gs2vclAxSh1j7vOAHxSVgduiiuVQ==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1754,7 +1754,7 @@ snapshots:
 
   '@babel/helper-validator-identifier@7.25.9': {}
 
-  '@babel/parser@7.26.0':
+  '@babel/parser@7.26.1':
     dependencies:
       '@babel/types': 7.26.0
 
@@ -1765,7 +1765,7 @@ snapshots:
 
   '@coffic/juice-editor-draw@1.0.5': {}
 
-  '@coffic/juice-editor@0.9.92(sass@1.80.3)(terser@5.36.0)':
+  '@coffic/juice-editor@0.9.93(sass@1.80.3)(terser@5.36.0)':
     dependencies:
       '@remixicon/vue': 4.4.0(vue@3.5.12(typescript@5.1.6))
       '@tailwindcss/typography': 0.5.15(tailwindcss@3.4.14)
@@ -1811,10 +1811,10 @@ snapshots:
       '@tiptap/extension-underline': 2.9.1(@tiptap/core@2.9.1(@tiptap/pm@2.9.1))
       '@tiptap/pm': 2.9.1
       '@tiptap/vue-3': 2.9.1(@tiptap/core@2.9.1(@tiptap/pm@2.9.1))(@tiptap/pm@2.9.1)(vue@3.5.12(typescript@5.1.6))
-      '@types/node': 22.8.0
+      '@types/node': 22.8.1
       '@types/turndown': 5.0.5
       '@types/uuid': 9.0.8
-      '@vitejs/plugin-vue': 4.6.2(vite@4.5.5(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0))(vue@3.5.12(typescript@5.1.6))
+      '@vitejs/plugin-vue': 4.6.2(vite@4.5.5(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0))(vue@3.5.12(typescript@5.1.6))
       autoprefixer: 10.4.20(postcss@8.4.47)
       axios: 1.7.7
       daisyui: 4.12.13(postcss@8.4.47)
@@ -1831,7 +1831,7 @@ snapshots:
       turndown: 7.2.0
       typescript: 5.1.6
       uuid: 9.0.1
-      vite: 4.5.5(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0)
+      vite: 4.5.5(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0)
       vue: 3.5.12(typescript@5.1.6)
       vue-tsc: 1.8.27(typescript@5.1.6)
     transitivePeerDependencies:
@@ -2384,7 +2384,7 @@ snapshots:
 
   '@types/mdurl@2.0.0': {}
 
-  '@types/node@22.8.0':
+  '@types/node@22.8.1':
     dependencies:
       undici-types: 6.19.8
 
@@ -2392,9 +2392,9 @@ snapshots:
 
   '@types/uuid@9.0.8': {}
 
-  '@vitejs/plugin-vue@4.6.2(vite@4.5.5(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0))(vue@3.5.12(typescript@5.1.6))':
+  '@vitejs/plugin-vue@4.6.2(vite@4.5.5(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0))(vue@3.5.12(typescript@5.1.6))':
     dependencies:
-      vite: 4.5.5(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0)
+      vite: 4.5.5(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0)
       vue: 3.5.12(typescript@5.1.6)
 
   '@volar/language-core@1.11.1':
@@ -2412,7 +2412,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.12':
     dependencies:
-      '@babel/parser': 7.26.0
+      '@babel/parser': 7.26.1
       '@vue/shared': 3.5.12
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -2425,7 +2425,7 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.12':
     dependencies:
-      '@babel/parser': 7.26.0
+      '@babel/parser': 7.26.1
       '@vue/compiler-core': 3.5.12
       '@vue/compiler-dom': 3.5.12
       '@vue/compiler-ssr': 3.5.12
@@ -2511,7 +2511,7 @@ snapshots:
   autoprefixer@10.4.20(postcss@8.4.47):
     dependencies:
       browserslist: 4.24.2
-      caniuse-lite: 1.0.30001669
+      caniuse-lite: 1.0.30001671
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -2542,8 +2542,8 @@ snapshots:
 
   browserslist@4.24.2:
     dependencies:
-      caniuse-lite: 1.0.30001669
-      electron-to-chromium: 1.5.45
+      caniuse-lite: 1.0.30001671
+      electron-to-chromium: 1.5.47
       node-releases: 2.0.18
       update-browserslist-db: 1.1.1(browserslist@4.24.2)
 
@@ -2552,7 +2552,7 @@ snapshots:
 
   camelcase-css@2.0.1: {}
 
-  caniuse-lite@1.0.30001669: {}
+  caniuse-lite@1.0.30001671: {}
 
   chokidar@3.6.0:
     dependencies:
@@ -2639,7 +2639,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.45: {}
+  electron-to-chromium@1.5.47: {}
 
   emoji-regex@8.0.0: {}
 
@@ -3296,24 +3296,24 @@ snapshots:
 
   uuid@9.0.1: {}
 
-  vite@4.5.5(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0):
+  vite@4.5.5(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.47
       rollup: 3.29.5
     optionalDependencies:
-      '@types/node': 22.8.0
+      '@types/node': 22.8.1
       fsevents: 2.3.3
       sass: 1.80.3
       terser: 5.36.0
 
-  vite@5.4.10(@types/node@22.8.0)(sass@1.80.3)(terser@5.36.0):
+  vite@5.4.10(@types/node@22.8.1)(sass@1.80.3)(terser@5.36.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
       rollup: 4.24.0
     optionalDependencies:
-      '@types/node': 22.8.0
+      '@types/node': 22.8.1
       fsevents: 2.3.3
       sass: 1.80.3
       terser: 5.36.0
