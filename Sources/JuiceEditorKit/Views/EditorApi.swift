@@ -245,8 +245,6 @@ public extension EditorView {
 
         return try await run("window.editor.setTranslateApi(`\(s)`)")
     }
-    
-    // MARK: SetDrawLink
 
     func setDrawLink(_ link: String) async throws {
         let verbose = true
@@ -257,8 +255,6 @@ public extension EditorView {
         
         _ = try await run("window.editor.setDrawLink('\(link)')")
     }
-    
-    // MARK: SetNode
 
     func setNodeBase64(_ nodeBase64: String) async throws -> Any {
         let verbose = false
@@ -269,14 +265,6 @@ public extension EditorView {
 
         return try await run("api.node.setNodeBase64(`\(nodeBase64)`)")
     }
-
-    // MARK: SetMode 
-
-    func setMode(_ mode: String) async throws -> Any {
-        try await run("api.mode.setMode(`\(mode)`)")
-    }
-    
-    // MARK: SetDoc
 
     func setDocBase64(_ docBase64: String) async throws -> Any {
         let verbose = false
@@ -293,7 +281,7 @@ public extension EditorView {
             os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url)")
         }
         
-        return try await run("window.editor.setContentFromWeb(`\(url)`)")
+        return try await run("window.editor.setContentFromUrl(`\(url)`)")
     }
 
     func setDocEmpty() async throws -> Any {

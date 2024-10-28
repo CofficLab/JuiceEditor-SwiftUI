@@ -9,7 +9,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     let notification = NotificationCenter.default
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let verbose = true
+        let verbose = false
 
         if message.name == "updateHtml" {
             let html = message.body as! String
@@ -88,8 +88,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     private func updateDoc(message: WKScriptMessage) {
-        let verbose = false
-        let printKeys = false
+        let verbose = true
+        let printKeys = true
         let data = message.body as! [String: Any]
 
         if verbose {
@@ -99,7 +99,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
                 data.keys.forEach({
                     let key = $0
                     let value = String(describing: data[$0]!)
-                    let valueDisplay = value.count > 100 ? "\(value.prefix(100))...\(value.count)" : value
+                    let valueDisplay = value.count > 1000 ? "\(value.prefix(1000))...\(value.count)" : value
                     os_log("  ➡️ \(key): \(valueDisplay)")
                 })
             }
