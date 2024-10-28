@@ -1,14 +1,16 @@
 import './style.css'
-import editor from '@coffic/juice-editor'
+import { Editor, EditorFactory } from '@coffic/juice-editor'
 
 declare global {
     interface Window {
-        editor: typeof editor;
+        editor: Editor;
     }
 }
 
-window.editor = editor
-
-editor.onCreate(() => {
-    editor.enableWebKit()
+EditorFactory.register('juice-editor', {
+    onCreate: (editor) => {
+        window.editor = editor
+        editor.enableLog()
+        editor.enableWebKit()
+    }
 })
