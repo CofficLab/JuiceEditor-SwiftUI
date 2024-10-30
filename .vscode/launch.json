@@ -4,18 +4,18 @@
             "type": "lldb",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:JuiceEditorSwift}",
+            "cwd": "${workspaceFolder:JuiceEditorKit}",
             "name": "Debug JuiceEditorTestApp",
-            "program": "${workspaceFolder:JuiceEditorSwift}/.build/debug/JuiceEditorTestApp",
+            "program": "${workspaceFolder:JuiceEditorKit}/.build/debug/JuiceEditorTestApp",
             "preLaunchTask": "swift: Build Debug JuiceEditorTestApp"
         },
         {
             "type": "lldb",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:JuiceEditorSwift}",
+            "cwd": "${workspaceFolder:JuiceEditorKit}",
             "name": "Release JuiceEditorTestApp",
-            "program": "${workspaceFolder:JuiceEditorSwift}/.build/release/JuiceEditorTestApp",
+            "program": "${workspaceFolder:JuiceEditorKit}/.build/release/JuiceEditorTestApp",
             "preLaunchTask": "swift: Build Release JuiceEditorTestApp"
         },
         {

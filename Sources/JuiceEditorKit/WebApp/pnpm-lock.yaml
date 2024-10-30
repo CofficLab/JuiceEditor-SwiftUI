@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@coffic/juice-editor':
-        specifier: ^0.9.99
-        version: 0.9.99(sass@1.80.3)(terser@5.36.0)
+        specifier: ^0.9.100
+        version: 0.9.100(sass@1.80.3)(terser@5.36.0)
       '@coffic/juice-editor-draw':
         specifier: ^1.0.5
         version: 1.0.5
@@ -48,8 +48,8 @@ packages:
   '@coffic/juice-editor-draw@1.0.5':
     resolution: {integrity: sha512-vLmbbXAuIB7yaE2qzufXw3AbvgHphEeFfzNfmaDHz8u1sMmo6y41cRZPIfO+sUZ9b+TT5HpkpJ1RtomP/rueNg==}
 
-  '@coffic/juice-editor@0.9.99':
-    resolution: {integrity: sha512-fx7AWgd8ukgU7DFxCIsb5VwXmzonk9E5pR2iN7Rzp5N6EisgNM98YeTz6S9YlC0Vubxf39Rsryf5fBWO8fjGkA==}
+  '@coffic/juice-editor@0.9.100':
+    resolution: {integrity: sha512-+FEfgUmIvmwTCueQ1N8UI5F3jZVLmPvhEUMPSTRjXEMYFAZ1x0asvv+STlLYa/bG1MSIUOHidd6GkdTN2FqSGw==}
 
   '@csstools/selector-resolve-nested@1.1.0':
     resolution: {integrity: sha512-uWvSaeRcHyeNenKg8tp17EVDRkpflmdyvbE0DHo6D/GdBb6PDnCYYU6gRpXhtICMGMcahQmj2zGxwFM/WC8hCg==}
@@ -949,8 +949,8 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  caniuse-lite@1.0.30001674:
-    resolution: {integrity: sha512-jOsKlZVRnzfhLojb+Ykb+gyUSp9Xb57So+fAiFlLzzTKpqg8xxSav0e40c8/4F/v9N8QSvrRRaLeVzQbLqomYw==}
+  caniuse-lite@1.0.30001675:
+    resolution: {integrity: sha512-/wV1bQwPrkLiQMjaJF5yUMVM/VdRPOCU8QZ+PmG6uW6DvYSrNY1bpwHI/3mOcUosLaJCzYDi5o91IQB51ft6cg==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -1735,7 +1735,7 @@ snapshots:
 
   '@coffic/juice-editor-draw@1.0.5': {}
 
-  '@coffic/juice-editor@0.9.99(sass@1.80.3)(terser@5.36.0)':
+  '@coffic/juice-editor@0.9.100(sass@1.80.3)(terser@5.36.0)':
     dependencies:
       '@remixicon/vue': 4.5.0(vue@3.5.12(typescript@5.1.6))
       '@tailwindcss/typography': 0.5.15(tailwindcss@3.4.14)
@@ -2483,7 +2483,7 @@ snapshots:
   autoprefixer@10.4.20(postcss@8.4.47):
     dependencies:
       browserslist: 4.24.2
-      caniuse-lite: 1.0.30001674
+      caniuse-lite: 1.0.30001675
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -2514,7 +2514,7 @@ snapshots:
 
   browserslist@4.24.2:
     dependencies:
-      caniuse-lite: 1.0.30001674
+      caniuse-lite: 1.0.30001675
       electron-to-chromium: 1.5.49
       node-releases: 2.0.18
       update-browserslist-db: 1.1.1(browserslist@4.24.2)
@@ -2524,7 +2524,7 @@ snapshots:
 
   camelcase-css@2.0.1: {}
 
-  caniuse-lite@1.0.30001674: {}
+  caniuse-lite@1.0.30001675: {}
 
   chokidar@3.6.0:
     dependencies:
