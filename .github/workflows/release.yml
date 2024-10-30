@@ -13,11 +13,23 @@ permissions:
   contents: write
 
 env:
-  tag: ${{ github.event.head_commit.id }}
+  tag: ''
 
 jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
+    steps:
+      - run: echo 'The triggering workflow passed'
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
+
   tag:
     runs-on: ubuntu-latest
+    needs: [on-success]
     steps:
       - name: Current User
         run: whoami
