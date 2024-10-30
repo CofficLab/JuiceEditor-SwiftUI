@@ -89,7 +89,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
 
     private func updateDoc(message: WKScriptMessage) {
         let verbose = true
-        let printKeys = true
+        let printKeys = false
         let data = message.body as! [String: Any]
 
         if verbose {
