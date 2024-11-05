@@ -1,8 +1,8 @@
 version: 2
+name: '🍋 Update dependencies'
 updates:
-  - package-ecosystem: "npm"
-    directory: "/Sources/JuiceEditorSwift/WebApp"
-    target-branch: "dev"
+  - package-ecosystem: 'npm'
+    directory: '/Sources/JuiceEditorSwift/WebApp'
+    target-branch: 'dev'
     schedule:
-      interval: "daily"
-
+      interval: 'daily'
