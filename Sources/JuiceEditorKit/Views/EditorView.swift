@@ -1,21 +1,21 @@
 import Foundation
+import MagicKit
 import os
 import SwiftUI
-import MagicKit
 
 public struct EditorView: SwiftUI.View, SuperLog {
     let emoji = "📄"
     let logger = Config.makeLogger("EditorView")
-    
+
     public static let defaultDelegate = DefaultDelegate()
-    
+
     @State private var server: HTTPServer
     @State private var isServerStarted = false
 
     public let webView = JSConfig.makeView(url: "about:blank")
     public let delegate: EditorDelegate
 
-    public init(delegate:  EditorDelegate = EditorView.defaultDelegate) {
+    public init(delegate: EditorDelegate = EditorView.defaultDelegate) {
         self.delegate = delegate
         self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate)
     }
@@ -56,16 +56,15 @@ extension EditorView {
     func onJSReady(_ n: Notification) {
         Task {
             let verbose = true
-            
+
             if verbose {
                 os_log("\(self.t)JSReady")
             }
-            
+
             do {
-                try await self.setTranslateApi(server.translateApiURL)
+                try await self.setChatApi(server.chatApi)
                 try await self.setDrawLink(server.drawIoLink)
-                
-                
+
                 self.delegate.onReady()
             } catch {
                 os_log(.error, "\(self.t)\(error.localizedDescription)")
@@ -95,11 +94,11 @@ extension EditorView {
 
     func onLoading(_ n: Notification) {
         let data = n.userInfo as? [String: Any]
-        
+
         guard let data = data else {
             return
         }
-        
+
         delegate.onLoading(data["reason"] as! String)
     }
 }

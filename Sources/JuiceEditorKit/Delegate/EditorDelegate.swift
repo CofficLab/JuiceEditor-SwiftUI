@@ -5,9 +5,9 @@ import OSLog
 public protocol EditorDelegate {
     func getHtml(_ uuid: String) -> String?
     func onReady() -> Void
-    func translate(_ text: String, language: String) async -> String
     func onUpdateDoc(_ data: [String: Any]) -> Void
     func onLoading(_ reason: String) -> Void
+    func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws
 }
 
 extension EditorDelegate {
@@ -19,20 +19,26 @@ extension EditorDelegate {
         os_log("Editor Ready")
     }
 
-    public func translate(_ text: String, language: String) async -> String {
-        return text + "(translated by default delegate)"
-    }
-
-    public func onUpdateDoc(_ data: [String: Any]) -> Void {
+    public func onUpdateDoc(_ data: [String: Any]) {
         os_log("Editor Doc Updated")
     }
 
-    public func onConfigChanged() -> Void {
+    public func onConfigChanged() {
         os_log("Editor Config Changed")
     }
 
-    public func onLoading(_ reason: String) -> Void {
+    public func onLoading(_ reason: String) {
         os_log("Editor Loading -> \(reason)")
+    }
+
+    public func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws {
+        let characters = ["You said: "] + Array(text)
+        for char in characters {
+            try await callback("\(char)")
+            try await Task.sleep(nanoseconds: 500000000)
+        }
+
+        try await callback("[DONE]\n")
     }
 }
 

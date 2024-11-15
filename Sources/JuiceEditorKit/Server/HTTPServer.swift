@@ -14,7 +14,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public var port: Int = 49493
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
-    public var translateApiURL: String = ""
+    public var chatApi: String = ""
     public var drawIoLink: String = ""
 
     @Published public var isRunning: Bool = false
@@ -36,7 +36,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         }
 
         self.getNode(app: app)
-        self.translate(app: app)
+        self.chat(app: app)
     }
 
     public func start() throws {
@@ -64,7 +64,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
                 self.main.async {
                     self.port = currentPort
-                    self.translateApiURL = self.baseURL.absoluteString + "/api/translate"
+                    self.chatApi = self.baseURL.absoluteString + "/api/chat"
                     self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
                     self.emitStarted()
                     self.isRunning = true
