@@ -238,12 +238,12 @@ public extension EditorView {
     }
 
     @discardableResult
-    func setTranslateApi(_ s: String, verbose: Bool = false) async throws -> Any {
+    func setChatApi(_ s: String, verbose: Bool = false) async throws -> Any {
         if verbose {
-            os_log("\(self.t)setTranslateApi 🛜🛜🛜 -> \(s)")
+            os_log("\(self.t)setChatApi 🛜🛜🛜 -> \(s)")
         }
 
-        return try await run("window.editor.setTranslateApi(`\(s)`)")
+        return try await run("window.editor.setChatApi(`\(s)`)")
     }
 
     func setDrawLink(_ link: String) async throws {
@@ -276,12 +276,12 @@ public extension EditorView {
     }
     
     @discardableResult
-    func setContentFromWeb(_ url: String, verbose: Bool = false) async throws -> Any {
+    func setContentFromWeb(_ url: String, uuid: String, verbose: Bool = false) async throws -> Any {
         if verbose {
             os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url)")
         }
         
-        return try await run("window.editor.setContentFromUrl(`\(url)`)")
+        return try await run("window.editor.setContentFromUrl(`\(url)`, `\(uuid)`)")
     }
 
     func setDocEmpty() async throws -> Any {
