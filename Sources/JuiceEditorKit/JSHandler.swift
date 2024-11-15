@@ -7,15 +7,14 @@ import WebKit
 class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     let emoji = "📶"
     let notification = NotificationCenter.default
+    var verbose = false
+    
+    init(verbose: Bool = false) {
+        self.verbose = verbose
+    }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        let verbose = false
-
-        if message.name == "updateHtml" {
-            let html = message.body as! String
-
-            self.emitJSCallUpdateHtml(html)
-        } else if message.name == "sendMessage" {
+        if message.name == "sendMessage" {
             let data = message.body as! [String: Any]
             let channel = eventName.from(data["channel"] as! String)
 
@@ -34,18 +33,16 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
                 pageLoaded(message: message)
             case .runCode:
                 runCode(message: message)
-            case .updateContent:
-                self.updateNode(message: message)
-            case .updateDoc:
-                self.updateDoc(message: message)
+            case .updateHTML:
+                self.updateHTML(message: message)
+            case .updateNodes:
+                self.updateNodes(message: message)
             case .updateDocWithNode:
                 self.updateDocWithNode(message: message)
             case .updateDrawing:
                 updateDrawing(message: message)
             case .updateSelectionType:
                 updateSelectionType(message: message)
-            case .updateNode:
-                updateNode(message: message)
             case .message:
                 printMessage(message)
             case .updateCurrentDocUUID:
@@ -73,43 +70,19 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         self.notification.post(name: .jsCallConfigChanged, object: nil, userInfo: data)
     }
 
-    private func updateNode(message: WKScriptMessage) {
-        let verbose = true
-        let data = message.body as! [String: String]
-
-        if verbose {
-            os_log("\(self.t)UpdateNode")
-            data.keys.forEach({
-                os_log("\($0): \(data[$0]! as String)")
-            })
-        }
-
-        self.notification.post(name: .jsCallUpdateDoc, object: nil, userInfo: data)
-    }
-
-    private func updateDoc(message: WKScriptMessage) {
-        let verbose = true
-        let printKeys = false
+    private func updateHTML(message: WKScriptMessage) {
         let data = message.body as! [String: Any]
 
-        if verbose {
-            os_log("\(self.t)UpdateDoc")
+        self.notification.post(name: .jsCallUpdateHTML, object: nil, userInfo: data)
+    }
+    
+    private func updateNodes(message: WKScriptMessage) {
+        let data = message.body as! [String: Any]
 
-            if printKeys {
-                data.keys.forEach({
-                    let key = $0
-                    let value = String(describing: data[$0]!)
-                    let valueDisplay = value.count > 1000 ? "\(value.prefix(1000))...\(value.count)" : value
-                    os_log("  ➡️ \(key): \(valueDisplay)")
-                })
-            }
-        }
-
-        self.notification.post(name: .jsCallUpdateDoc, object: nil, userInfo: data)
+        self.notification.post(name: .jsCallUpdateNodes, object: nil, userInfo: data)
     }
 
     private func updateCurrentDocUUID(message: WKScriptMessage) {
-        let verbose = false
         let data = message.body as! [String: String]
 
         if verbose {
@@ -123,7 +96,6 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     private func updateDocWithNode(message: WKScriptMessage) {
-        let verbose = false
         let data = message.body as! [String: String]
 
         if verbose {
@@ -137,14 +109,12 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     private func updateSelectionType(message: WKScriptMessage) {
-        os_log("\(self.t)JS Said: updateSelectionType")
-
         let data = message.body as! [String: String]
 
         self.notification.post(name: .jsCallUpdateSelectionType, object: nil, userInfo: data)
     }
 
-    private func pageLoaded(message: WKScriptMessage, verbose: Bool = true) {
+    private func pageLoaded(message: WKScriptMessage) {
         if verbose {
             os_log("\(self.t)JS Said: Ready")
         }
@@ -153,16 +123,12 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     private func downloadFile(message: WKScriptMessage) {
-        os_log("\(self.t)JS Said: DownloadFile")
-
         let data = message.body as! [String: String]
 
         downloadFile(base64: data["base64"] ?? "", name: data["name"] ?? "")
     }
 
     private func updateDrawing(message: WKScriptMessage) {
-        os_log("\(self.t)JS Said: UpdateDrawing")
-
         self.notification.post(name: .jsCallUpdateDrawing, object: nil, userInfo: message.body as! [String: String])
     }
 
@@ -174,8 +140,6 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     private func downloadFile(base64: String, name: String) {
-        let verbose = false
-
         if verbose {
             os_log("\(self.t)Download File")
             os_log("\(base64)")
@@ -203,8 +167,6 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 
     private func printMessage(_ message: WKScriptMessage) {
-        let verbose = false
-
         let data = message.body as! [String: String]
         let m = data["message"]!
 
@@ -217,18 +179,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         let data = message.body as! [String: String]
         let m = data["message"]!
 
-        os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
-    }
-}
-
-// MARK: JS
-
-extension JSHandler {
-    func emitJSCallUpdateHtml(_ html: String) {
-        DispatchQueue.main.async {
-            self.notification.post(name: .jsCallUpdateHtml, object: nil, userInfo: [
-                "html": html,
-            ])
+        if verbose {
+            os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
         }
     }
 }
@@ -237,8 +189,8 @@ extension Notification.Name {
   static let jsReady = Notification.Name("jsReady")
   static let jsLoading = Notification.Name("jsLoading")
   static let jsCallConfigChanged = Notification.Name("jsCallConfigChanged")
-  static let jsCallUpdateDoc = Notification.Name("jsCallUpdateDoc")
-  static let jsCallUpdateHtml = Notification.Name("jsCallUpdateHtml")
+  static let jsCallUpdateNodes = Notification.Name("jsCallUpdateNodes")
+  static let jsCallUpdateHTML = Notification.Name("jsCallUpdateHTML")
   static let jsCallUpdateDocWithNode = Notification.Name("jsCallUpdateDocWithNode")
   static let jsCallUpdateSelectionType = Notification.Name("jsCallUpdateSelectionType")
   static let jsCallUpdateDrawing = Notification.Name("jsCallUpdateDrawing")

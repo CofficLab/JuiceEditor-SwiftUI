@@ -5,7 +5,8 @@ import OSLog
 public protocol EditorDelegate {
     func getHtml(_ uuid: String) -> String?
     func onReady() -> Void
-    func onUpdateDoc(_ data: [String: Any]) -> Void
+    func onUpdateHTML(_ data: [String: Any]) -> Void
+    func onUpdateNodes(_ nodes: [WildNode]) -> Void
     func onLoading(_ reason: String) -> Void
     func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws
 }
@@ -19,8 +20,12 @@ extension EditorDelegate {
         os_log("Editor Ready")
     }
 
-    public func onUpdateDoc(_ data: [String: Any]) {
-        os_log("Editor Doc Updated")
+    public func onUpdateHTML(_ data: [String: Any]) {
+        os_log("Editor HTML Updated")
+    }
+    
+    public func onUpdateNodes(_ nodes: [WildNode]) {
+        os_log("Editor Nodes Updated, Count: \(nodes.count)")
     }
 
     public func onConfigChanged() {
