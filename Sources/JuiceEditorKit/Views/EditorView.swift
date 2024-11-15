@@ -46,7 +46,11 @@ public struct EditorView: SwiftUI.View, SuperLog {
 
 extension EditorView {
     public func setContent(_ uuid: String) async throws {
-        try await self.setContentFromWeb(self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html", verbose: true)
+        try await self.setContentFromWeb(
+            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+            uuid: uuid,
+            verbose: true
+        )
     }
 }
 

@@ -276,12 +276,12 @@ public extension EditorView {
     }
     
     @discardableResult
-    func setContentFromWeb(_ url: String, verbose: Bool = false) async throws -> Any {
+    func setContentFromWeb(_ url: String, uuid: String, verbose: Bool = false) async throws -> Any {
         if verbose {
             os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url)")
         }
         
-        return try await run("window.editor.setContentFromUrl(`\(url)`)")
+        return try await run("window.editor.setContentFromUrl(`\(url)`, `\(uuid)`)")
     }
 
     func setDocEmpty() async throws -> Any {
