@@ -3,12 +3,11 @@ import Foundation
 // MARK: JS 调用 Swift 时的通道名称
 
 enum eventName {
-    case updateContent
-    case updateDoc
+    case updateHTML
     case updateDocWithNode
     case updateDrawing
     case updateCurrentDocUUID
-    case updateNode
+    case updateNodes
     case message
     case loading
     case pageLoaded
@@ -21,14 +20,14 @@ enum eventName {
 
     static func from(_ s: String) -> Self {
         switch s {
-        case "updateContent":
-            return .updateContent
-        case "updateDoc":
-            return .updateDoc
+        case "updateHTML":
+            return .updateHTML
         case "updateDocWithNode":
             return .updateDocWithNode
         case "updateDrawing":
             return .updateDrawing
+        case "updateNodes":
+            return .updateNodes
         case "pageLoaded":
             return .pageLoaded
         case "downloadFile":
@@ -37,8 +36,6 @@ enum eventName {
             return .runCode
         case "updateSelectionType":
             return .updateSelectionType
-        case "updateNode":
-            return .updateNode
         case "message":
             return .message
         case "updateCurrentDocUUID":

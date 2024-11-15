@@ -6,14 +6,12 @@ import MagicKit
 import WebKit
 
 class JSConfig: ObservableObject {    
-    static func makeView(url: String) -> MagicKit.WebView {
-        let verbose = false
-        
+    static func makeView(url: String, verbose: Bool = false) -> MagicKit.WebView {
         if verbose {
             os_log("🛜 JSConfig::MakeView with -> \(url)")
         }
         
-        return WebView(url: URL(string: url), config: getViewConfig())
+        return WebView(url: URL(string: url), config: getViewConfig(verbose: verbose))
     }
     
     static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
@@ -24,12 +22,12 @@ class JSConfig: ObservableObject {
         subdirectory: "dist/juice-editor"
     )
 
-    static func getViewConfig() -> WKWebViewConfiguration {
+    static func getViewConfig(verbose: Bool = false) -> WKWebViewConfiguration {
         let userContentController = WKUserContentController()
         let config = WKWebViewConfiguration()
 
-        userContentController.add(JSHandler(), name: "sendMessage")
-        userContentController.add(JSHandler(), name: "updateHtml")
+        userContentController.add(JSHandler(verbose: verbose), name: "sendMessage")
+        userContentController.add(JSHandler(verbose: verbose), name: "updateHtml")
 
         config.userContentController = userContentController
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")

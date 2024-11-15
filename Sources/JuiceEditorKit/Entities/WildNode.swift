@@ -77,6 +77,52 @@ public struct WildNode: Codable {
             return "{}"
         }
     }
+    
+    static func getWildNodesFromData(_ data: [String: Any]) async throws -> [WildNode] {
+        guard let jsNodes = data["nodes"] as? [[String: Any]] else {
+            throw NSError(domain: "InvalidType", code: 0, userInfo: [NSLocalizedDescriptionKey: "Expected an array of dictionaries"])
+        }
+        
+        var nodes = [WildNode]()
+        
+        for block in jsNodes {
+            var node = WildNode(type: .root)
+            
+            if let type = block["type"] as? String {
+                node.setType(type)
+            }
+
+            if let attrs = block["attrs"] as? [String: Any] {
+                // 将 Any 转换为 AttributeValue
+                let convertedAttrs = attrs.mapValues { value -> AttributeValue in
+                    if let stringValue = value as? String {
+                        return AttributeValue.string(stringValue)
+                    }
+                    
+                    if let numberValue = value as? Int {
+                        return AttributeValue.int(numberValue)
+                    }
+                    
+                    // 根据需要添加其他类型的转换
+                    return AttributeValue.string(String(describing: value))
+                }
+                
+                node.setAttrs(convertedAttrs)
+            }
+
+            if let text = block["text"] as? String {
+                node.setText(text)
+            }
+            
+            if let html = block["html"] as? String {
+                node.setHtml(html)
+            }
+            
+            nodes.append(node)
+        }
+        
+        return nodes
+    }
 }
 
 // MARK: Set
