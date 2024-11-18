@@ -18,8 +18,6 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public var drawIoLink: String = ""
     public var verbose: Bool
 
-    @Published public var isRunning: Bool = false
-
     var baseURL: URL { URL(string: "http://localhost:\(port)")! }
 
     public let logger = Config.makeLogger("HttpServer")
@@ -68,7 +66,6 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                     self.chatApi = self.baseURL.absoluteString + "/api/chat"
                     self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
                     self.emitStarted()
-                    self.isRunning = true
                 }
 
                 if verbose {
@@ -98,33 +95,6 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     deinit {
         app?.shutdown()
-        self.isRunning = false // Set isRunning to false when server shuts down
-    }
-
-    public func startServer() {
-        Task {
-            do {
-                try await self.startAsync()
-                self.main.async {
-                    self.isRunning = true
-                }
-            } catch {
-                self.main.async {
-                    self.isRunning = false
-                }
-            }
-        }
-    }
-
-    private func startAsync() async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            do {
-                try self.start()
-                continuation.resume()
-            } catch {
-                continuation.resume(throwing: error)
-            }
-        }
     }
 }
 

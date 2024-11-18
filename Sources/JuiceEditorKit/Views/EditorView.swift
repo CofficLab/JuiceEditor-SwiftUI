@@ -36,8 +36,15 @@ public struct EditorView: SwiftUI.View, SuperLog {
                     }
             } else {
                 Text("Starting server...")
-                    .task {
-                        server.startServer()
+                    .onAppear() {
+                        Task(priority: .userInitiated) {
+                            do {
+                                try await server.start()
+                            } catch {
+                                os_log(.error, "\(self.t)Failed to start server: \(error)")
+                            }
+                        }
+                        
                     }
             }
         }
