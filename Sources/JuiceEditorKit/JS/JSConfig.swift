@@ -7,7 +7,7 @@ import WebKit
 
 class JSConfig: ObservableObject {    
     static func makeView(url: String, verbose: Bool) -> MagicKit.WebView {
-        WebView(url: URL(string: url), config: getViewConfig(verbose: verbose))
+        WebView(url: URL(string: url), config: getViewConfig(verbose: verbose), verbose: verbose)
     }
     
     static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)

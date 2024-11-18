@@ -15,7 +15,7 @@ struct JuiceEditorTestApp: App, SuperLog {
                 e
             } else {
                 ProgressView().onAppear {
-                    self.editorView = EditorView(delegate: self)
+                    self.editorView = EditorView(delegate: self, verbose: true)
                 }
             }
         }

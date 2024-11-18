@@ -9,6 +9,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     let emoji = Config.rootEmoji + " 📺"
 
     public var app: Application?
+    public let logger = Config.makeLogger("HttpServer")
     public let directoryPath: String
     public let isDevMode = false
     public var port: Int = 49493
@@ -17,10 +18,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public var chatApi: String = ""
     public var drawIoLink: String = ""
     public var verbose: Bool
-
-    var baseURL: URL { URL(string: "http://localhost:\(port)")! }
-
-    public let logger = Config.makeLogger("HttpServer")
+    public var baseURL: URL { URL(string: "http://localhost:\(port)")! }
 
     public init(directoryPath: String, delegate: EditorDelegate, verbose: Bool) {
         self.directoryPath = directoryPath
@@ -39,7 +37,11 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
         self.chat(app: app)
     }
 
-    public func start() throws {
+    private func start(verbose: Bool = true) throws {
+        if verbose {
+            os_log("\(self.t)Start")
+        }
+        
         var currentPort = port
         var serverStarted = false
 
@@ -61,12 +63,12 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                 try app.start()
                 serverStarted = true
 
-                self.main.async {
-                    self.port = currentPort
-                    self.chatApi = self.baseURL.absoluteString + "/api/chat"
-                    self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
-                    self.emitStarted()
-                }
+               self.main.async {
+                   self.port = currentPort
+                   self.chatApi = self.baseURL.absoluteString + "/api/chat"
+                   self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
+                   self.emitStarted()
+               }
 
                 if verbose {
                     os_log("\(self.t)Server started on port \(currentPort) 🎉🎉🎉")
@@ -88,9 +90,15 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
             throw HTTPServerError.noAvailablePort
         }
     }
-
-    public func run() throws {
-        try app?.run()
+    
+    public func startServer(verbose: Bool) {
+        bg.async {
+            do {
+                try self.start(verbose: verbose)
+            } catch {
+                os_log(.error, "\(self.t)Failed to start server: \(error)")
+            }
+        }
     }
 
     deinit {
