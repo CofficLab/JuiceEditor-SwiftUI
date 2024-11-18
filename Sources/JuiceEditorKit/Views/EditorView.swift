@@ -4,7 +4,7 @@ import os
 import SwiftUI
 
 public struct EditorView: SwiftUI.View, SuperLog {
-    let emoji =  "🖥️"
+    let emoji = Config.rootEmoji + " 🖥️"
     let logger = Config.makeLogger("EditorView")
 
     public static let defaultDelegate = DefaultDelegate()
@@ -12,14 +12,19 @@ public struct EditorView: SwiftUI.View, SuperLog {
     @State private var server: HTTPServer
     @State private var isServerStarted = false
 
-    public let webView = JSConfig.makeView(url: "about:blank")
+    public let webView: WebView
     public let delegate: EditorDelegate
-    public var verbose: Bool = false
+    public let verbose: Bool
 
-    public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool = false) {
+    public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool) {
+        if verbose {
+            os_log("\(Logger.initLog) EditorView")
+        }
+        
         self.delegate = delegate
-        self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate)
+        self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate, verbose: verbose)
         self.verbose = verbose
+        self.webView = JSConfig.makeView(url: "about:blank", verbose: verbose)
     }
 
     public var body: some View {
@@ -38,7 +43,7 @@ public struct EditorView: SwiftUI.View, SuperLog {
         }
         .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted), perform: onServerStarted)
         .onReceive(NotificationCenter.default.publisher(for: .jsReady), perform: onJSReady)
-        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateHTML), perform: onJSCallUpdateHTML)
+        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateDoc), perform: onJSCallUpdateDoc)
         .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateNodes), perform: onJSCallUpdateNodes)
         .onReceive(NotificationCenter.default.publisher(for: .jsCallConfigChanged), perform: onConfigChanged)
         .onReceive(NotificationCenter.default.publisher(for: .jsLoading), perform: onLoading)
@@ -63,7 +68,7 @@ extension EditorView {
     func onJSReady(_ n: Notification) {
         Task {
             if verbose {
-                os_log("\(self.t)JSReady")
+                os_log("\(self.t)Editor Page Ready")
             }
 
             do {
@@ -82,7 +87,7 @@ extension EditorView {
         isServerStarted = true
     }
 
-    func onJSCallUpdateHTML(_ n: Notification) {
+    func onJSCallUpdateDoc(_ n: Notification) {
         let data = n.userInfo as? [String: Any]
 
         guard let data = data else {
@@ -90,9 +95,15 @@ extension EditorView {
             return
         }
 
-        delegate.onUpdateHTML(data)
+        Task {
+            do {
+                await delegate.onUpdateNodes([try EditorNode.getWildNodeFromData(data)])
+            } catch {
+                os_log(.error, "\(error)")
+            }
+        }
     }
-    
+
     func onJSCallUpdateNodes(_ n: Notification) {
         let data = n.userInfo as? [String: Any]
 
@@ -100,12 +111,12 @@ extension EditorView {
             logger.warning("\(self.t)No Data")
             return
         }
-        
+
         Task {
             do {
-                await delegate.onUpdateNodes(try WildNode.getWildNodesFromData(data))
+                await delegate.onUpdateNodes(try EditorNode.getWildNodesFromData(data))
             } catch {
-                os_log(.error, "\(error)")
+                os_log(.error, "\(self.t)\(error)")
             }
         }
     }
@@ -126,5 +137,5 @@ extension EditorView {
 }
 
 #Preview {
-    EditorView()
+    EditorView(verbose: true)
 }

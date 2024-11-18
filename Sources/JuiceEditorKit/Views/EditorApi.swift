@@ -13,12 +13,12 @@ public extension EditorView {
     
     // MARK: GetJSONFromHTML
     
-    func getWildNodesFromHTML(_ html: String) async throws -> [WildNode] {
+    func getWildNodesFromHTML(_ html: String) async throws -> [EditorNode] {
         let blocks = try await self.getBlocksFromHTML(html)
-        var nodes = [WildNode]()
+        var nodes = [EditorNode]()
         
         for block in blocks {
-            var node = WildNode(type: .root)
+            var node = EditorNode(type: .root)
             
             if let type = block["type"] as? String {
                 node.setType(type)
@@ -247,13 +247,7 @@ public extension EditorView {
     }
 
     func setDrawLink(_ link: String) async throws {
-        let verbose = true
-        
-        if verbose {
-            os_log("\(self.t)setDrawLink -> \(link)")
-        }
-        
-        _ = try await run("window.editor.setDrawLink('\(link)')")
+        try await run("window.editor.setDrawLink('\(link)')")
     }
 
     func setNodeBase64(_ nodeBase64: String) async throws -> Any {
@@ -276,7 +270,7 @@ public extension EditorView {
     }
     
     @discardableResult
-    func setContentFromWeb(_ url: String, uuid: String, verbose: Bool = false) async throws -> Any {
+    func setContentFromWeb(_ url: String, uuid: String, verbose: Bool) async throws -> Any {
         if verbose {
             os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url)")
         }

@@ -6,6 +6,8 @@ import WebKit
 import Foundation
 
 struct Config {
+    static var rootEmoji = "🖼️"
+    
     private var fileManager = FileManager.default
     
     var sandboxPrivateKeyURL: URL {

@@ -6,7 +6,7 @@ import SwiftUI
 import Vapor
 
 public class HTTPServer: ObservableObject, SuperLog, SuperThread {
-    let emoji = "📺"
+    let emoji = Config.rootEmoji + " 📺"
 
     public var app: Application?
     public let directoryPath: String
@@ -16,6 +16,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
     public var delegate: EditorDelegate
     public var chatApi: String = ""
     public var drawIoLink: String = ""
+    public var verbose: Bool
 
     @Published public var isRunning: Bool = false
 
@@ -23,9 +24,10 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     public let logger = Config.makeLogger("HttpServer")
 
-    public init(directoryPath: String, delegate: EditorDelegate) {
+    public init(directoryPath: String, delegate: EditorDelegate, verbose: Bool) {
         self.directoryPath = directoryPath
         self.delegate = delegate
+        self.verbose = verbose
     }
 
     private func configureRoutes(app: Application) throws {
@@ -35,12 +37,11 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
             self.prod(app: app)
         }
 
-        self.getNode(app: app)
+        self.getNode(app: app, verbose: self.verbose)
         self.chat(app: app)
     }
 
     public func start() throws {
-        let verbose = true
         var currentPort = port
         var serverStarted = false
 
@@ -70,7 +71,9 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                     self.isRunning = true
                 }
 
-                os_log("\(self.t)Server started on port \(currentPort) 🎉🎉🎉")
+                if verbose {
+                    os_log("\(self.t)Server started on port \(currentPort) 🎉🎉🎉")
+                }
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
                 logger.warning("\(self.t)Port \(currentPort) is in use, trying next port")
                 currentPort += 1
