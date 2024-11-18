@@ -127,10 +127,21 @@ public struct EditorNode: Codable, SuperLog {
     }
 
     static func getWildNodesFromData(_ data: [String: Any]) async throws -> [EditorNode] {
+        guard let dataNodes = data["nodes"] else {
+            let error = NSError(
+                domain: "InvalidType",
+                code: 0,
+                userInfo: [NSLocalizedDescriptionKey: "no nodes key"]
+            )
+            
+            os_log(.error, "\(error.localizedDescription)")
+            
+            throw error
+        }
+        
         guard let jsNodes = data["nodes"] as? [[String: Any]] else {
             let error = NSError(domain: "InvalidType", code: 0, userInfo: [NSLocalizedDescriptionKey: "Expected an array of dictionaries"])
             os_log(.error, "\(error.localizedDescription)")
-            print(data)
             
             throw error
         }

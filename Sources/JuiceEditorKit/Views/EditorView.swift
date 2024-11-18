@@ -36,8 +36,8 @@ public struct EditorView: SwiftUI.View, SuperLog {
                     }
             } else {
                 Text("Starting server...")
-                    .task {
-                        server.startServer()
+                    .onAppear() {
+                        server.startServer(verbose: verbose)
                     }
             }
         }

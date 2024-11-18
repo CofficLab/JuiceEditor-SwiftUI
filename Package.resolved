@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CofficLab/MagicKit.git",
       "state" : {
-        "revision" : "37705c293da7cdb03416e9305dc9d728b55b103c",
-        "version" : "1.0.3"
+        "revision" : "389f8efecc0f16058f125de5c247f9fbee727c06",
+        "version" : "1.0.4"
       }
     },
     {
