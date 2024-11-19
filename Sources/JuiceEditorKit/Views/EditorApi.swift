@@ -121,7 +121,7 @@ public extension EditorView {
     // MARK: Toggle
 
     func toggleToc() async throws -> Any {
-        try await run("api.node.toggleToc()")
+        try await run("window.editor.toggleToc()")
     }
 
     func toggleItalic() async throws -> Any {
