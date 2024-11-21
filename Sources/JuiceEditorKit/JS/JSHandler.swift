@@ -3,7 +3,7 @@ import OSLog
 import SwiftUI
 import WebKit
 
-/// 与JS通信
+/// Communicate with JS
 class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     let emoji = Config.rootEmoji + " 📶"
     let notification = NotificationCenter.default
@@ -118,7 +118,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
 
     private func runCode(message: WKScriptMessage) {
         let data = message.body as! [String: String]
-        JobRunCode().run(lan: languages.fromString(data["lan"]!), code: data["code"]!, completion: {
+        JobRunCode().run(lan: CodeLanguage.fromString(data["lan"]!), code: data["code"]!, completion: {
             self.notification.post(name: .jsRunCodeResult, object: nil, userInfo: ["output": $0])
         })
     }
@@ -127,6 +127,16 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         if verbose {
             os_log("\(self.t)Download File")
             os_log("\(base64)")
+        }
+
+        if name.isEmpty {
+            let alert = NSAlert()
+            alert.messageText = "Download Failed"
+            alert.informativeText = "File name cannot be empty.\nThis should never happen. \n\nPlease report this bug."
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+            return
         }
 
         let panel = NSOpenPanel()
@@ -140,11 +150,17 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
                 return
             }
 
+            let targetURL = url.appendingPathComponent(name)
+
             do {
-                try base64Data.write(to: url.appendingPathComponent(name))
-                print("保存成功")
+                try base64Data.write(to: targetURL)
+                if verbose {
+                    os_log(.info, "\(self.t)File downloaded successfully 🎉")
+                }
             } catch {
-                print("保存失败 -> \(error)")
+                os_log(.error, "\(self.t)Error downloading file -> \(error.localizedDescription)")
+                os_log(.error, "  ➡️ URL: \(targetURL.path)")
+                os_log(.error, "\(self.t)\(error)")
             }
         } else {
         }
@@ -169,6 +185,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     }
 }
 
+// MARK: Event Name
+
 extension Notification.Name {
     static let jsReady = Notification.Name("jsReady")
     static let jsLoading = Notification.Name("jsLoading")
@@ -184,4 +202,10 @@ extension Notification.Name {
     static let jsCallDownloadFile = Notification.Name("jsCallDownloadFile")
     static let jsRunCodeResult = Notification.Name("jsRunCodeResult")
     static let RunJavaScriptTextInputPanelWithPrompt = Notification.Name("RunJavaScriptTextInputPanelWithPrompt")
+}
+
+// MARK: Error
+
+enum JSHandlerError: Error {
+    case downloadFileFailed(String)
 }

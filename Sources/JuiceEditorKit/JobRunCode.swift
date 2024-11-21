@@ -51,7 +51,7 @@ class JobRunCode: SuperLog {
         }
     }
 
-    func run(lan: languages, code: String, completion: @escaping (String) -> Void) {
+    func run(lan: CodeLanguage, code: String, completion: @escaping (String) -> Void) {
         os_log("\(self.t) 🧮 Runner -> 运行代码 \(String(describing: lan))")
         
         // 先把文件复制过去
@@ -78,7 +78,7 @@ class JobRunCode: SuperLog {
     
     // MARK: 保存文件
     
-    private func saveCodeToFile(_ code: String, lan: languages) -> URL {
+    private func saveCodeToFile(_ code: String, lan: CodeLanguage) -> URL {
         // 确定文件内容
         var content = code
         if lan == .PHP {

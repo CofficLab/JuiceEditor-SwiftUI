@@ -1,7 +1,6 @@
 import Foundation
 
-// MARK: JS 调用 Swift 时的通道名称
-
+/// Event Name for JS to Swift
 enum JSEvent {
     case updateDoc
     case updateNodes

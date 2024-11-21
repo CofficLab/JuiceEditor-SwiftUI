@@ -5,7 +5,7 @@ import MagicKit
 public struct EditorNode: Codable, SuperLog {
     static var emoji = "🌰"
     public var emoji = EditorNode.emoji
-    public var type: String = SuperNodeType.root.rawValue
+    public var type: String = EditorNodeType.root.rawValue
     public var html: String? = nil
     public var text: String? = nil
     public var attrs: [String: AttributeValue]?
@@ -50,7 +50,7 @@ public struct EditorNode: Codable, SuperLog {
         try container.encodeIfPresent(attrs, forKey: .attrs)
     }
 
-    public init(type: SuperNodeType) {
+    public init(type: EditorNodeType) {
         self.type = type.rawValue
     }
 
