@@ -18,7 +18,7 @@ public extension EditorView {
         var nodes = [EditorNode]()
         
         for block in blocks {
-            var node = EditorNode(type: .root)
+            var node = EditorNode(type: .doc)
             
             if let type = block["type"] as? String {
                 node.setType(type)

@@ -94,12 +94,17 @@ extension EditorView {
             logger.warning("\(self.t)No Data")
             return
         }
+        
+        guard let nodeData = data["node"] as? [String: Any] else {
+            return
+        }
 
         Task {
             do {
-                await delegate.onUpdateNodes([try EditorNode.getWildNodeFromData(data)])
+                let node = try await EditorNode.getEditorNodeFromData(nodeData, reason: "EditorView.onJSCallUpdateDoc", verbose: verbose)
+                delegate.onUpdateNodes([node])
             } catch {
-                os_log(.error, "\(error)")
+                os_log(.error, "\(self.t)\(error)")
             }
         }
     }
@@ -114,7 +119,8 @@ extension EditorView {
 
         Task {
             do {
-                await delegate.onUpdateNodes(try EditorNode.getWildNodesFromData(data))
+                let nodes = try await EditorNode.getEditorNodesFromData(data, reason: "EditorView.onJSCallUpdateNodes", verbose: verbose)
+                delegate.onUpdateNodes(nodes)
             } catch {
                 os_log(.error, "\(self.t)\(error)")
             }

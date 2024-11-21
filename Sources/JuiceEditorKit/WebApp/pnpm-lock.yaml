@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@coffic/juice-editor':
-        specifier: ^0.9.112
-        version: 0.9.112(sass@1.80.3)(terser@5.36.0)
+        specifier: ^0.9.113
+        version: 0.9.113(sass@1.80.3)(terser@5.36.0)
       '@coffic/juice-editor-draw':
         specifier: ^1.0.5
         version: 1.0.5
@@ -48,8 +48,8 @@ packages:
   '@coffic/juice-editor-draw@1.0.5':
     resolution: {integrity: sha512-vLmbbXAuIB7yaE2qzufXw3AbvgHphEeFfzNfmaDHz8u1sMmo6y41cRZPIfO+sUZ9b+TT5HpkpJ1RtomP/rueNg==}
 
-  '@coffic/juice-editor@0.9.112':
-    resolution: {integrity: sha512-HduilcwWWhU6sbBtWYmcWaZ5WidA5wXVV5LvhwtRN+rn0DyYiigBIIU66qLbGdoteJujiu2zsUPZ9ZDDoM9CYA==}
+  '@coffic/juice-editor@0.9.113':
+    resolution: {integrity: sha512-/uUPbl2ruXZSJVOUMJIDgsqEd9i4nVJXgJvwxq+yQ0bAWzjMClEePNsNjPJaVvDnhKRd7RU54XrG6KqgsejMXQ==}
 
   '@csstools/selector-resolve-nested@1.1.0':
     resolution: {integrity: sha512-uWvSaeRcHyeNenKg8tp17EVDRkpflmdyvbE0DHo6D/GdBb6PDnCYYU6gRpXhtICMGMcahQmj2zGxwFM/WC8hCg==}
@@ -1741,7 +1741,7 @@ snapshots:
 
   '@coffic/juice-editor-draw@1.0.5': {}
 
-  '@coffic/juice-editor@0.9.112(sass@1.80.3)(terser@5.36.0)':
+  '@coffic/juice-editor@0.9.113(sass@1.80.3)(terser@5.36.0)':
     dependencies:
       '@remixicon/vue': 4.5.0(vue@3.5.13(typescript@5.1.6))
       '@tailwindcss/typography': 0.5.15(tailwindcss@3.4.15)

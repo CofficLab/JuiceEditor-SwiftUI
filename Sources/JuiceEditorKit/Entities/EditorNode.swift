@@ -3,9 +3,9 @@ import OSLog
 import MagicKit
 
 public struct EditorNode: Codable, SuperLog {
-    static var emoji = "🌰"
+    static var emoji = Config.rootEmoji + " 🌰"
     public var emoji = EditorNode.emoji
-    public var type: String = EditorNodeType.root.rawValue
+    public var type: String = EditorNodeType.doc.rawValue
     public var html: String? = nil
     public var text: String? = nil
     public var attrs: [String: AttributeValue]?
@@ -20,7 +20,11 @@ public struct EditorNode: Codable, SuperLog {
 
     public var parentId: String? {
         if let attrs = self.attrs {
-            return attrs["parent"]?.stringValue ?? nil
+            if let parent = attrs["parent"]?.stringValue {
+                return parent
+            }
+            
+            return attrs["parentId"]?.stringValue ?? nil
         }
 
         return nil
@@ -74,16 +78,21 @@ public struct EditorNode: Codable, SuperLog {
         }
     }
 
-    static func getWildNodeFromData(_ data: [String: Any]) async throws -> EditorNode {
-        guard let jsNode = data["node"] as? [String: Any] else {
-            let error = NSError(domain: "InvalidType", code: 0, userInfo: [NSLocalizedDescriptionKey: "Expected [String: Any]"])
-            os_log(.error, "\(error.localizedDescription)")
-            print(data)
+    static func getEditorNodeFromData(_ data: [String: Any], reason: String, verbose: Bool) async throws -> EditorNode {
+        guard let jsNode = data as? [String: Any] else {
+            os_log(.error, "%{public}@ GetEditorNodeFromData::InvalidType, not [String: Any]", Self.emoji)
+            os_log(.error, "  ➡️ Reason: %{public}@", reason)
+            os_log(.error, "  ➡️ Data: %{public}@", String(describing: data))
             
-            throw error
+            throw EditorNodeError.InvalidType
+        }
+        
+        if verbose {
+            os_log("\(Self.emoji)EditorNode::getEditorNodeFromData")
+            os_log("%{public}@", String(describing: data))
         }
 
-        var node = EditorNode(type: .root)
+        var node = EditorNode(type: .doc)
 
         if let type = jsNode["type"] as? String {
             node.setType(type)
@@ -126,30 +135,25 @@ public struct EditorNode: Codable, SuperLog {
         return node
     }
 
-    static func getWildNodesFromData(_ data: [String: Any]) async throws -> [EditorNode] {
+    static func getEditorNodesFromData(_ data: [String: Any], reason: String, verbose: Bool) async throws -> [EditorNode] {
         guard let dataNodes = data["nodes"] else {
-            let error = NSError(
-                domain: "InvalidType",
-                code: 0,
-                userInfo: [NSLocalizedDescriptionKey: "no nodes key"]
-            )
+            os_log(.error, "\(Self.emoji)EditorNode::GetWildNodesFromData -> no nodes key")
+            os_log(.error, "\(Self.emoji) \(reason)")
             
-            os_log(.error, "\(error.localizedDescription)")
-            
-            throw error
+            throw EditorNodeError.DataNoNodesKey
         }
         
         guard let jsNodes = data["nodes"] as? [[String: Any]] else {
-            let error = NSError(domain: "InvalidType", code: 0, userInfo: [NSLocalizedDescriptionKey: "Expected an array of dictionaries"])
-            os_log(.error, "\(error.localizedDescription)")
+            os_log(.error, "\(Self.emoji)EditorNode::GetWildNodesFromData -> nodes not array")
             
-            throw error
+            throw EditorNodeError.DataNodesNotArray
         }
 
         var nodes = [EditorNode]()
 
         for block in jsNodes {
-            await nodes.append(try EditorNode.getWildNodeFromData(block))
+            let node = try await EditorNode.getEditorNodeFromData(block, reason: reason, verbose: verbose)
+            await nodes.append(node)
         }
 
         return nodes
@@ -208,4 +212,12 @@ extension EditorNode {
 
         self.attrs?["title"] = AttributeValue.string(title)
     }
+}
+
+// MARK: Error
+
+enum EditorNodeError: Error, LocalizedError {
+    case DataNoNodesKey
+    case DataNodesNotArray
+    case InvalidType
 }
