@@ -10,11 +10,11 @@
     "draw:copy": "rm -rf public/draw || true && mkdir -p public/draw && cp -rf node_modules/@coffic/juice-editor-draw/dist/* public/draw/"
   },
   "devDependencies": {
-    "typescript": "^5.6.3",
+    "typescript": "^5.7.2",
     "vite": "^5.4.11"
   },
   "dependencies": {
-    "@coffic/juice-editor": "^0.9.113",
+    "@coffic/juice-editor": "^0.9.114",
     "@coffic/juice-editor-draw": "^1.0.5"
   }
 }
