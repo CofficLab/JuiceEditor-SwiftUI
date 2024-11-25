@@ -43,7 +43,7 @@ public struct EditorView: SwiftUI.View, SuperLog {
         }
         .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted), perform: onServerStarted)
         .onReceive(NotificationCenter.default.publisher(for: .jsReady), perform: onJSReady)
-        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateDoc), perform: onJSCallUpdateDoc)
+        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateArticle), perform: onJSCallUpdateArticle)
         .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateNodes), perform: onJSCallUpdateNodes)
         .onReceive(NotificationCenter.default.publisher(for: .jsCallConfigChanged), perform: onConfigChanged)
         .onReceive(NotificationCenter.default.publisher(for: .jsLoading), perform: onLoading)
@@ -56,7 +56,6 @@ extension EditorView {
     public func setContent(_ uuid: String) async throws {
         try await self.setContentFromWeb(
             self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
-            uuid: uuid,
             verbose: self.verbose
         )
     }
@@ -87,7 +86,7 @@ extension EditorView {
         isServerStarted = true
     }
 
-    func onJSCallUpdateDoc(_ n: Notification) {
+    func onJSCallUpdateArticle(_ n: Notification) {
         let data = n.userInfo as? [String: Any]
 
         guard let data = data else {
@@ -101,7 +100,7 @@ extension EditorView {
 
         Task {
             do {
-                let node = try await EditorNode.getEditorNodeFromData(nodeData, reason: "EditorView.onJSCallUpdateDoc", verbose: verbose)
+                let node = try await EditorNode.getEditorNodeFromData(nodeData, reason: "EditorView.onJSCallUpdateArticle", verbose: verbose)
                 delegate.onUpdateNodes([node])
             } catch {
                 os_log(.error, "\(self.t)\(error)")

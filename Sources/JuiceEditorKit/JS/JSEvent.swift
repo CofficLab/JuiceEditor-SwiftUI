@@ -2,7 +2,7 @@ import Foundation
 
 /// Event Name for JS to Swift
 enum JSEvent {
-    case updateDoc
+    case updateArticle
     case updateNodes
     case updateDrawing
     case message
@@ -17,8 +17,8 @@ enum JSEvent {
 
     static func from(_ s: String) -> Self {
         switch s {
-        case "updateDoc":
-            return .updateDoc
+        case "updateArticle":
+            return .updateArticle
         case "updateNodes":
             return .updateNodes
         case "updateDrawing":
