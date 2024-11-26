@@ -5,6 +5,7 @@ public enum EditorNodeType: Codable, Hashable {
     case cloudPublic
     case web
     case root
+    case article
     case doc
     case heading
     case paragraph
@@ -42,6 +43,7 @@ extension EditorNodeType: CaseIterable {
     public static var allCases: [EditorNodeType] {
         return [
             .root,
+            .article,
             .doc,
             .heading,
             .paragraph,
@@ -68,6 +70,7 @@ extension EditorNodeType: RawRepresentable {
     public init?(rawValue: String) {
         switch rawValue {
         case "root": self = .root
+        case "article": self = .article
         case "doc": self = .doc
         case "heading": self = .heading
         case "paragraph": self = .paragraph
@@ -94,6 +97,7 @@ extension EditorNodeType: RawRepresentable {
         switch self {
         case .root: return "root"
         case .doc: return "doc"
+        case .article: return "article"
         case .heading: return "heading"
         case .paragraph: return "paragraph"
         case .text: return "text"

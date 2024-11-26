@@ -1,7 +1,7 @@
 {
   "name": "webapp",
   "private": true,
-  "version": "1.0.27",
+  "version": "1.0.30",
   "type": "module",
   "scripts": {
     "dev": "npm run draw:copy && vite",
@@ -14,7 +14,7 @@
     "vite": "^5.4.11"
   },
   "dependencies": {
-    "@coffic/juice-editor": "^0.9.116",
+    "@coffic/juice-editor": "^0.9.118",
     "@coffic/juice-editor-draw": "^1.0.5"
   }
 }

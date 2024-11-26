@@ -29,8 +29,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
                 self.notification.post(name: .jsReady, object: nil)
             case .runCode:
                 runCode(message: message)
-            case .updateDoc:
-                self.updateDoc(message: message)
+            case .updateArticle:
+                self.updateArticle(message: message)
             case .updateNodes:
                 self.updateNodes(message: message)
             case .updateDrawing:
@@ -62,10 +62,10 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         self.notification.post(name: .jsCallConfigChanged, object: nil, userInfo: data)
     }
 
-    private func updateDoc(message: WKScriptMessage) {
+    private func updateArticle(message: WKScriptMessage) {
         let data = message.body as! [String: Any]
 
-        self.notification.post(name: .jsCallUpdateDoc, object: nil, userInfo: data)
+        self.notification.post(name: .jsCallUpdateArticle, object: nil, userInfo: data)
     }
 
     private func updateNodes(message: WKScriptMessage) {
@@ -85,19 +85,6 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         }
 
         self.notification.post(name: .jsCallUpdateCurrentDocUUID, object: nil, userInfo: data)
-    }
-
-    private func updateDocWithNode(message: WKScriptMessage) {
-        let data = message.body as! [String: String]
-
-        if verbose {
-            os_log("\(self.t)UpdateDocWithNode")
-            data.keys.forEach({
-                os_log("\($0): \(data[$0]! as String)")
-            })
-        }
-
-        self.notification.post(name: .jsCallUpdateDocWithNode, object: nil, userInfo: data)
     }
 
     private func updateSelectionType(message: WKScriptMessage) {
@@ -191,9 +178,8 @@ extension Notification.Name {
     static let jsReady = Notification.Name("jsReady")
     static let jsLoading = Notification.Name("jsLoading")
     static let jsCallConfigChanged = Notification.Name("jsCallConfigChanged")
-    static let jsCallUpdateDoc = Notification.Name("jsCallUpdateDoc")
+    static let jsCallUpdateArticle = Notification.Name("jsCallUpdateArticle")
     static let jsCallUpdateNodes = Notification.Name("jsCallUpdateNodes")
-    static let jsCallUpdateDocWithNode = Notification.Name("jsCallUpdateDocWithNode")
     static let jsCallUpdateSelectionType = Notification.Name("jsCallUpdateSelectionType")
     static let jsCallUpdateDrawing = Notification.Name("jsCallUpdateDrawing")
     static let jsCallUpdateContent = Notification.Name("jsCallUpdateContent")
