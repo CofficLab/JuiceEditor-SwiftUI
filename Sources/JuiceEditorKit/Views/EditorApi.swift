@@ -179,6 +179,7 @@ public extension EditorView {
         return try await run("window.editor.setChatApi(`\(s)`)")
     }
 
+    @discardableResult
     func setDrawLink(_ link: String) async throws {
         try await run("window.editor.setDrawLink('\(link)')")
     }
@@ -194,7 +195,7 @@ public extension EditorView {
     }
 
     @discardableResult
-    func setContentFromWeb(_ url: String, verbose: Bool) async throws -> Any {
+    func setContentFromWeb(_ url: String, uuid:String, verbose: Bool) async throws -> Any {
         if verbose {
             os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
         }
