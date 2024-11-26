@@ -56,6 +56,7 @@ extension EditorView {
     public func setContent(_ uuid: String) async throws {
         try await self.setContentFromWeb(
             self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+            uuid: uuid,
             verbose: self.verbose
         )
     }
