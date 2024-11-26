@@ -1,77 +1,68 @@
 import Foundation
-import OSLog
 import MagicKit
+import OSLog
 
 public extension EditorView {
-    func run(_ script: String) async throws -> Any {
-        try await self.webView.content.run(script)
+    // MARK: Create
+
+    @discardableResult
+    func createArticle(title: String) async throws -> Any {
+        try await run("window.editor.createArticle(\(title))")
     }
 
-    func evaluateJavaScript(_ script: String) async throws -> Any {
-        try await self.webView.content.evaluateJavaScript(script)
-    }
-    
-    // MARK: GetJSONFromHTML
-    
-    func getWildNodesFromHTML(_ html: String) async throws -> [EditorNode] {
-        let blocks = try await self.getBlocksFromHTML(html)
-        var nodes = [EditorNode]()
-        
-        for block in blocks {
-            var node = EditorNode(type: .doc)
-            
-            if let type = block["type"] as? String {
-                node.setType(type)
-            }
+    // MARK: Disable
 
-            if let attrs = block["attrs"] as? [String: Any] {
-                // 将 Any 转换为 AttributeValue
-                let convertedAttrs = attrs.mapValues { value -> AttributeValue in
-                    if let stringValue = value as? String {
-                        return AttributeValue.string(stringValue)
-                    }
-                    
-                    if let numberValue = value as? Int {
-                        return AttributeValue.int(numberValue)
-                    }
-                    
-                    // 根据需要添加其他类型的转换
-                    return AttributeValue.string(String(describing: value))
-                }
-                
-                node.setAttrs(convertedAttrs)
-            }
+    func disableBubbleMenu() async throws -> Any {
+        try await run("window.editor.disableBubbleMenu()")
+    }
 
-            if let text = block["text"] as? String {
-                node.setText(text)
-            }
-            
-            if let html = block["html"] as? String {
-                node.setHtml(html)
-            }
-            
-            nodes.append(node)
-        }
-        
-        return nodes
+    func disableContextMenu() async throws -> Any {
+        try await run("window.editor.disableContextMenu()")
     }
-    
-    func getJSONFromHTML(_ html: String) async throws -> Any {
-        let escapedHTML = html.replacingOccurrences(of: "`", with: "\\`")
-        return try await run("api.node.getJSONFromHTML(`\(escapedHTML)`)")
+
+    func disableDraw() async throws -> Any {
+        try await run("window.editor.disableDraw()")
     }
-    
-    func getBlocksFromHTML(_ html:String) async throws -> [[String: Any]] {
-        let escapedHTML = html.replacingOccurrences(of: "`", with: "\\`")
-        let result = try await run("api.node.getBlocksFromHTML(`\(escapedHTML)`)")
-        
-        guard let array = result as? [[String: Any]] else {
-            throw NSError(domain: "InvalidType", code: 0, userInfo: [NSLocalizedDescriptionKey: "Expected an array of dictionaries"])
-        }
-        
-        return array
+
+    func disableFloatingMenu() async throws -> Any {
+        try await run("window.editor.disableFloatingMenu()")
     }
-    
+
+    func disableFlotingMenuAndBubbleMenu() async throws -> Any {
+        try await run("window.editor.disableFlotingMenuAndBubbleMenu()")
+    }
+
+    func disableEdit() async throws -> Any {
+        try await run("window.editor.disableEdit()")
+    }
+
+    func disableTable() async throws -> Any {
+        try await run("window.editor.disableTable()")
+    }
+
+    // MARK: Enable
+
+    func enableEdit() async throws -> Any {
+        try await run("window.editor.enableEdit()")
+    }
+
+    func enableTable() async throws -> Any {
+        try await run("window.editor.enableTable()")
+    }
+
+    func enableDraw() async throws -> Any {
+        try await run("window.editor.enableDraw()")
+    }
+
+    @discardableResult
+    func enableFloatingMenu() async throws -> Any {
+        try await run("window.editor.enableFloatingMenu()")
+    }
+
+    func enableBubbleMenu() async throws -> Any {
+        try await run("window.editor.enableBubbleMenu()")
+    }
+
     // MARK: Get
 
     func getMarkdown() -> String {
@@ -96,26 +87,26 @@ public extension EditorView {
 //        return result ?? ""
     }
 
-    // MARK: 插入节点
+    // MARK: Insert
 
     func insertTable() async throws -> Any {
-        try await run("api.event.insertTable()")
+        try await run("window.editor.insertTable()")
     }
 
     func insertTodo() async throws -> Any {
-        try await run("api.event.insertTodo()")
+        try await run("window.editor.insertTodo()")
     }
 
     func insertDraw() async throws -> Any {
-        try await run("api.event.insertDraw()")
+        try await run("window.editor.insertDraw()")
     }
 
     func insertImage() async throws -> Any {
-        try await run("api.event.insertImage()")
+        try await run("window.editor.insertImage()")
     }
 
     func insertCodeBlock() async throws -> Any {
-        try await run("api.event.insertCodeBlock()")
+        try await run("window.editor.insertCodeBlock()")
     }
 
     // MARK: Toggle
@@ -125,101 +116,43 @@ public extension EditorView {
     }
 
     func toggleItalic() async throws -> Any {
-        try await run("api.event.toggleItalic()")
+        try await run("window.editor.toggleItalic()")
     }
 
     func toggleBanner() async throws -> Any {
-        try await run("api.event.toggleBanner()")
+        try await run("window.editor.toggleBanner()")
     }
 
     func toggleBold() async throws -> Any {
-        try await run("api.event.toggleBold()")
+        try await run("window.editor.toggleBold()")
     }
 
     func toggleTaskList() async throws -> Any {
-        try await run("api.event.toggleTaskList()")
+        try await run("window.editor.toggleTaskList()")
     }
 
     // MARK: Hide
 
     func hideEditor() async throws -> Any {
-        try await run("api.feature.hideEditor()")
+        try await run("window.editor.hideEditor()")
     }
 
     func hideToolbar() async throws -> Any {
-        try await run("api.feature.hideToolbar()")
+        try await run("window.editor.hideToolbar()")
     }
 
     // MARK: Show
 
     func showEditorAndEnableEdit() async throws -> Any {
-        try await run("api.feature.showEditorAndEnableEdit()")
+        try await run("window.editor.showEditorAndEnableEdit()")
     }
 
     func showEditor() async throws -> Any {
-        try await run("api.feature.showEditor()")
+        try await run("window.editor.showEditor()")
     }
 
     func showToolbar() async throws -> Any {
-        try await run("api.feature.showToolbar()")
-    }
-
-    // MARK: Enable
-
-    func enableEdit() async throws -> Any {
-        try await run("api.feature.enableEdit()")
-    }
-
-    func enableTable() async throws -> Any {
-        try await run("api.feature.enableTable()")
-    }
-
-    func enableDraw() async throws -> Any {
-        try await run("api.feature.enableDraw()")
-    }
-
-    @discardableResult
-    func enableFloatingMenu() async throws -> Any {
-        try await run("api.feature.enableFloatingMenu()")
-    }
-    
-    func ping() async throws -> Any {
-        try await run("api.doc.ping()")
-    }
-
-
-    func enableBubbleMenu() async throws -> Any {
-        try await run("api.feature.enableBubbleMenu()")
-    }
-
-    // MARK: Disable
-
-    func disableBubbleMenu() async throws -> Any {
-        try await run("api.feature.disableBubbleMenu()")
-    }
-
-    func disableFloatingMenu() async throws -> Any {
-        try await run("api.feature.disableFloatingMenu()")
-    }
-
-    func disableContextMenu() async throws -> Any {
-        try await run("api.feature.disableContextMenu()")
-    }
-
-    func disableFlotingMenuAndBubbleMenu() async throws -> Any {
-        try await run("api.feature.disableFlotingMenuAndBubbleMenu()")
-    }
-
-    func disableEdit() async throws -> Any {
-        try await run("api.feature.disableEdit()")
-    }
-
-    func disableTable() async throws -> Any {
-        try await run("api.feature.disableTable()")
-    }
-
-    func disableDraw() async throws -> Any {
-        try await run("api.feature.disableDraw()")
+        try await run("window.editor.showToolbar()")
     }
 
     // MARK: Set
@@ -252,7 +185,7 @@ public extension EditorView {
 
     func setNodeBase64(_ nodeBase64: String) async throws -> Any {
         let verbose = false
-        
+
         if verbose {
             os_log("\(self.t)setNodeBase64 -> \(nodeBase64.mini())")
         }
@@ -260,77 +193,46 @@ public extension EditorView {
         return try await run("api.node.setNodeBase64(`\(nodeBase64)`)")
     }
 
-    func setDocBase64(_ docBase64: String) async throws -> Any {
-        let verbose = false
-        if verbose {
-            os_log("\(self.t)setDocBase64 🛜🛜🛜 -> \(docBase64.mini())")
-        }
-
-        return try await run("api.doc.setDocBase64(`\(docBase64)`)")
-    }
-    
     @discardableResult
     func setContentFromWeb(_ url: String, uuid: String, verbose: Bool) async throws -> Any {
         if verbose {
-            os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url)")
+            os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
         }
-        
+
         return try await run("window.editor.setContentFromUrl(`\(url)`, `\(uuid)`)")
     }
 
-    func setDocEmpty() async throws -> Any {
-        let verbose = false
-        if verbose {
-            os_log("\(self.t)setDocEmpty 🛜🛜🛜")
-        }
-
-        return try await run("api.doc.setDocEmpty()")
-    }
-    
-    func setDocNull() async throws -> Any {
-        let verbose = false
-        if verbose {
-            os_log("\(self.t)setDocNull 🛜🛜🛜")
-        }
-
-        return try await run("api.doc.setDocNull()")
+    func setParagraph() async throws -> Any {
+        try await run("window.editor.setParagraph()")
     }
 
-    func setParagraph() async throws -> Any  {
-        try await run("api.event.setParagraph()")
+    func setHeading1() async throws -> Any {
+        try await run("window.editor.setHeading1()")
     }
 
-    func setHeading1() async throws -> Any  {
-        try await run("api.event.setHeading1()")
+    func setHeading2() async throws -> Any {
+        try await run("window.editor.setHeading2()")
     }
 
-    func setHeading2() async throws -> Any  {
-        try await run("api.event.setHeading2()")
+    func setHeading3() async throws -> Any {
+        try await run("window.editor.setHeading3()")
     }
 
-    func setHeading3() async throws -> Any  {
-        try await run("api.event.setHeading3()")
+    func setHeading4() async throws -> Any {
+        try await run("window.editor.setHeading4()")
     }
 
-    func setHeading4() async throws -> Any  {
-        try await run("api.event.setHeading4()")
-    }
-
-    func setHeading5() async throws -> Any  {
-        try await run("api.event.setHeading5()")
+    func setHeading5() async throws -> Any {
+        try await run("window.editor.setHeading5()")
     }
 
     func setHeading6() async throws -> Any {
-        try await run("api.event.setHeading6()")
+        try await run("window.editor.setHeading6()")
     }
 
     // MARK: Other
 
-    func closeDraw() async throws -> Any  {
-        try await run("api.app.closeDraw()")
-    }
-
-    func runnerCallback(_ output: String) async throws -> Any  {
+    func runnerCallback(_ output: String) async throws -> Any {
         // 对字符串进行 URL 编码
         if let encodedOutput = output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             // 调用 JavaScript 函数，并传递编码后的字符串
@@ -338,5 +240,17 @@ public extension EditorView {
         } else {
             try await run("runnerCallback(`swift 编码失败`)")
         }
+    }
+
+    func run(_ script: String) async throws -> Any {
+        try await self.webView.content.run(script)
+    }
+
+    func evaluateJavaScript(_ script: String) async throws -> Any {
+        try await self.webView.content.evaluateJavaScript(script)
+    }
+
+    func closeDraw() async throws -> Any {
+        try await run("api.app.closeDraw()")
     }
 }
