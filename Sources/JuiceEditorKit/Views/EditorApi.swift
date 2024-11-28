@@ -211,26 +211,32 @@ public extension EditorView {
     
     // MARK: Toggle
 
+    @discardableResult
     func toggleToc() async throws -> Any {
         try await run("window.editor.toggleToc()")
     }
 
+    @discardableResult
     func toggleItalic() async throws -> Any {
         try await run("window.editor.toggleItalic()")
     }
 
+    @discardableResult
     func toggleBanner() async throws -> Any {
         try await run("window.editor.toggleBanner()")
     }
 
+    @discardableResult
     func toggleBold() async throws -> Any {
         try await run("window.editor.toggleBold()")
     }
 
+    @discardableResult
     func toggleTaskList() async throws -> Any {
         try await run("window.editor.toggleTaskList()")
     }
     
+    @discardableResult
     func toggleDebugBar() async throws -> Any {
         try await run("window.editor.toggleDebugBar()")
     }
