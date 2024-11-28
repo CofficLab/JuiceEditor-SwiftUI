@@ -109,28 +109,6 @@ public extension EditorView {
         try await run("window.editor.insertCodeBlock()")
     }
 
-    // MARK: Toggle
-
-    func toggleToc() async throws -> Any {
-        try await run("window.editor.toggleToc()")
-    }
-
-    func toggleItalic() async throws -> Any {
-        try await run("window.editor.toggleItalic()")
-    }
-
-    func toggleBanner() async throws -> Any {
-        try await run("window.editor.toggleBanner()")
-    }
-
-    func toggleBold() async throws -> Any {
-        try await run("window.editor.toggleBold()")
-    }
-
-    func toggleTaskList() async throws -> Any {
-        try await run("window.editor.toggleTaskList()")
-    }
-
     // MARK: Hide
 
     func hideEditor() async throws -> Any {
@@ -229,6 +207,32 @@ public extension EditorView {
 
     func setHeading6() async throws -> Any {
         try await run("window.editor.setHeading6()")
+    }
+    
+    // MARK: Toggle
+
+    func toggleToc() async throws -> Any {
+        try await run("window.editor.toggleToc()")
+    }
+
+    func toggleItalic() async throws -> Any {
+        try await run("window.editor.toggleItalic()")
+    }
+
+    func toggleBanner() async throws -> Any {
+        try await run("window.editor.toggleBanner()")
+    }
+
+    func toggleBold() async throws -> Any {
+        try await run("window.editor.toggleBold()")
+    }
+
+    func toggleTaskList() async throws -> Any {
+        try await run("window.editor.toggleTaskList()")
+    }
+    
+    func toggleDebugBar() async throws -> Any {
+        try await run("window.editor.toggleDebugBar()")
     }
 
     // MARK: Other
