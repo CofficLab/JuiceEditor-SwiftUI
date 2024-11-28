@@ -10,7 +10,7 @@ declare global {
 EditorFactory.register('juice-editor', {
     onCreate: (editor) => {
         window.editor = editor
-        editor.enableVerboseMode()
+        editor.enableAllVerbose()
         editor.enableWebKit()
         editor.disableLocalStorage()
     }
