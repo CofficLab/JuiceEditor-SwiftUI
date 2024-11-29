@@ -3,7 +3,7 @@ import MagicKit
 import OSLog
 
 public protocol EditorDelegate {
-    func getHtml(_ uuid: String) -> String?
+    func getHtml(_ uuid: String) async throws -> String?
     func onReady() -> Void
     func onUpdateNodes(_ nodes: [EditorNode]) -> Void
     func onLoading(_ reason: String) -> Void
@@ -11,7 +11,7 @@ public protocol EditorDelegate {
 }
 
 extension EditorDelegate {
-    public func getHtml(_ uuid: String) -> String? {
+    public func getHtml(_ uuid: String) async throws -> String? {
         return "Hi from DefaultDelegate"
     }
 

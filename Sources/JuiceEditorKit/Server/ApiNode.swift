@@ -10,7 +10,7 @@ extension HTTPServer {
                 throw Abort(.badRequest)
             }
             
-            let content = self.delegate.getHtml(id) ?? ""
+            let content = try await self.delegate.getHtml(id) ?? ""
             
             if verbose {
                 os_log("\(self.t)getNode(\(id)): \(content.max(120))")
