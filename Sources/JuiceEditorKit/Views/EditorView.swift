@@ -1,10 +1,11 @@
 import Foundation
 import MagicKit
+import MagicWeb
 import os
 import SwiftUI
 
 public struct EditorView: SwiftUI.View, SuperLog {
-    let emoji = Config.rootEmoji + " 🖥️"
+    public static let emoji = Config.rootEmoji + " 🖥️"
     let logger = Config.makeLogger("EditorView")
 
     public static let defaultDelegate = DefaultDelegate()
@@ -12,13 +13,13 @@ public struct EditorView: SwiftUI.View, SuperLog {
     @State private var server: HTTPServer
     @State private var isServerStarted = false
 
-    public let webView: WebView
+    public let webView: MagicWebView
     public let delegate: EditorDelegate
     public let verbose: Bool
 
     public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool) {
         if verbose {
-            os_log("\(Logger.initLog) EditorView")
+            os_log("\(Self.i) EditorView")
         }
         
         self.delegate = delegate

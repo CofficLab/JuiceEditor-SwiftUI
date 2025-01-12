@@ -3,7 +3,7 @@ import OSLog
 import MagicKit
 
 public struct EditorNode: Codable, SuperLog {
-    static var emoji = Config.rootEmoji + " 🌰"
+    public static var emoji = Config.rootEmoji + " 🌰"
     public var emoji = EditorNode.emoji
     public var type: String = EditorNodeType.doc.rawValue
     public var html: String? = nil

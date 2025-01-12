@@ -5,7 +5,7 @@ import MagicKit
 
 @main
 struct JuiceEditorTestApp: App, SuperLog {
-    let emoji = "🍎"
+    static let emoji = "🍎"
     
     @State var editorView: EditorView?
 

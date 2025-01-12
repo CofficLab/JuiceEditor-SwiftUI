@@ -6,7 +6,7 @@ import SwiftUI
 import Vapor
 
 public class HTTPServer: ObservableObject, SuperLog, SuperThread {
-    let emoji = Config.rootEmoji + " 📺"
+    public static let emoji = Config.rootEmoji + " 📺"
 
     public var app: Application?
     public let logger = Config.makeLogger("HttpServer")

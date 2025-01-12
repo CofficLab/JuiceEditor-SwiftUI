@@ -6,6 +6,8 @@ import SwiftUI
 import MagicKit
 
 class JobRunCode: SuperLog {
+    static var emoji: String = "🪝"
+    
     var runnerDir = Config().getRunnerDir()
     var tempDir = Config().getTempDir()
     var sandboxPrivateKeyURL = Config().sandboxPrivateKeyURL

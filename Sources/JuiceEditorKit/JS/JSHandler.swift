@@ -5,7 +5,7 @@ import WebKit
 
 /// Communicate with JS
 class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
-    let emoji = Config.rootEmoji + " 📶"
+    static let emoji = Config.rootEmoji + " 📶"
     let notification = NotificationCenter.default
     var verbose = false
 
