@@ -57,7 +57,9 @@ class JobRunCode: SuperLog {
         os_log("\(self.t) 🧮 Runner -> 运行代码 \(String(describing: lan))")
         
         // 先把文件复制过去
-        let fileURL = saveCodeToFile(code, lan: lan)
+        guard let fileURL = try? saveCodeToFile(code, lan: lan) else {
+            return
+        }
         let fileName = fileURL.lastPathComponent
         let path = ".kuaiyizhi/" + fileName
         scp(fileURL)
@@ -80,7 +82,7 @@ class JobRunCode: SuperLog {
     
     // MARK: 保存文件
     
-    private func saveCodeToFile(_ code: String, lan: CodeLanguage) -> URL {
+    private func saveCodeToFile(_ code: String, lan: CodeLanguage) throws -> URL {
         // 确定文件内容
         var content = code
         if lan == .PHP {
@@ -106,7 +108,7 @@ class JobRunCode: SuperLog {
 
         // 写入临时文件
         let url = runnerDir.appending(component: "temp").appendingPathExtension(ext)
-        content.saveToFile(url)
+        try content.saveToFile(url)
         
         return url
     }
