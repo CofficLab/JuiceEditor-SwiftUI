@@ -4,12 +4,11 @@ import SwiftData
 import SwiftUI
 import MagicKit
 import WebKit
-import MagicWeb
 
 class JSConfig: ObservableObject {    
     static func makeView(url: String, verbose: Bool, logger: MagicLogger    ) -> MagicWebView {
         print("JSConfig.makeView")
-        return MagicWebView(url: URL(string: url), config: getViewConfig(verbose: verbose, logger: logger), verbose: verbose)
+        return url.toURL().makeWebView()
     }
     
     static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
@@ -31,4 +30,9 @@ class JSConfig: ObservableObject {
 
         return config
     }
+}
+
+#Preview {
+    EditorView(verbose: true)
+        .inMagicContainer()
 }

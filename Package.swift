@@ -23,8 +23,7 @@ let package = Package(
             name: "JuiceEditorKit",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
-                .product(name: "MagicKit", package: "MagicKit"),
-                .product(name: "MagicWeb", package: "MagicKit")
+                .product(name: "MagicKit", package: "MagicKit")
             ],
             resources: [
                 .copy("./WebApp")

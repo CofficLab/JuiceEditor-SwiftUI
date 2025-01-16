@@ -2,7 +2,7 @@ import Foundation
 import MagicKit
 import OSLog
 
-public extension EditorViewModel {
+public extension EditorView {
     // MARK: Create
 
     @discardableResult
@@ -257,11 +257,13 @@ public extension EditorViewModel {
     }
 
     func run(_ script: String) async throws -> Any {
-        try await self.webView.content.run(script)
+        "nil"
+//        try await self.webView.content.run(script)
     }
 
     func evaluateJavaScript(_ script: String) async throws -> Any {
-        try await self.webView.content.evaluateJavaScript(script)
+        "nil"
+//        try await self.webView.content.evaluateJavaScript(script)
     }
 
     func closeDraw() async throws -> Any {
