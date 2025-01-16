@@ -7,10 +7,12 @@ import WebKit
 class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     static let emoji = Config.rootEmoji + " 📶"
     let notification = NotificationCenter.default
+    let logger: MagicLogger
     var verbose = true
 
-    init(verbose: Bool = false) {
+    init(verbose: Bool = false, logger: MagicLogger) {
         self.verbose = verbose
+        self.logger = logger
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -26,7 +28,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
             case .downloadFile:
                 downloadFile(message: message)
             case .pageLoaded:
-                print("JS Ready")
+                logger.info("JS Said: Ready")
                 self.notification.post(name: .jsReady, object: nil)
             case .runCode:
                 runCode(message: message)
@@ -173,7 +175,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
             os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
         }
 
-        print("JS Message 🫧🫧🫧 -> \(m)")
+        logger.info("JS Message 🫧🫧🫧 -> \(m)")
     }
 }
 
@@ -199,4 +201,10 @@ extension Notification.Name {
 
 enum JSHandlerError: Error {
     case downloadFileFailed(String)
+}
+
+#Preview {
+    EditorView(verbose: true)
+        .frame(height: 800)
+        .frame(width: 800)
 }

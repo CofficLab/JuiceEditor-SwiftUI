@@ -11,7 +11,7 @@ public struct EditorView: SwiftUI.View, SuperEvent {
 
     public let delegate: EditorDelegate
     public let verbose: Bool
-    public let logger = MagicLogger(app: "EditorView")
+    public let logger: MagicLogger
     public var webView: MagicWebView {
         vm.webView
     }
@@ -23,7 +23,10 @@ public struct EditorView: SwiftUI.View, SuperEvent {
 
         self.delegate = delegate
         self.verbose = verbose
-        _vm = StateObject(wrappedValue: EditorViewModel(delegate: delegate, verbose: verbose))
+        
+        let logger  = MagicLogger(app: "EditorView")
+        self.logger = logger
+        _vm = StateObject(wrappedValue: EditorViewModel(delegate: delegate, verbose: verbose, logger: logger))
     }
 
     public var body: some View {
@@ -56,13 +59,13 @@ public struct EditorView: SwiftUI.View, SuperEvent {
 // MARK: Action
 
 extension EditorView {
-    public func setContent(_ uuid: String) async throws {
-        try await self.vm.setContentFromWeb(
-            self.vm.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
-            uuid: uuid,
-            verbose: self.verbose
-        )
-    }
+//    public func setContent(_ uuid: String) async throws {
+//        try await self.vm.setContentFromWeb(
+//            self.vm.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+//            uuid: uuid,
+//            verbose: self.verbose
+//        )
+//    }
 }
 
 #Preview {

@@ -15,6 +15,7 @@ public class EditorViewModel: ObservableObject {
     let delegate: EditorDelegate
     let verbose: Bool
     let server: HTTPServer
+    let logger: MagicLogger
     
     @Published var isServerStarted = false
     
@@ -22,9 +23,9 @@ public class EditorViewModel: ObservableObject {
     private var _webView: MagicWebView {
         if Self.sharedWebView == nil {
             if self.verbose {
-                print("Creating WebView - \(Date())")
+                logger.info("Creating WebView - \(Date())")
             }
-            Self.sharedWebView = JSConfig.makeView(url: "about:blank", verbose: self.verbose)
+            Self.sharedWebView = JSConfig.makeView(url: "about:blank", verbose: self.verbose, logger: logger)
         }
         return Self.sharedWebView!
     }
@@ -37,44 +38,36 @@ public class EditorViewModel: ObservableObject {
         webView
             .onAppear {
                 if self.isServerStarted {
-                    self.webView.goto(self.server.baseURL)
+                    self.webView.goto("http://localhost:5173/".toURL())
                 }
             }
     }
     
-    // 添加清理方法
-    deinit {
-        if verbose {
-            print("EditorViewModel deinit")
-        }
-    }
-    
-    init(delegate: EditorDelegate, verbose: Bool) {
+    init(delegate: EditorDelegate, verbose: Bool, logger: MagicLogger) {
         self.delegate = delegate
         self.verbose = verbose
+        self.logger = logger
         self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate, verbose: verbose)
     }
     
     func startServer() {
+        logger.info("Start Server")
         server.startServer(verbose: verbose)
     }
     
     func onServerStarted(_ notification: Notification) {
+        logger.info("Server Started")
         isServerStarted = true
     }
     
     func onJSReady(_ n: Notification) {
+        logger.info("Editor Page Ready")
         Task {
-            if verbose {
-                os_log("Editor Page Ready")
-                print("Editor Page Ready")
-            }
-
             do {
-                try await self.setChatApi(server.chatApi)
-                try await self.setDrawLink(server.drawIoLink)
+//                try await self.setChatApi(server.chatApi)
+//                try await self.setDrawLink(server.drawIoLink)
 
-                self.delegate.onReady()
+//                self.delegate.onReady()
             } catch {
                 os_log(.error, "\(error)")
             }
@@ -83,6 +76,7 @@ public class EditorViewModel: ObservableObject {
     
 
     func onJSCallUpdateArticle(_ n: Notification) {
+        logger.info("EditorView.onJSCallUpdateArticle")
         let data = n.userInfo as? [String: Any]
 
         guard let data = data else {
@@ -104,20 +98,21 @@ public class EditorViewModel: ObservableObject {
     }
     
     func onJSCallUpdateNodes(_ n: Notification) {
+        logger.info("EditorView.onJSCallUpdateNodes")
         let data = n.userInfo as? [String: Any]
 
         guard let data = data else {
             return
         }
-
-        Task {
-            do {
-                let nodes = try await EditorNode.getEditorNodesFromData(data, reason: "EditorView.onJSCallUpdateNodes", verbose: verbose)
-                delegate.onUpdateNodes(nodes)
-            } catch {
-                os_log(.error, "\(error)")
-            }
-        }
+//
+//        Task {
+//            do {
+//                let nodes = try await EditorNode.getEditorNodesFromData(data, reason: "EditorView.onJSCallUpdateNodes", verbose: verbose)
+//                delegate.onUpdateNodes(nodes)
+//            } catch {
+//                os_log(.error, "\(error)")
+//            }
+//        }
     }
     
     
@@ -126,13 +121,14 @@ public class EditorViewModel: ObservableObject {
     }
 
     func onLoading(_ n: Notification) {
+        logger.info("EditorView.onLoading")
         let data = n.userInfo as? [String: Any]
 
         guard let data = data else {
             return
         }
 
-        delegate.onLoading(data["reason"] as! String)
+//        delegate.onLoading(data["reason"] as! String)
     }
 }
 

@@ -13,5 +13,6 @@ EditorFactory.register('juice-editor', {
         editor.enableAllVerbose()
         editor.enableWebKit()
         editor.disableLocalStorage()
+        editor.enableDebugBar()
     }
 })
