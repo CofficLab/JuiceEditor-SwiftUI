@@ -2,7 +2,7 @@ import Foundation
 import MagicKit
 import OSLog
 
-public extension EditorView {
+public extension EditorViewModel {
     // MARK: Create
 
     @discardableResult
@@ -12,10 +12,12 @@ public extension EditorView {
 
     // MARK: Disable
 
+    @discardableResult
     func disableBubbleMenu() async throws -> Any {
         try await run("window.editor.disableBubbleMenu()")
     }
 
+    @discardableResult
     func disableContextMenu() async throws -> Any {
         try await run("window.editor.disableContextMenu()")
     }
@@ -24,6 +26,7 @@ public extension EditorView {
         try await run("window.editor.disableDraw()")
     }
 
+    @discardableResult
     func disableFloatingMenu() async throws -> Any {
         try await run("window.editor.disableFloatingMenu()")
     }
@@ -151,7 +154,7 @@ public extension EditorView {
     @discardableResult
     func setChatApi(_ s: String, verbose: Bool = false) async throws -> Any {
         if verbose {
-            os_log("\(self.t)setChatApi 🛜🛜🛜 -> \(s)")
+            os_log("setChatApi 🛜🛜🛜 -> \(s)")
         }
 
         return try await run("window.editor.setChatApi(`\(s)`)")
@@ -166,7 +169,7 @@ public extension EditorView {
         let verbose = false
 
         if verbose {
-            os_log("\(self.t)setNodeBase64 -> \(nodeBase64.mini())")
+            os_log("setNodeBase64 -> \(nodeBase64.mini())")
         }
 
         return try await run("api.node.setNodeBase64(`\(nodeBase64)`)")
@@ -175,7 +178,7 @@ public extension EditorView {
     @discardableResult
     func setContentFromWeb(_ url: String, uuid:String, verbose: Bool) async throws -> Any {
         if verbose {
-            os_log("\(self.t)setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
+            os_log("setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
         }
 
         return try await run("window.editor.setContentFromUrl(`\(url)`, `\(uuid)`)")

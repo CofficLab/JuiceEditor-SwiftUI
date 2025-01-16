@@ -7,7 +7,7 @@ import WebKit
 class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
     static let emoji = Config.rootEmoji + " 📶"
     let notification = NotificationCenter.default
-    var verbose = false
+    var verbose = true
 
     init(verbose: Bool = false) {
         self.verbose = verbose
@@ -26,6 +26,7 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
             case .downloadFile:
                 downloadFile(message: message)
             case .pageLoaded:
+                print("JS Ready")
                 self.notification.post(name: .jsReady, object: nil)
             case .runCode:
                 runCode(message: message)
@@ -160,6 +161,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         if verbose {
             os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
         }
+
+        print("JS Message 🫧🫧🫧 -> \(m)")
     }
 
     private func printDebugMessage(_ message: WKScriptMessage) {
@@ -169,6 +172,8 @@ class JSHandler: NSObject, WKScriptMessageHandler, SuperThread, SuperLog {
         if verbose {
             os_log("\(self.t)JS Message 🫧🫧🫧 -> \(m)")
         }
+
+        print("JS Message 🫧🫧🫧 -> \(m)")
     }
 }
 

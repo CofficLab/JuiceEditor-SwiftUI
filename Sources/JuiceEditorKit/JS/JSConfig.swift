@@ -8,7 +8,8 @@ import MagicWeb
 
 class JSConfig: ObservableObject {    
     static func makeView(url: String, verbose: Bool) -> MagicWebView {
-        MagicWebView(url: URL(string: url), config: getViewConfig(verbose: verbose), verbose: verbose)
+        print("JSConfig.makeView")
+        return MagicWebView(url: URL(string: url), config: getViewConfig(verbose: verbose), verbose: verbose)
     }
     
     static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
