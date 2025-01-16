@@ -4,15 +4,16 @@ import MagicWeb
 import os
 import SwiftUI
 
-public struct EditorView: SwiftUI.View {
+public struct EditorView: SwiftUI.View, SuperEvent {
     public static let defaultDelegate = DefaultDelegate()
 
-    @StateObject private var viewModel: EditorViewModel
+    @StateObject private var vm: EditorViewModel
 
     public let delegate: EditorDelegate
     public let verbose: Bool
+    public let logger = MagicLogger(app: "EditorView")
     public var webView: MagicWebView {
-        viewModel.webView
+        vm.webView
     }
 
     public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool) {
@@ -22,26 +23,33 @@ public struct EditorView: SwiftUI.View {
 
         self.delegate = delegate
         self.verbose = verbose
-        _viewModel = StateObject(wrappedValue: EditorViewModel(delegate: delegate, verbose: verbose))
+        _vm = StateObject(wrappedValue: EditorViewModel(delegate: delegate, verbose: verbose))
     }
 
     public var body: some View {
         Group {
-            if viewModel.isServerStarted {
-                viewModel.webViewContainer
-            } else {
-                Text("Starting server...")
-                    .onAppear {
-                        viewModel.startServer()
-                    }
+            VStack {
+                if vm.isServerStarted {
+                    vm.webViewContainer
+                } else {
+                    Text("Starting server...")
+                        .onAppear {
+                            vm.startServer()
+                        }
+                }
+                
+                logger.logView()
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .httpServerStarted), perform: viewModel.onServerStarted)
-        .onReceive(NotificationCenter.default.publisher(for: .jsReady), perform: viewModel.onJSReady)
-        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateArticle), perform: viewModel.onJSCallUpdateArticle)
-        .onReceive(NotificationCenter.default.publisher(for: .jsCallUpdateNodes), perform: viewModel.onJSCallUpdateNodes)
-        .onReceive(NotificationCenter.default.publisher(for: .jsCallConfigChanged), perform: viewModel.onConfigChanged)
-        .onReceive(NotificationCenter.default.publisher(for: .jsLoading), perform: viewModel.onLoading)
+        .onAppear {
+            logger.info("EditorView onAppear")
+        }
+        .onReceive(nc.publisher(for: .httpServerStarted), perform: vm.onServerStarted)
+        .onReceive(nc.publisher(for: .jsReady), perform: vm.onJSReady)
+        .onReceive(nc.publisher(for: .jsCallUpdateArticle), perform: vm.onJSCallUpdateArticle)
+        .onReceive(nc.publisher(for: .jsCallUpdateNodes), perform: vm.onJSCallUpdateNodes)
+        .onReceive(nc.publisher(for: .jsCallConfigChanged), perform: vm.onConfigChanged)
+        .onReceive(nc.publisher(for: .jsLoading), perform: vm.onLoading)
     }
 }
 
@@ -49,19 +57,11 @@ public struct EditorView: SwiftUI.View {
 
 extension EditorView {
     public func setContent(_ uuid: String) async throws {
-        try await self.viewModel.setContentFromWeb(
-            self.viewModel.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+        try await self.vm.setContentFromWeb(
+            self.vm.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
             uuid: uuid,
             verbose: self.verbose
         )
-    }
-}
-
-// MARK: Event Handler
-
-extension EditorView {
-    func onServerStarted(_ n: Notification) {
-        viewModel.isServerStarted = true
     }
 }
 
