@@ -11,6 +11,7 @@ extension EditorView {
             do {
                 try await self.setChatApi(server.chatApi)
                 try await self.setDrawLink(server.drawIoLink)
+                try await self.disableDebugBar()
 
                 self.delegate.onReady()
             } catch {
@@ -21,8 +22,9 @@ extension EditorView {
 
     func onServerStarted(_ n: Notification) {
         isServerStarted = true
-        self.webView = "http://localhost:5173".toURL()
+        self.webView = self.server.baseURL
             .makeWebView(onCustomMessage: onCustomMessage)
+            .verboseMode(false)
     }
 
     func onJSCallUpdateArticle(_ n: Notification) {
@@ -132,7 +134,6 @@ extension EditorView {
         } else {
         }
     }
-
 }
 
 #Preview {

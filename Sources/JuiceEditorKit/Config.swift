@@ -5,34 +5,30 @@ import SwiftUI
 import WebKit
 import Foundation
 
-struct Config {
-    static var rootEmoji = "🖼️"
+public struct Config {
+    public static var rootEmoji = "🖼️"
     
-    static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
-
-    static var htmlFile = Bundle.main.url(
-        forResource: "index",
-        withExtension: "html",
-        subdirectory: "dist/juice-editor"
-    )
+    public static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
     
     private var fileManager = FileManager.default
     
-    var sandboxPrivateKeyURL: URL {
+    public var sandboxPrivateKeyURL: URL {
         getRunnerDir().appending(component: "private_key")
     }
     
-    func getDocumentsURL() -> URL {
+    public init() {}
+    
+    public func getDocumentsURL() -> URL {
         fileManager
             .urls(for: .documentDirectory, in: .userDomainMask)
             .first!
     }
     
-    func getKnownHostsURL() -> URL {
+    public func getKnownHostsURL() -> URL {
         getRunnerDir().appending(component: "known_hosts")
     }
     
-    func getAppDir() -> URL {
+    public func getAppDir() -> URL {
         var isDir: ObjCBool = true
         let url = getDocumentsURL().appendingPathComponent(
             "Kuaiyizhi",
@@ -53,7 +49,7 @@ struct Config {
         return url
     }
     
-    func getTempDir() -> URL {
+    public func getTempDir() -> URL {
         var isDir: ObjCBool = true
         let url = getAppDir()
             .appendingPathComponent("temp", isDirectory: true)
@@ -72,7 +68,7 @@ struct Config {
         return url
     }
     
-    func getRunnerDir() -> URL {
+    public func getRunnerDir() -> URL {
         var isDir: ObjCBool = true
         let url = getAppDir()
             .appendingPathComponent("runner", isDirectory: true)
@@ -91,9 +87,9 @@ struct Config {
         return url
     }
 
-    static var currentDirectoryPath = FileManager.default.currentDirectoryPath
+    public static var currentDirectoryPath = FileManager.default.currentDirectoryPath
     
-    static var webAppPath: String = {
+    public static var webAppPath: String = {
         let settingsURL = Bundle.module.url(forResource: "WebApp", withExtension: nil)
 
         if let settingsURL = settingsURL {

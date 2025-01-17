@@ -17,7 +17,10 @@ public class HTTPServer: ObservableObject, SuperThread {
     public var baseURL: URL { URL(string: "http://localhost:\(port)")! }
 
     public init(directoryPath: String, delegate: EditorDelegate, verbose: Bool) {
-        self.directoryPath = directoryPath
+        if verbose {
+            info("Initializing HTTP Server with directory: \(directoryPath)")
+        }
+        self.directoryPath = URL(fileURLWithPath: directoryPath).path
         self.delegate = delegate
         self.verbose = verbose
     }
@@ -124,5 +127,5 @@ extension HTTPServer {
 #Preview {
     EditorView(verbose: true)
         .frame(height: 1000)
-        .frame(width: 700)
+        .frame(width: 1700)
 }

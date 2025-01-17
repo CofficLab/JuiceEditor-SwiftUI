@@ -4,13 +4,14 @@ import SwiftUI
 extension HTTPServer {
      public func dev(app: Application) {
          // 明确定义根路径路由
+         info("Initializing HTTP Server with directory: \(directoryPath)")
          app.get { req -> ClientResponse in
              return try await self.handleDevModeRequest(req, path: "/index.html")
          }
 
          // 定义通配符路由
          app.get("**") { req -> ClientResponse in
-             let verbose = false
+             let verbose = true
 
              if verbose {
                  info("Processing wildcard request in dev mode: \(req.url.string)")
