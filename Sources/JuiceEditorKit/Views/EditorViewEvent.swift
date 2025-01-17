@@ -4,10 +4,6 @@ import SwiftUI
 extension EditorView {
     func onJSReady() {
         Task {
-            if verbose {
-                info("Editor Page Ready")
-            }
-
             do {
                 try await self.setChatApi(server.chatApi)
                 try await self.setDrawLink(server.drawIoLink)
@@ -42,7 +38,7 @@ extension EditorView {
 
         Task {
             do {
-                let node = try await EditorNode.getEditorNodeFromData(nodeData, reason: "EditorView.onJSCallUpdateArticle", verbose: verbose)
+                let node = try await EditorNode.getEditorNodeFromData(nodeData, reason: "EditorView.onJSCallUpdateArticle", verbose: true)
                 delegate.onUpdateNodes([node])
             } catch {
                 errorLog("\(error)")
@@ -60,7 +56,7 @@ extension EditorView {
 
         Task {
             do {
-                let nodes = try await EditorNode.getEditorNodesFromData(data, reason: "EditorView.onJSCallUpdateNodes", verbose: verbose)
+                let nodes = try await EditorNode.getEditorNodesFromData(data, reason: "EditorView.onJSCallUpdateNodes", verbose: true)
                 delegate.onUpdateNodes(nodes)
             } catch {
                 errorLog("\(error)")
@@ -126,9 +122,7 @@ extension EditorView {
 
             do {
                 try base64Data.write(to: targetURL)
-                if verbose {
-                    info("File downloaded successfully 🎉")
-                }
+                info("File downloaded successfully 🎉")
             } catch {
                 errorLog("Error downloading file -> \(error.localizedDescription)")
             }
@@ -139,4 +133,4 @@ extension EditorView {
 
 #Preview {
     EditorViewPre()
-} 
+}

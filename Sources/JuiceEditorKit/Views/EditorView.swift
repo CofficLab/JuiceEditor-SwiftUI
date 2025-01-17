@@ -12,35 +12,55 @@ public struct EditorView: SwiftUI.View, SuperEvent {
     @State var webView: MagicWebView?
     
     public let delegate: EditorDelegate
-    public var verbose: Bool
-    public var showLogView: Bool
     
-    public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool = true, showLogView: Bool = true) {
+    public var isEditable: Bool
+    public var showToolbar: Bool
+    public var showEditor: Bool
+    public var isVerbose: Bool
+    public var logViewVisible: Bool
+    
+    public init(
+        delegate: EditorDelegate = EditorView.defaultDelegate,
+        verbose: Bool = true,
+        showLogView: Bool = true
+    ) {
         self.delegate = delegate
         self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate, verbose: verbose)
-        self.verbose = verbose
-        self.showLogView = showLogView
+        self.isVerbose = verbose
+        self.logViewVisible = showLogView
+        self.isEditable = true
+        self.showToolbar = true
+        self.showEditor = true
     }
 
     public var body: some View {
-        Group {
-            VStack {
-                if isServerStarted, let webView = webView {
-                    webView
-                } else {
-                    MagicLoading().magicTitle("Starting server...")
-                        .onAppear {
-                            server.startServer(verbose: verbose)
-                        }
-                }
-                
-                if showLogView {
-                    Logger.logView()
+        VStack(spacing: 0) {
+            EditorControlPanel(
+                isEditable: .constant(isEditable),
+                showToolbar: .constant(showToolbar),
+                showEditor: .constant(showEditor),
+                logViewVisible: .constant(logViewVisible),
+                isVerbose: .constant(isVerbose)
+            )
+            
+            Group {
+                VStack {
+                    if isServerStarted, let webView = webView {
+                        webView
+                    } else {
+                        MagicLoading().magicTitle("Starting server...")
+                            .onAppear {
+                                server.startServer(verbose: isVerbose)
+                            }
+                    }
+                    
+                    if logViewVisible {
+                        Logger.logView()
+                    }
                 }
             }
+            .onNotification(.httpServerStarted, onServerStarted)
         }
-        .frame(minHeight: 600)
-        .onNotification(.httpServerStarted, onServerStarted)
     }
 }
 

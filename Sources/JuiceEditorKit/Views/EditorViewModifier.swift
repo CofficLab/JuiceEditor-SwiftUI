@@ -1,16 +1,38 @@
 import SwiftUI
 
 public extension EditorView {
-    func verbose(_ isVerbose: Bool) -> EditorView {
+    func setVerbose(_ value: Bool) -> EditorView {
         var view = self
-        view.verbose = isVerbose
+        view.isVerbose = value
         return view
     }
     
-    func showLogView(_ show: Bool) -> EditorView {
+    func setLogViewVisible(_ value: Bool) -> EditorView {
         var view = self
-        view.showLogView = show
+        view.logViewVisible = value
         return view
+    }
+    
+    func setEditable(_ value: Bool) -> EditorView {
+        var view = self
+        view.isEditable = value
+        return view
+    }
+    
+    func setToolbarVisible(_ value: Bool) -> EditorView {
+        var view = self
+        view.showToolbar = value
+        return view
+    }
+    
+    func setEditorVisible(_ value: Bool) -> EditorView {
+        var view = self
+        view.showEditor = value
+        return view
+    }
+    
+    var verbose: Bool {
+        isVerbose
     }
     
     // MARK: Create
