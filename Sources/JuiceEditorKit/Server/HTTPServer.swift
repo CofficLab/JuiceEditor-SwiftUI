@@ -1,15 +1,11 @@
 import Foundation
 import MagicKit
 import NIOCore
-import os
 import SwiftUI
 import Vapor
 
-public class HTTPServer: ObservableObject, SuperLog, SuperThread {
-    public static let emoji = Config.rootEmoji + " 📺"
-
+public class HTTPServer: ObservableObject, SuperThread {
     public var app: Application?
-    public let logger = Config.makeLogger("HttpServer")
     public let directoryPath: String
     public let isDevMode = false
     public var port: Int = 49493
@@ -39,7 +35,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
 
     private func start(verbose: Bool = true) throws {
         if verbose {
-            os_log("\(self.t)Start")
+            info("Start HTTP Server")
         }
         
         var currentPort = port
@@ -71,17 +67,17 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
                }
 
                 if verbose {
-                    os_log("\(self.t)Server started on port \(currentPort) 🎉🎉🎉")
+                    info("Server ready on port \(currentPort)")
                 }
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
-                logger.warning("\(self.t)Port \(currentPort) is in use, trying next port")
+                warning("Port \(currentPort) is in use, trying next port")
                 currentPort += 1
                 self.app?.shutdown()
                 self.app = nil
             } catch {
-                logger.error("\(self.t)Unexpected error: \(error.localizedDescription)")
-                logger.error("\(self.t)Error type: \(type(of: error))")
-                logger.error("\(self.t)Error details: \(String(describing: error))")
+                errorLog("Unexpected error: \(error.localizedDescription)")
+                errorLog("Error type: \(type(of: error))")
+                errorLog("Error details: \(String(describing: error))")
                 throw error
             }
         }
@@ -96,7 +92,7 @@ public class HTTPServer: ObservableObject, SuperLog, SuperThread {
             do {
                 try self.start(verbose: verbose)
             } catch {
-                os_log(.error, "\(self.t)Failed to start server: \(error)")
+                errorLog("Failed to start server: \(error)")
             }
         }
     }
@@ -123,4 +119,10 @@ extension HTTPServer {
     public func emitStarted() {
         NotificationCenter.default.post(name: .httpServerStarted, object: nil)
     }
+}
+
+#Preview {
+    EditorView(verbose: true)
+        .frame(height: 1000)
+        .frame(width: 700)
 }

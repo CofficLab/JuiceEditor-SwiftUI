@@ -8,14 +8,18 @@ import Foundation
 struct Config {
     static var rootEmoji = "🖼️"
     
+    static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
+
+    static var htmlFile = Bundle.main.url(
+        forResource: "index",
+        withExtension: "html",
+        subdirectory: "dist/juice-editor"
+    )
+    
     private var fileManager = FileManager.default
     
     var sandboxPrivateKeyURL: URL {
         getRunnerDir().appending(component: "private_key")
-    }
-    
-    static func makeLogger(_ category: String) -> Logger {
-        Logger(subsystem: "JuiceEditorSwift", category: category)
     }
     
     func getDocumentsURL() -> URL {

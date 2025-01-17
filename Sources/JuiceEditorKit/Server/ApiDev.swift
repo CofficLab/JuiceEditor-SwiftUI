@@ -1,5 +1,5 @@
 import Vapor
-import OSLog
+import SwiftUI
 
 extension HTTPServer {
      public func dev(app: Application) {
@@ -13,7 +13,7 @@ extension HTTPServer {
              let verbose = false
 
              if verbose {
-                 os_log("\(self.t)Processing wildcard request in dev mode: \(req.url.string)")
+                 info("Processing wildcard request in dev mode: \(req.url.string)")
              }
              return try await self.handleDevModeRequest(req, path: req.url.path)
          }
@@ -33,9 +33,15 @@ extension HTTPServer {
          }
         
          if verbose {
-             os_log("\(self.t)➡️ Forwarding to: \(url)")
+             info("➡️ Forwarding to: \(url)")
          }
         
          return try await client.get(URI(string: url))
      }
+}
+
+#Preview {
+    EditorView(verbose: true)
+        .frame(height: 1000)
+        .frame(width: 700)
 }

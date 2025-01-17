@@ -1,6 +1,6 @@
 import Foundation
 import Vapor
-import OSLog
+import SwiftUI
 
 public extension HTTPServer {
     func chat(app: Application) {
@@ -11,7 +11,7 @@ public extension HTTPServer {
 
             let req = try req.content.decode(ChatRequest.self)
 
-            os_log("\(self.t)Chat request -> \(req.text)")
+            debug("Chat request -> \(req.text)")
 
             return Response(
                 status: .ok,
@@ -36,4 +36,10 @@ public extension HTTPServer {
             )
         }
     }
+}
+
+#Preview {
+    EditorView(verbose: true)
+        .frame(height: 1000)
+        .frame(width: 700)
 }

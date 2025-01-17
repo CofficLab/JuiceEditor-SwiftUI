@@ -1,6 +1,5 @@
 import Foundation
 import MagicKit
-import OSLog
 import SwiftUI
 
 public extension EditorView {
@@ -139,6 +138,14 @@ public extension EditorView {
 
     // MARK: Set
 
+    func setContent(_ uuid: String) async throws {
+        try await self.setContentFromWeb(
+            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+            uuid: uuid,
+            verbose: self.verbose
+        )
+    }
+
     func setToolbarVisible(_ v: Bool) async throws -> Any {
         await v ? try showToolbar() : try hideToolbar()
     }
@@ -155,7 +162,7 @@ public extension EditorView {
     @discardableResult
     func setChatApi(_ s: String, verbose: Bool = false) async throws -> Any {
         if verbose {
-            os_log("setChatApi 🛜🛜🛜 -> \(s)")
+            info("setChatApi 🛜🛜🛜 -> \(s)")
         }
 
         return try await run("window.editor.setChatApi(`\(s)`)")
@@ -170,16 +177,16 @@ public extension EditorView {
         let verbose = false
 
         if verbose {
-            os_log("setNodeBase64 -> \(nodeBase64.mini())")
+            info("setNodeBase64 -> \(nodeBase64.mini())")
         }
 
         return try await run("api.node.setNodeBase64(`\(nodeBase64)`)")
     }
 
     @discardableResult
-    func setContentFromWeb(_ url: String, uuid:String, verbose: Bool) async throws -> Any {
+    func setContentFromWeb(_ url: String, uuid: String, verbose: Bool) async throws -> Any {
         if verbose {
-            os_log("setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
+            info("setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
         }
 
         return try await run("window.editor.setContentFromUrl(`\(url)`, `\(uuid)`)")
@@ -212,7 +219,7 @@ public extension EditorView {
     func setHeading6() async throws -> Any {
         try await run("window.editor.setHeading6()")
     }
-    
+
     // MARK: Toggle
 
     @discardableResult
@@ -239,7 +246,7 @@ public extension EditorView {
     func toggleTaskList() async throws -> Any {
         try await run("window.editor.toggleTaskList()")
     }
-    
+
     @discardableResult
     func toggleDebugBar() async throws -> Any {
         try await run("window.editor.toggleDebugBar()")
@@ -274,6 +281,6 @@ public extension EditorView {
 
 #Preview {
     EditorView(verbose: true)
-        .frame(height: 800)
-        .frame(width: 600)
+        .frame(height: 1200)
+        .frame(width: 800)
 }
