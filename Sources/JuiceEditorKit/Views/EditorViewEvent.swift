@@ -24,7 +24,7 @@ extension EditorView {
         isServerStarted = true
         self.webView = self.server.baseURL
             .makeWebView(onCustomMessage: onCustomMessage)
-            .verboseMode(false)
+            .verboseMode(true)
     }
 
     func onJSCallUpdateArticle(_ n: Notification) {
@@ -138,6 +138,6 @@ extension EditorView {
 
 #Preview {
     EditorView(verbose: true)
-        .frame(height: 1000)
-        .frame(width: 700)
+        .frame(height: 800)
+        .frame(width: 600)
 }

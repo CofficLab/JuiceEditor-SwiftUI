@@ -80,6 +80,6 @@ public struct DefaultDelegate: EditorDelegate {}
 
 #Preview {
     EditorView(verbose: true)
-        .frame(height: 1500)
-        .frame(width: 900)
+        .frame(height: 900)
+        .frame(width: 500)
 }

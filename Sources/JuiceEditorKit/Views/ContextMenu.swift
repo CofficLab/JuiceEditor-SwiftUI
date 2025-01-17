@@ -1,6 +1,8 @@
-//import AppKit
-//import Foundation
-//import MagicKit
+import AppKit
+import Foundation
+import MagicKit
+import SwiftUI
+
 //
 //var selectionNodeType: NodeType = .paragraph
 //
@@ -250,3 +252,9 @@
 ////        }
 //    }
 //}
+
+#Preview {
+    EditorView(verbose: true)
+        .frame(height: 900)
+        .frame(width: 500)
+}
