@@ -42,7 +42,7 @@
       "location" : "https://github.com/CofficLab/MagicKit.git",
       "state" : {
         "branch" : "dev",
-        "revision" : "426a60596bde2d5092a4253fbf4c3210f3fc65c0"
+        "revision" : "b52d6fc6a40f3c25a28461b9d7386956f84bec07"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
       "state" : {
-        "revision" : "a31236f24bfd2ea2f520a74575881f6731d7ae68",
-        "version" : "4.7.0"
+        "revision" : "3498e60218e6003894ff95192d756e238c01f44e",
+        "version" : "4.7.1"
       }
     },
     {

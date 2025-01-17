@@ -138,7 +138,5 @@ extension EditorView {
 }
 
 #Preview {
-    EditorView(verbose: true)
-        .frame(height: 800)
-        .frame(width: 600)
-}
+    EditorViewPre()
+} 

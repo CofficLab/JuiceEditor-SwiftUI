@@ -10,15 +10,16 @@ public struct EditorView: SwiftUI.View, SuperEvent {
     @State var server: HTTPServer
     @State var isServerStarted = false
     @State var webView: MagicWebView?
-    @State var showLogView = true
-
+    
     public let delegate: EditorDelegate
     public var verbose: Bool
-
-    public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool = true) {
+    public var showLogView: Bool
+    
+    public init(delegate: EditorDelegate = EditorView.defaultDelegate, verbose: Bool = true, showLogView: Bool = true) {
         self.delegate = delegate
         self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate, verbose: verbose)
         self.verbose = verbose
+        self.showLogView = showLogView
     }
 
     public var body: some View {
@@ -86,7 +87,5 @@ extension EditorDelegate {
 public struct DefaultDelegate: EditorDelegate {}
 
 #Preview {
-    EditorView(verbose: true)
-        .frame(height: 800)
-        .frame(width: 600)
-}
+    EditorViewPre()
+} 

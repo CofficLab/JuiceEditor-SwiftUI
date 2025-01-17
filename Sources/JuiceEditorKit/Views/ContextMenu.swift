@@ -254,7 +254,5 @@ import SwiftUI
 //}
 
 #Preview {
-    EditorView(verbose: true)
-        .frame(height: 900)
-        .frame(width: 500)
-}
+    EditorViewPre()
+} 
