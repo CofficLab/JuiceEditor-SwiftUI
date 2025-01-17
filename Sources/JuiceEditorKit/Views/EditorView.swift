@@ -77,7 +77,7 @@ extension EditorView {
 
     func onServerStarted(_ n: Notification) {
         isServerStarted = true
-        self.webView = webView.goto(server.baseURL)
+        self.webView = webView.goto("http://localhost:5173/".toURL())
     }
 
     func onJSCallUpdateArticle(_ n: Notification) {
@@ -137,6 +137,6 @@ extension EditorView {
 
 #Preview {
     EditorView(verbose: true)
-        .frame(height: 800)
-        .frame(width: 600)
+        .frame(height: 1000)
+        .frame(width: 700)
 }

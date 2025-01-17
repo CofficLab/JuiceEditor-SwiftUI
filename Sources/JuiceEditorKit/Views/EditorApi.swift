@@ -1,6 +1,7 @@
 import Foundation
 import MagicKit
 import OSLog
+import SwiftUI
 
 public extension EditorView {
     // MARK: Create
@@ -269,4 +270,10 @@ public extension EditorView {
     func closeDraw() async throws -> Any {
         try await run("api.app.closeDraw()")
     }
+}
+
+#Preview {
+    EditorView(verbose: true)
+        .frame(height: 800)
+        .frame(width: 600)
 }
