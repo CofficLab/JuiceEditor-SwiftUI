@@ -5,6 +5,7 @@ typealias Logger = MagicLogger
 typealias MagicCard = MagicKit.MagicCard
 typealias MagicApp = MagicKit.MagicApp
 typealias MagicLoading = MagicKit.MagicLoading
+typealias MagicButton = MagicKit.MagicButton
 
 // 创建便捷的日志函数
 func info(_ message: String, caller: String = #fileID) {

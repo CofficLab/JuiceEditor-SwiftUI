@@ -12,7 +12,6 @@ public struct EditorView: SwiftUI.View, SuperEvent {
     @State var webView: MagicWebView?
     
     public let delegate: EditorDelegate
-    
     public var isEditable: Bool
     public var showToolbar: Bool
     public var showEditor: Bool
@@ -36,11 +35,7 @@ public struct EditorView: SwiftUI.View, SuperEvent {
     public var body: some View {
         VStack(spacing: 0) {
             EditorControlPanel(
-                isEditable: .constant(isEditable),
-                showToolbar: .constant(showToolbar),
-                showEditor: .constant(showEditor),
-                logViewVisible: .constant(logViewVisible),
-                isVerbose: .constant(isVerbose)
+                editorView: self
             )
             
             Group {
