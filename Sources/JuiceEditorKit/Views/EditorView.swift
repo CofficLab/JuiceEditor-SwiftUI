@@ -11,13 +11,13 @@ public struct EditorView: SwiftUI.View, SuperEvent {
     @State var isServerStarted = false
     @State var webView: MagicWebView?
     @State public var logViewVisible: Bool
-    
+
     public let delegate: EditorDelegate
     public var isEditable: Bool
     public var showToolbar: Bool
     public var showEditor: Bool
     public var isVerbose: Bool
-    
+
     public init(
         delegate: EditorDelegate = EditorView.defaultDelegate,
         verbose: Bool = true,
@@ -34,21 +34,14 @@ public struct EditorView: SwiftUI.View, SuperEvent {
 
     public var body: some View {
         VStack(spacing: 0) {
-            panel            
             Group {
-                VStack {
-                    if isServerStarted, let webView = webView {
-                        webView
-                    } else {
-                        MagicLoading().magicTitle("Starting server...")
-                            .onAppear {
-                                server.startServer(verbose: isVerbose)
-                            }
-                    }
-                    
-                    if logViewVisible {
-                        Logger.logView()
-                    }
+                if isServerStarted, let webView = webView {
+                    webView
+                } else {
+                    MagicLoading().magicTitle("Starting server...")
+                        .onAppear {
+                            server.startServer(verbose: isVerbose)
+                        }
                 }
             }
             .onNotification(.httpServerStarted, onServerStarted)
@@ -99,6 +92,5 @@ extension EditorDelegate {
 public struct DefaultDelegate: EditorDelegate {}
 
 #Preview {
-    EditorView()
-        .frame(height: 800)
+    EditorAppPre()
 }
