@@ -1,6 +1,14 @@
 import Foundation
 import SwiftUI
 
+public protocol EditorDelegate {
+    func getHtml(_ uuid: String) async throws -> String?
+    func onReady() -> Void
+    func onUpdateNodes(_ nodes: [EditorNode]) -> Void
+    func onLoading(_ reason: String) -> Void
+    func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws
+}
+
 extension EditorDelegate {
     public func getHtml(_ uuid: String) async throws -> String? {
         return "Hi from DefaultDelegate"

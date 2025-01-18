@@ -6,23 +6,18 @@ import Vapor
 
 public class HTTPServer: ObservableObject, SuperThread {
     public var app: Application?
-    public let directoryPath: String
+    public let directoryPath: String = Config.webAppPath
     public let isDevMode = false
     public var port: Int = 49493
     public let vueDevServerURL = "http://localhost:5173"
     public var delegate: EditorDelegate
     public var chatApi: String = ""
     public var drawIoLink: String = ""
-    public var verbose: Bool
     public var baseURL: URL { URL(string: "http://localhost:\(port)")! }
 
-    public init(directoryPath: String, delegate: EditorDelegate, verbose: Bool) {
-        if verbose {
-            info("Initializing HTTP Server with directory: \(directoryPath)")
-        }
-        self.directoryPath = URL(fileURLWithPath: directoryPath).path
+    public init(delegate: EditorDelegate) {
+        info("Initializing HTTP Server with directory: \(directoryPath)")
         self.delegate = delegate
-        self.verbose = verbose
     }
 
     private func configureRoutes(app: Application) throws {
@@ -32,7 +27,7 @@ public class HTTPServer: ObservableObject, SuperThread {
             self.prod(app: app)
         }
 
-        self.getNode(app: app, verbose: self.verbose)
+        self.getNode(app: app)
         self.chat(app: app)
     }
 
@@ -69,9 +64,7 @@ public class HTTPServer: ObservableObject, SuperThread {
                    self.emitStarted()
                }
 
-                if verbose {
-                    info("Server ready on port \(currentPort)")
-                }
+                info("Server ready on port \(currentPort)")
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
                 warning("Port \(currentPort) is in use, trying next port")
                 currentPort += 1
@@ -79,8 +72,6 @@ public class HTTPServer: ObservableObject, SuperThread {
                 self.app = nil
             } catch {
                 errorLog("Unexpected error: \(error.localizedDescription)")
-                errorLog("Error type: \(type(of: error))")
-                errorLog("Error details: \(String(describing: error))")
                 throw error
             }
         }

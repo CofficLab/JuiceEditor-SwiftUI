@@ -7,7 +7,7 @@ public struct EditorView: SwiftUI.View, SuperEvent {
 
     @State var server: HTTPServer
     @State var isServerStarted = false
-    @State var webView: MagicWebView?
+    @State var view: MagicWebView?
     @State public var logViewVisible: Bool
 
     public let delegate: EditorDelegate
@@ -22,37 +22,29 @@ public struct EditorView: SwiftUI.View, SuperEvent {
         showLogView: Bool = true
     ) {
         self.delegate = delegate
-        self.server = HTTPServer(directoryPath: Config.webAppPath, delegate: delegate, verbose: verbose)
+        self.server = HTTPServer(delegate: delegate)
         self.isVerbose = verbose
         self.logViewVisible = showLogView
         self.isEditable = true
         self.showToolbar = true
         self.showEditor = true
+        
+        self.server.startServer(verbose: true)
     }
 
     public var body: some View {
         VStack(spacing: 0) {
             Group {
-                if isServerStarted, let webView = webView {
+                if isServerStarted, let webView = view {
                     webView
                 } else {
-                    MagicLoading().magicTitle("Starting server...")
-                        .onAppear {
-                            server.startServer(verbose: isVerbose)
-                        }
+                    MagicLoading()
+                        .magicTitle("Starting server...")
                 }
             }
             .onNotification(.httpServerStarted, onServerStarted)
         }
     }
-}
-
-public protocol EditorDelegate {
-    func getHtml(_ uuid: String) async throws -> String?
-    func onReady() -> Void
-    func onUpdateNodes(_ nodes: [EditorNode]) -> Void
-    func onLoading(_ reason: String) -> Void
-    func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws
 }
 
 #Preview {

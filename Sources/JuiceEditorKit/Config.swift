@@ -6,8 +6,6 @@ import WebKit
 import Foundation
 
 public struct Config {
-    public static var rootEmoji = "🖼️"
-    
     public static var publicDir = Bundle.main.url(forResource: "dist", withExtension: nil)
     
     private var fileManager = FileManager.default

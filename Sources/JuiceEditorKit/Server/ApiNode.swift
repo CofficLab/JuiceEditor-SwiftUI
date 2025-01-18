@@ -1,20 +1,18 @@
 import Foundation
-import Vapor
 import SwiftUI
+import Vapor
 
 extension HTTPServer {
-    public func getNode(app: Application, verbose: Bool) {
+    public func getNode(app: Application) {
         app.get("api", "node", ":id", "html") { req async throws -> String in
-            
+
             guard let id = req.parameters.get("id") else {
                 throw Abort(.badRequest)
             }
-            
+
             let content = try await self.delegate.getHtml(id) ?? ""
-            
-            if verbose {
-                debug("getNode(\(id)): \(content.max(120))")
-            }
+
+            debug("getNode(\(id)): \(content.max(120))")
 
             return content
         }
@@ -26,4 +24,3 @@ extension HTTPServer {
         .frame(height: 1000)
         .frame(width: 700)
 }
-

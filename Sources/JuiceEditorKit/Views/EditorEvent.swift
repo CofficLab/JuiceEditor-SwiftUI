@@ -18,7 +18,7 @@ extension EditorView {
 
     func onServerStarted(_ n: Notification) {
         isServerStarted = true
-        self.webView = self.server.baseURL
+        self.view = self.server.baseURL
             .makeWebView(onCustomMessage: onCustomMessage)
             .showLogView(false)
             .verboseMode(true)

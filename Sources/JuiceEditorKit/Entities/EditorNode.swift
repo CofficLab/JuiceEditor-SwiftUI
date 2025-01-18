@@ -2,9 +2,7 @@ import Foundation
 import OSLog
 import MagicKit
 
-public struct EditorNode: Codable, SuperLog {
-    public static var emoji = Config.rootEmoji + " 🌰"
-    public var emoji = EditorNode.emoji
+public struct EditorNode: Codable {
     public var type: String = EditorNodeType.doc.rawValue
     public var html: String? = nil
     public var text: String? = nil
@@ -80,16 +78,13 @@ public struct EditorNode: Codable, SuperLog {
 
     static func getEditorNodeFromData(_ data: [String: Any], reason: String, verbose: Bool) async throws -> EditorNode {
         guard let jsNode = data as? [String: Any] else {
-            os_log(.error, "%{public}@ GetEditorNodeFromData::InvalidType, not [String: Any]", Self.emoji)
-            os_log(.error, "  ➡️ Reason: %{public}@", reason)
-            os_log(.error, "  ➡️ Data: %{public}@", String(describing: data))
+            errorLog("GetEditorNodeFromData::InvalidType, not [String: Any]")
             
             throw EditorNodeError.InvalidType
         }
         
         if verbose {
-            os_log("\(Self.emoji)EditorNode::getEditorNodeFromData")
-            os_log("%{public}@", String(describing: data))
+            info("EditorNode::getEditorNodeFromData")
         }
 
         var node = EditorNode(type: .doc)
@@ -137,15 +132,10 @@ public struct EditorNode: Codable, SuperLog {
 
     static func getEditorNodesFromData(_ data: [String: Any], reason: String, verbose: Bool) async throws -> [EditorNode] {
         guard let dataNodes = data["nodes"] else {
-            os_log(.error, "\(Self.emoji)EditorNode::GetWildNodesFromData -> no nodes key")
-            os_log(.error, "\(Self.emoji) \(reason)")
-            
             throw EditorNodeError.DataNoNodesKey
         }
         
         guard let jsNodes = data["nodes"] as? [[String: Any]] else {
-            os_log(.error, "\(Self.emoji)EditorNode::GetWildNodesFromData -> nodes not array")
-            
             throw EditorNodeError.DataNodesNotArray
         }
 

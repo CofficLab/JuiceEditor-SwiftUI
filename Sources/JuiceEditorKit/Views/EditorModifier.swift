@@ -219,7 +219,7 @@ public extension EditorView {
 
     @discardableResult
     func run(_ script: String) async throws -> Any {
-        guard let webView = self.webView else {
+        guard let webView = self.view else {
             throw EditorError.webViewNotLoaded
         }
 
