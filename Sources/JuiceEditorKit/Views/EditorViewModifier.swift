@@ -315,5 +315,5 @@ public extension EditorView {
 }
 
 #Preview {
-    EditorViewPre()
+    EditorView()
 } 

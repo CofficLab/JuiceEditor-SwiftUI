@@ -34,10 +34,7 @@ public struct EditorView: SwiftUI.View, SuperEvent {
 
     public var body: some View {
         VStack(spacing: 0) {
-            EditorControlPanel(
-                editorView: self
-            )
-            
+            panel            
             Group {
                 VStack {
                     if isServerStarted, let webView = webView {
@@ -102,5 +99,5 @@ extension EditorDelegate {
 public struct DefaultDelegate: EditorDelegate {}
 
 #Preview {
-    EditorViewPre()
+    EditorView()
 } 
