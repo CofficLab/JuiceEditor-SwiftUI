@@ -15,7 +15,7 @@ let package = Package(
             targets: ["JuiceEditorTestApp"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
+        .package(url: "https://github.com/vapor/vapor.git", exact: "4.89.0"),
         .package(url: "https://github.com/CofficLab/MagicKit.git", branch: "dev")
     ],
     targets: [
