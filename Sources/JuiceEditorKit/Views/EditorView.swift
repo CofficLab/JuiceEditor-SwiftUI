@@ -5,10 +5,11 @@ import SwiftUI
 public struct EditorView: View, SuperEvent {
     public static let defaultDelegate = DefaultDelegate()
 
-    @State var server: HTTPServer
+    internal let server: HTTPServer
     @State var isServerStarted = false
     @State var view: MagicWebView?
-    @State public var logViewVisible: Bool
+    @State var logViewVisible: Bool
+    @State var topBarVisible: Bool = true
 
     public let delegate: EditorDelegate
     public var isEditable: Bool
@@ -28,12 +29,20 @@ public struct EditorView: View, SuperEvent {
         self.isEditable = true
         self.showToolbar = true
         self.showEditor = true
-        
+
         self.server.startServer(verbose: true)
     }
 
+    public func hideLogView() {
+        self.logViewVisible = false
+    }
+
     public var body: some View {
-        VStack(spacing: 0) {
+        VStack {
+            if topBarVisible {
+                self.makeToolbar()
+            }
+
             Group {
                 if isServerStarted, let webView = view {
                     webView
@@ -42,11 +51,27 @@ public struct EditorView: View, SuperEvent {
                         .magicTitle("Starting server...")
                 }
             }
-            .onNotification(.httpServerStarted, onServerStarted)
+
+            if logViewVisible {
+                self.getLogView()
+            }
         }
+        .onNotification(.httpServerStarted, perform: { _ in
+            isServerStarted = true
+            self.view = self.server.baseURL
+                .makeWebView(onCustomMessage: onCustomMessage)
+                .showLogView(false)
+                .verboseMode(true)
+        })
     }
 }
 
 #Preview {
-    EditorDemo()
+    let v = EditorView()
+    
+    return VStack {
+        v
+    }.onAppear {
+        v.hideLogView()
+    }
 }

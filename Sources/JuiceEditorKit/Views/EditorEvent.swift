@@ -16,14 +16,6 @@ extension EditorView {
         }
     }
 
-    func onServerStarted(_ n: Notification) {
-        isServerStarted = true
-        self.view = self.server.baseURL
-            .makeWebView(onCustomMessage: onCustomMessage)
-            .showLogView(false)
-            .verboseMode(true)
-    }
-
     func onJSCallUpdateArticle(_ n: Notification) {
         let data = n.userInfo as? [String: Any]
 
