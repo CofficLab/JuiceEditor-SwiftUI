@@ -1,56 +1,61 @@
+import MagicKit
 import SwiftUI
 
 extension EditorView {
     var panel: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                Group {
-                    MagicButton(
-                        title: "只读",
-                        action: {
-                            Task {
-                                try? await self.disableEdit()
+                MagicButton(
+                    title: "清空内容",
+                    action: {
+                        Task {
+                            try? await self.setContent("")
+                        }
+                    }
+                )
+                MagicButton(
+                    title: "只读",
+                    action: {
+                        Task {
+                            try? await self.disableEdit()
+                        }
+                    }
+                )
+                MagicButton(
+                    title: "工具栏",
+                    action: {
+                        Task {
+                            try? await self.toggleDebugBar()
+                        }
+                    }
+                )
+
+                MagicButton(
+                    title: "日志界面",
+                    action: { self.logViewVisible.toggle()
+                    }
+                )
+
+                MagicButton(
+                    title: "设置内容",
+                    action: {
+                        Task {
+                            do {
+                                try await self.setContent("Current time is \(Date.now)")
+                            } catch {
+                                errorLog("Error setting content: \(error)")
                             }
                         }
-                    )                    
-                    MagicButton(
-                        title: "工具栏",
-                        action: {
-                            Task {
-                                try? await self.toggleDebugBar()
-                            }
-                        }
-                    )
-                    .magicSize(.auto)
-                    .frame(width: 60)
-                    
-                    MagicButton(
-                        title: "日志界面",
-                        action: {
-                            Task {
-                                setLogViewVisible(false)
-                            }
-                        }
-                    )
-                    
-                    MagicButton(
-                        title: "设置内容",
-                        action: {
-                            Task {
-                                try? await setContent(UUID().uuidString)
-                            }
-                        }
-                    )
-            
-                    MagicButton(
-                        icon: .iconTimer,
-                        title: "表格",
-                        action: {
+                    }
+                )
+
+                MagicButton(
+                    icon: .iconTable,
+                    action: {
                         Task {
                             try? await insertTable()
                         }
                     })
-                }
             }
             .padding(.horizontal)
         }

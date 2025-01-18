@@ -10,13 +10,13 @@ public struct EditorView: SwiftUI.View, SuperEvent {
     @State var server: HTTPServer
     @State var isServerStarted = false
     @State var webView: MagicWebView?
+    @State public var logViewVisible: Bool
     
     public let delegate: EditorDelegate
     public var isEditable: Bool
     public var showToolbar: Bool
     public var showEditor: Bool
     public var isVerbose: Bool
-    public var logViewVisible: Bool
     
     public init(
         delegate: EditorDelegate = EditorView.defaultDelegate,
@@ -100,4 +100,5 @@ public struct DefaultDelegate: EditorDelegate {}
 
 #Preview {
     EditorView()
-} 
+        .frame(height: 800)
+}

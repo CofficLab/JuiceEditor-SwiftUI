@@ -36,7 +36,7 @@ extension JuiceEditorTestApp: EditorDelegate {
     func onReady() {
         os_log("\(t)OnReady")
         Task {
-            try? await self.editorView?.setContent("1")
+            try? await self.editorView?.setContentFromWeb("1")
         }
     }
     
