@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 public extension EditorView {
     func setContentFromWeb(_ uuid: String) async throws {
@@ -86,4 +87,9 @@ public extension EditorView {
     func setHeading6() async throws -> Any {
         try await run("window.editor.setHeading6()")
     }
+}
+
+#Preview {
+    EditorPre()
+        .frame(height: 800)
 }

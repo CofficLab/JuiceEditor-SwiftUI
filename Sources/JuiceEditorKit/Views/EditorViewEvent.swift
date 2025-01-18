@@ -132,5 +132,5 @@ extension EditorView {
 }
 
 #Preview {
-    EditorView()
+    EditorPre()
 }

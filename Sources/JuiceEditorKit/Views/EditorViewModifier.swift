@@ -217,6 +217,7 @@ public extension EditorView {
         }
     }
 
+    @discardableResult
     func run(_ script: String) async throws -> Any {
         guard let webView = self.webView else {
             throw EditorError.webViewNotLoaded
@@ -231,5 +232,5 @@ public extension EditorView {
 }
 
 #Preview {
-    EditorView()
+    EditorPre()
 } 

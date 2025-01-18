@@ -1,18 +1,8 @@
 import Foundation
 import SwiftUI
 
-public struct EditorApp {
-    private let editorView: EditorView
-
-    init() {
-        self.editorView = EditorView()
-    }
-    
+public extension EditorView {
     // MARK: Views
-
-    func getEditorView() -> EditorView {
-        editorView
-    }
     
     func getLogView() -> some View {
         Logger.logView()
@@ -30,60 +20,60 @@ public struct EditorApp {
     
     // MARK: Buttons
 
-    func makeTableButton() -> MagicButton {
+    func makeTableButton() -> some View {
         MagicButton(
             icon: .iconTable,
             action: {
                 Task {
-                    try? await self.editorView.insertTable()
+                    try? await self.insertTable()
                 }
             }).magicStyle(.secondary).magicShape(.circle)
     }
 
-    func makeLogButton() -> MagicButton {
+    func makeLogButton() -> some View {
         Logger.logButton()
     }
 
-    func makeDebugBarButton() -> MagicButton {
+    func makeDebugBarButton() -> some View {
         MagicButton(
             icon: .iconTopToolbar,
             action: {
                 Task {
-                    try? await self.editorView.toggleDebugBar()
+                    try? await self.toggleDebugBar()
                 }
             }
         ).magicStyle(.secondary).magicShape(.circle)
     }
 
-    func makeClearContentButton() -> MagicButton {
+    func makeClearContentButton() -> some View {
         MagicButton(
             icon: .iconTrash,
             action: {
                 Task {
-                    try? await self.editorView.setContent("")
+                    try? await self.setContent("")
                 }
             }
         ).magicStyle(.secondary).magicShape(.circle)
     }
 
-    func makeReadOnlyButton() -> MagicButton {
+    func makeReadOnlyButton() -> some View {
         MagicButton(
             icon: .iconReadOnly,
             action: {
                 Task {
-                    try? await self.editorView.disableEdit()
+                    try? await self.disableEdit()
                 }
             }
         ).magicStyle(.secondary).magicShape(.circle)
     }
 
-    func makeSetContentButton() -> MagicButton {
+    func makeSetContentButton() -> some View {
         MagicButton(
             icon: .iconDocumentFill,
             action: {
                 Task {
                     do {
-                        try await self.editorView.setContent("Current time is \(Date.now)")
+                        try await self.setContent("Current time is \(Date.now)")
                     } catch {
                         errorLog("Error setting content: \(error)")
                     }
@@ -94,5 +84,5 @@ public struct EditorApp {
 }
 
 #Preview {
-    EditorAppPre()
+    EditorPre()
 }
