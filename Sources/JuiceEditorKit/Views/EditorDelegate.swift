@@ -36,6 +36,6 @@ extension EditorDelegate {
 public struct DefaultDelegate: EditorDelegate {}
 
 #Preview {
-    EditorPre()
+    EditorDemo()
         .frame(height: 800)
 }

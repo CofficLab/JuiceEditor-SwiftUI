@@ -1,22 +1,22 @@
 import Foundation
 import SwiftUI
 
-struct EditorPre: View {
-    let editorKit = EditorView()
+struct EditorDemo: View {
+    let editor = EditorView()
     
     var body: some View {
         VStack {
-            editorKit.makeToolbar()
+            editor.makeToolbar()
             
-            editorKit
+            editor
             
-            editorKit.getLogView()
+            editor.getLogView()
         }
         .frame(minHeight: 800)
     }
 }
 
 #Preview {
-    EditorPre()
+    EditorDemo()
         .frame(height: 800)
 }

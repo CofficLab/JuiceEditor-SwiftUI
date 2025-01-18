@@ -90,6 +90,6 @@ public extension EditorView {
 }
 
 #Preview {
-    EditorPre()
+    EditorDemo()
         .frame(height: 800)
 }

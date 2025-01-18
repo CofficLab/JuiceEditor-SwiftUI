@@ -56,5 +56,5 @@ public protocol EditorDelegate {
 }
 
 #Preview {
-    EditorPre()
+    EditorDemo()
 }
