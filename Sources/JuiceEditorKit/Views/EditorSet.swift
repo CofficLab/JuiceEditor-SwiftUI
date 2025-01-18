@@ -5,8 +5,7 @@ public extension EditorView {
     func setContentFromWeb(_ uuid: String) async throws {
         try await self.setContentFromWeb(
             self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
-            uuid: uuid,
-            verbose: self.verbose
+            uuid: uuid
         )
     }
 
@@ -29,9 +28,7 @@ public extension EditorView {
 
     @discardableResult
     func setChatApi(_ s: String) async throws -> Any {
-        if verbose {
-            info("setChatApi 🛜🛜🛜 -> \(s)")
-        }
+        info("setChatApi 🛜🛜🛜 -> \(s)")
 
         return try await run("window.editor.setChatApi(`\(s)`)")
     }
@@ -52,7 +49,7 @@ public extension EditorView {
     }
 
     @discardableResult
-    func setContentFromWeb(_ url: String, uuid: String, verbose: Bool) async throws -> Any {
+    func setContentFromWeb(_ url: String, uuid: String) async throws -> Any {
         if verbose {
             info("setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
         }
@@ -90,6 +87,6 @@ public extension EditorView {
 }
 
 #Preview {
-    EditorDemo()
+    EditorView()
         .frame(height: 800)
 }

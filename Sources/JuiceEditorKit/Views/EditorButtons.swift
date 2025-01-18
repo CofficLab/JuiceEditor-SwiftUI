@@ -84,5 +84,5 @@ public extension EditorView {
 }
 
 #Preview {
-    EditorDemo()
+    EditorView()
 }
