@@ -2,7 +2,7 @@ import Foundation
 import MagicKit
 import SwiftUI
 
-public struct EditorView: SwiftUI.View, SuperEvent {
+public struct EditorView: View, SuperEvent {
     public static let defaultDelegate = DefaultDelegate()
 
     @State var server: HTTPServer
