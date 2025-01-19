@@ -1,12 +1,12 @@
-import SwiftUI
 import MagicKit
+import SwiftUI
 
 public struct EditorContent: View {
     @ObservedObject var editor: Editor
-    
+
     private var topBarVisible: Bool = true
     private var logViewVisible: Bool = false
-    
+
     init(
         editor: Editor,
         showTopBar: Bool = true,
@@ -16,7 +16,7 @@ public struct EditorContent: View {
         self.topBarVisible = showTopBar
         self.logViewVisible = showLogView
     }
-    
+
     public var body: some View {
         VStack(spacing: 0) {
             if topBarVisible {
@@ -33,20 +33,11 @@ public struct EditorContent: View {
             }
 
             if logViewVisible {
-                getLogView()
+                MagicLogger.logView()
             }
         }
     }
-    
-    @ViewBuilder
-    private func getLogView() -> some View {
-        ScrollView {
-            Text("Editor Logs")
-                .font(.caption)
-        }
-        .frame(height: 100)
-    }
-} 
+}
 
 #Preview {
     EditorPreview()

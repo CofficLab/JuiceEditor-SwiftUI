@@ -1,5 +1,5 @@
-import SwiftUI
 import MagicKit
+import SwiftUI
 
 // MARK: - Preview Delegate
 
@@ -7,18 +7,18 @@ class PreviewDelegate: EditorDelegate {
     func getHtml(_ uuid: String) async throws -> String? {
         return """
         # Welcome to Editor Preview
-        
+
         This is a preview of the editor with different configurations.
-        
+
         ## Features
-        
+
         - Rich text editing
         - Markdown support
         - Toolbar customization
         - And more...
         """
     }
-    
+
     func onReady() {
         print("Editor is ready!")
     }
@@ -33,17 +33,17 @@ struct EditorPreview: View {
                 .tabItem {
                     Label("Default", systemImage: "doc.text")
                 }
-            
+
             MinimalPreview()
                 .tabItem {
                     Label("Minimal", systemImage: "doc.text.fill")
                 }
-            
+
             DebugPreview()
                 .tabItem {
                     Label("Debug", systemImage: "terminal")
                 }
-            
+
             CustomPreview()
                 .tabItem {
                     Label("Custom", systemImage: "slider.horizontal.3")
@@ -57,7 +57,7 @@ struct EditorPreview: View {
 
 struct DefaultPreview: View {
     @StateObject private var editor = Editor(delegate: PreviewDelegate())
-    
+
     var body: some View {
         editor.view()
     }
@@ -67,7 +67,7 @@ struct DefaultPreview: View {
 
 struct MinimalPreview: View {
     @StateObject private var editor = Editor(delegate: PreviewDelegate())
-    
+
     var body: some View {
         editor.view(
             showTopBar: false,
@@ -80,19 +80,12 @@ struct MinimalPreview: View {
 
 struct DebugPreview: View {
     @StateObject private var editor = Editor(delegate: PreviewDelegate(), verbose: true)
-    
+
     var body: some View {
-        VStack {
-            editor.view(
-                showTopBar: true,
-                showLogView: true
-            )
-            
-            Text("Debug Mode: Verbose logging enabled")
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .padding()
-        }
+        editor.view(
+            showTopBar: true,
+            showLogView: true
+        )
     }
 }
 
@@ -101,12 +94,12 @@ struct DebugPreview: View {
 struct CustomPreview: View {
     @StateObject private var editor = Editor(delegate: PreviewDelegate())
     @State private var content = ""
-    
+
     var body: some View {
         VStack(spacing: 0) {
             // 自定义工具栏
             customToolbar
-            
+
             // 编辑器视图
             editor.view(
                 showTopBar: false,
@@ -114,19 +107,19 @@ struct CustomPreview: View {
             )
         }
     }
-    
+
     private var customToolbar: some View {
         VStack(spacing: 0) {
             HStack {
                 Text("Custom Toolbar")
                     .font(.headline)
-                
+
                 Spacer()
-                
+
                 TextField("Content", text: $content)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 200)
-                
+
                 Button("Save") {
                     Task {
                         try? await editor.setContent(content)
@@ -135,7 +128,7 @@ struct CustomPreview: View {
                 .buttonStyle(.borderedProminent)
             }
             .padding()
-            
+
             Divider()
         }
         .background(Color(.windowBackgroundColor))
