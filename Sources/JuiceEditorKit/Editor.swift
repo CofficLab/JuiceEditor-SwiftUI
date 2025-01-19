@@ -18,7 +18,7 @@ public final class Editor: ObservableObject {
     // MARK: - Initialization
     
     public init(
-        delegate: EditorDelegate,
+        delegate: EditorDelegate = DefaultDelegate(),
         verbose: Bool = false
     ) {
         self.delegate = delegate
@@ -87,7 +87,8 @@ public final class Editor: ObservableObject {
         guard let webView = webView, isReady else {
             throw EditorError.notReady
         }
-        return try await webView.evaluateJavaScript(script)
+
+        return webView.evaluateJavaScript(script)
     }
     
     public func setContent(_ uuid: String) async throws {
@@ -112,4 +113,10 @@ public enum EditorError: Error {
     case notReady
     case invalidResponse
     case evaluationFailed(String)
+}
+
+// MARK: - Previews
+
+#Preview("All Features") {
+    EditorPreview()
 }
