@@ -4,7 +4,178 @@ import SwiftUI
 
 // MARK: - Editor APIs
 
+// MARK: - Editor UI Control
+
 public extension Editor {
+    func hideEditor() async throws {
+        try await run("window.editor.hideEditor()")
+    }
+    
+    func showEditor() async throws {
+        try await run("window.editor.showEditor()")
+    }
+    
+    func hideToolbar() async throws {
+        try await run("window.editor.hideToolbar()")
+    }
+    
+    func showToolbar() async throws {
+        try await run("window.editor.showToolbar()")
+    }
+}
+
+// MARK: - Editor Features
+
+public extension Editor {
+    func disableBubbleMenu() async throws {
+        try await run("window.editor.disableBubbleMenu()")
+    }
+    
+    func disableContextMenu() async throws {
+        try await run("window.editor.disableContextMenu()")
+    }
+    
+    func disableFloatingMenu() async throws {
+        try await run("window.editor.disableFloatingMenu()")
+    }
+    
+    func disableDebugBar() async throws {
+        try await run("window.editor.disableDebugBar()")
+    }
+    
+    func enableBubbleMenu() async throws {
+        try await run("window.editor.enableBubbleMenu()")
+    }
+    
+    func enableFloatingMenu() async throws {
+        try await run("window.editor.enableFloatingMenu()")
+    }
+}
+
+// MARK: - Editor Content
+
+public extension Editor {
+    func insertTable() async throws {
+        try await run("window.editor.insertTable()")
+    }
+    
+    func insertTodo() async throws {
+        try await run("window.editor.insertTodo()")
+    }
+    
+    func insertDraw() async throws {
+        try await run("window.editor.insertDraw()")
+    }
+    
+    func insertImage() async throws {
+        try await run("window.editor.insertImage()")
+    }
+    
+    func insertCodeBlock() async throws {
+        try await run("window.editor.insertCodeBlock()")
+    }
+}
+
+// MARK: - Editor Formatting
+
+public extension Editor {
+    func toggleBold() async throws {
+        try await run("window.editor.toggleBold()")
+    }
+    
+    func toggleItalic() async throws {
+        try await run("window.editor.toggleItalic()")
+    }
+    
+    func toggleTaskList() async throws {
+        try await run("window.editor.toggleTaskList()")
+    }
+    
+    func toggleToc() async throws {
+        try await run("window.editor.toggleToc()")
+    }
+}
+
+
+public extension Editor {
+    func setContentFromWeb(_ uuid: String) async throws {
+//        try await self.setContentFromWeb(
+//            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+//            uuid: uuid
+//        )
+    }
+
+    func setToolbarVisible(_ v: Bool) async throws -> Any {
+        await v ? try showToolbar() : try hideToolbar()
+    }
+
+    @discardableResult
+    func setEditable(_ v: Bool) async throws -> Any {
+        await v ? try enableEdit() : try disableEdit()
+    }
+
+    func setEditorVisible(_ v: Bool) async throws -> Any {
+        await v ? try showEditor() : try hideEditor()
+    }
+
+    @discardableResult
+    func setChatApi(_ s: String) async throws -> Any {
+        info("setChatApi 🛜🛜🛜 -> \(s)")
+
+        return try await run("window.editor.setChatApi(`\(s)`)")
+    }
+
+    @discardableResult
+    func setDrawLink(_ link: String) async throws -> Any {
+        try await run("window.editor.setDrawLink('\(link)')")
+    }
+
+    func setNodeBase64(_ nodeBase64: String) async throws -> Any {
+        let verbose = false
+
+        if verbose {
+            info("setNodeBase64 -> \(nodeBase64.mini())")
+        }
+
+        return try await run("api.node.setNodeBase64(`\(nodeBase64)`)")
+    }
+
+    @discardableResult
+    func setContentFromWeb(_ url: String, uuid: String) async throws -> Any {
+        if verbose {
+            info("setContentFromWeb 🛜🛜🛜 -> \(url) -> \(uuid)")
+        }
+
+        return try await run("window.editor.setContentFromUrl(`\(url)`, `\(uuid)`)")
+    }
+
+    func setParagraph() async throws -> Any {
+        try await run("window.editor.setParagraph()")
+    }
+
+    func setHeading1() async throws -> Any {
+        try await run("window.editor.setHeading1()")
+    }
+
+    func setHeading2() async throws -> Any {
+        try await run("window.editor.setHeading2()")
+    }
+
+    func setHeading3() async throws -> Any {
+        try await run("window.editor.setHeading3()")
+    }
+
+    func setHeading4() async throws -> Any {
+        try await run("window.editor.setHeading4()")
+    }
+
+    func setHeading5() async throws -> Any {
+        try await run("window.editor.setHeading5()")
+    }
+
+    func setHeading6() async throws -> Any {
+        try await run("window.editor.setHeading6()")
+    }
     // MARK: Formatting
     
     // MARK: Control
