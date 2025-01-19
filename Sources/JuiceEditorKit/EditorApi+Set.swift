@@ -1,16 +1,12 @@
 import Foundation
 import SwiftUI
 
-public extension EditorView {
+public extension Editor {
     func setContentFromWeb(_ uuid: String) async throws {
-        try await self.setContentFromWeb(
-            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
-            uuid: uuid
-        )
-    }
-
-    func setContent(_ content: String) async throws {
-        try await self.run("window.editor.setContent(`\(content)`)")
+//        try await self.setContentFromWeb(
+//            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+//            uuid: uuid
+//        )
     }
 
     func setToolbarVisible(_ v: Bool) async throws -> Any {
@@ -87,6 +83,6 @@ public extension EditorView {
 }
 
 #Preview {
-    EditorView()
+    EditorPreview()
         .frame(height: 800)
 }

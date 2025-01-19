@@ -254,5 +254,5 @@ import SwiftUI
 //}
 
 #Preview {
-    EditorView()
+    EditorPreview()
 } 

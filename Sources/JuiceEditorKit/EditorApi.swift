@@ -1,6 +1,28 @@
 import SwiftUI
 
-public extension EditorView {
+
+
+// MARK: - Editor APIs
+
+public extension Editor {
+    // MARK: Formatting
+    
+    // MARK: Control
+    
+    func disableEdit() async throws {
+        try await run("window.editor.disableEdit()")
+    }
+    
+    func enableEdit() async throws {
+        try await run("window.editor.enableEdit()")
+    }
+    
+    func toggleDebugBar() async throws {
+        try await run("window.editor.toggleDebugBar()")
+    }
+}
+
+public extension Editor {
     // MARK: Create
 
     @discardableResult
@@ -183,20 +205,11 @@ public extension EditorView {
         }
     }
 
-    @discardableResult
-    func run(_ script: String) async throws -> Any {
-        guard let webView = self.view else {
-            throw EditorError.webViewNotLoaded
-        }
-
-        return webView.evaluateJavaScript(script)
-    }
-
     func closeDraw() async throws -> Any {
         try await run("api.app.closeDraw()")
     }
 }
 
 #Preview {
-    EditorView()
+    EditorPreview()
 }

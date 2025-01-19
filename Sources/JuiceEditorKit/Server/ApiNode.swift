@@ -20,7 +20,7 @@ extension HTTPServer {
 }
 
 #Preview {
-    EditorView(verbose: true)
+    EditorPreview()
         .frame(height: 1000)
         .frame(width: 700)
 }
