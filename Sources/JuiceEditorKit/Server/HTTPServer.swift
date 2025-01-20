@@ -14,10 +14,14 @@ public class HTTPServer: ObservableObject, SuperThread {
     public var chatApi: String = ""
     public var drawIoLink: String = ""
     public var baseURL: URL { URL(string: "http://localhost:\(port)")! }
+    private let verbose: Bool
 
-    public init(delegate: EditorDelegate) {
-        info("Initializing HTTP Server with directory: \(directoryPath)")
+    public init(delegate: EditorDelegate, verbose: Bool = false) {
+        if verbose {
+            info("Initializing HTTP Server with directory: \(directoryPath)")
+        }
         self.delegate = delegate
+        self.verbose = verbose
     }
 
     private func configureRoutes(app: Application) throws {
@@ -31,11 +35,11 @@ public class HTTPServer: ObservableObject, SuperThread {
         self.chat(app: app)
     }
 
-    private func start(verbose: Bool = true) throws {
+    private func start() throws {
         if verbose {
             info("Start HTTP Server")
         }
-        
+
         var currentPort = port
         var serverStarted = false
 
@@ -57,14 +61,16 @@ public class HTTPServer: ObservableObject, SuperThread {
                 try app.start()
                 serverStarted = true
 
-               self.main.async {
-                   self.port = currentPort
-                   self.chatApi = self.baseURL.absoluteString + "/api/chat"
-                   self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
-                   self.emitStarted()
-               }
+                self.main.async {
+                    self.port = currentPort
+                    self.chatApi = self.baseURL.absoluteString + "/api/chat"
+                    self.drawIoLink = self.baseURL.absoluteString + "/draw/index.html?"
+                    self.emitStarted()
+                }
 
-                info("Server ready on port \(currentPort)")
+                if verbose {
+                    info("Server ready on port \(currentPort)")
+                }
             } catch let error as NIOCore.IOError where error.errnoCode == EADDRINUSE {
                 warning("Port \(currentPort) is in use, trying next port")
                 currentPort += 1
@@ -80,11 +86,11 @@ public class HTTPServer: ObservableObject, SuperThread {
             throw HTTPServerError.noAvailablePort
         }
     }
-    
-    public func startServer(verbose: Bool) {
+
+    public func startServer() {
         bg.async {
             do {
-                try self.start(verbose: verbose)
+                try self.start()
             } catch {
                 errorLog("Failed to start server: \(error)")
             }

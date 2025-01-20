@@ -23,13 +23,13 @@ public final class Editor: ObservableObject {
     ) {
         self.delegate = delegate
         self.verbose = verbose
-        self.server = HTTPServer(delegate: delegate)
+        self.server = HTTPServer(delegate: delegate, verbose: verbose)
 
         setupServer()
     }
 
     private func setupServer() {
-        server.startServer(verbose: verbose)
+        server.startServer()
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(onServerStarted),
@@ -50,7 +50,7 @@ public final class Editor: ObservableObject {
                     self.onCustomMessage($0)
                 })
                 .showLogView(false)
-                .verboseMode(false)
+                .verboseMode(verbose)
         }
     }
 
