@@ -66,7 +66,7 @@ public final class Editor: ObservableObject {
                 }
             } else if channel == "debug" {
                 let message = message["message"] as? String
-                if let message = message {
+                if let message = message, verbose {
                     debug("JS Message: " + message)
                 }
             } else if channel == "updateNodes" {
