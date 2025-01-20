@@ -70,12 +70,16 @@ public final class Editor: ObservableObject {
                     debug("JS Message: " + message)
                 }
             } else if channel == "updateNodes" {
-                debug("updateNodes")
+                if verbose {
+                    debug("updateNodes")
+                }
                 Task {
                     try? await self.delegate.onUpdateNodes(EditorNode.getEditorNodesFromData(message, reason: "Editor", verbose: false))
                 }
             } else if channel == "updateArticle" {
-                debug("updateArticle")
+                if verbose {
+                    debug("updateArticle")
+                }
             } else {
                 debug("收到 WebView 消息: \(String(describing: message))")
             }

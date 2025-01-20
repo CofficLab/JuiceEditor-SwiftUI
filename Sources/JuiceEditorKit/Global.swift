@@ -12,8 +12,8 @@ func info(_ message: String, caller: String = #fileID) {
     Logger.info(message, caller: caller)
 }
 
-func debug(_ message: String, caller: String = #fileID) {
-    Logger.debug(message, caller: caller)
+func debug(_ message: String, caller: String = #fileID, line: Int = #line) {
+    Logger.debug(message, caller: caller, line: line)
 }
 
 func warning(_ message: String, caller: String = #fileID) {
