@@ -1,19 +1,8 @@
 import SwiftUI
 
 public extension Editor {
-    // MARK: - Core APIs
-
-    @discardableResult
-    public func run(_ script: String) async throws -> Any {
-        guard let webView = webView, isReady else {
-            throw EditorError.notReady
-        }
-
-        return webView.evaluateJavaScript(script)
-    }
-
-    public func setContent(_ uuid: String) async throws {
-        try await run("window.editor.setContent('\(uuid)')")
+    func closeDraw() async throws -> Any {
+        try await run("api.app.closeDraw()")
     }
 
     public func getContent() async throws -> String {
@@ -31,10 +20,6 @@ public extension Editor {
         try await run("window.editor.hideEditor()")
     }
 
-    func showEditor() async throws {
-        try await run("window.editor.showEditor()")
-    }
-
     func hideToolbar() async throws {
         try await run("window.editor.hideToolbar()")
     }
@@ -42,11 +27,7 @@ public extension Editor {
     func showToolbar() async throws {
         try await run("window.editor.showToolbar()")
     }
-}
 
-// MARK: - Editor Features
-
-public extension Editor {
     func disableBubbleMenu() async throws {
         try await run("window.editor.disableBubbleMenu()")
     }
@@ -70,11 +51,7 @@ public extension Editor {
     func enableFloatingMenu() async throws {
         try await run("window.editor.enableFloatingMenu()")
     }
-}
 
-// MARK: - Editor Content
-
-public extension Editor {
     func insertTable() async throws {
         try await run("window.editor.insertTable()")
     }
@@ -94,11 +71,7 @@ public extension Editor {
     func insertCodeBlock() async throws {
         try await run("window.editor.insertCodeBlock()")
     }
-}
 
-// MARK: - Editor Formatting
-
-public extension Editor {
     func toggleBold() async throws {
         try await run("window.editor.toggleBold()")
     }
@@ -114,9 +87,7 @@ public extension Editor {
     func toggleToc() async throws {
         try await run("window.editor.toggleToc()")
     }
-}
 
-public extension Editor {
     func setContentFromWeb(_ uuid: String) async throws {
 //        try await self.setContentFromWeb(
 //            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
@@ -211,9 +182,7 @@ public extension Editor {
     func toggleDebugBar() async throws {
         try await run("window.editor.toggleDebugBar()")
     }
-}
 
-public extension Editor {
     // MARK: Create
 
     @discardableResult
@@ -281,6 +250,14 @@ public extension Editor {
     func enableBubbleMenu() async throws -> Any {
         try await run("window.editor.enableBubbleMenu()")
     }
+    
+    func enableWebKit() async throws -> Any {
+        if verbose {
+            info("enableWebKit 🛜🛜🛜")
+        }
+
+        return try await run("window.editor.enableWebKit()")
+    }
 
     // MARK: Get
 
@@ -338,7 +315,39 @@ public extension Editor {
         try await run("window.editor.hideToolbar()")
     }
 
+    @discardableResult
+    func run(_ script: String) async throws -> Any {
+        guard let webView = webView, isReady else {
+            errorLog("Editor not ready")
+            throw EditorError.notReady
+        }
+
+        if verbose {
+            info("run 🛜🛜🛜 -> \(script)")
+        }
+
+        return webView.evaluateJavaScript(script)
+    }
+
+    func runnerCallback(_ output: String) async throws -> Any {
+        // 对字符串进行 URL 编码
+        if let encodedOutput = output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            // 调用 JavaScript 函数，并传递编码后的字符串
+            try await run("runnerCallback(`\(encodedOutput)`)")
+        } else {
+            try await run("runnerCallback(`swift 编码失败`)")
+        }
+    }
+
+    public func setContent(_ uuid: String) async throws {
+        try await run("window.editor.setContent('\(uuid)')")
+    }
+
     // MARK: Show
+
+    func showEditor() async throws {
+        try await run("window.editor.showEditor()")
+    }
 
     func showEditorAndEnableEdit() async throws -> Any {
         try await run("window.editor.showEditorAndEnableEdit()")
@@ -382,22 +391,6 @@ public extension Editor {
     @discardableResult
     func toggleDebugBar() async throws -> Any {
         try await run("window.editor.toggleDebugBar()")
-    }
-
-    // MARK: Other
-
-    func runnerCallback(_ output: String) async throws -> Any {
-        // 对字符串进行 URL 编码
-        if let encodedOutput = output.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            // 调用 JavaScript 函数，并传递编码后的字符串
-            try await run("runnerCallback(`\(encodedOutput)`)")
-        } else {
-            try await run("runnerCallback(`swift 编码失败`)")
-        }
-    }
-
-    func closeDraw() async throws -> Any {
-        try await run("api.app.closeDraw()")
     }
 }
 

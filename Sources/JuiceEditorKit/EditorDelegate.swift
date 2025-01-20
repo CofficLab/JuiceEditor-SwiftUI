@@ -18,19 +18,27 @@ public protocol EditorDelegate: AnyObject {
 // MARK: - Default Implementation
 
 public extension EditorDelegate {
-    func onReady() {}
-    func onUpdateNodes(_ nodes: [EditorNode]) {}
-    func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws {}
+    func onReady() {
+        info("EditorDelegate onReady")
+    }
+    
+    func onUpdateNodes(_ nodes: [EditorNode]) {
+        info("EditorDelegate onUpdateNodes")
+    }
+    
+    func chat(_ text: String, callback: @escaping (String) async throws -> Void) async throws {
+        info("EditorDelegate chat")
+    }
+    
+    public func getHtml(_ uuid: String) async throws -> String? {
+        return "# Welcome to Editor\n\nStart editing..."
+    }
 }
 
 // MARK: - Default Delegate
 
 public final class DefaultDelegate: EditorDelegate {
     public init() {}
-    
-    public func getHtml(_ uuid: String) async throws -> String? {
-        return "# Welcome to Editor\n\nStart editing..."
-    }
 }
 
 #Preview {

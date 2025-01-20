@@ -50,22 +50,37 @@ public final class Editor: ObservableObject {
                     self.onCustomMessage($0)
                 })
                 .showLogView(false)
-                .verboseMode(verbose)
+                .verboseMode(false)
         }
     }
 
     private func onCustomMessage(_ message: Any) {
-        if verbose {
-            debug("收到 WebView 消息: \(String(describing: message))")
-        }
-
         if let message = message as? [String: Any] {
-            if message["channel"] as? String == "pageLoaded" {
+            let channel = message["channel"] as? String
+
+            if channel == "pageLoaded" {
                 Task { @MainActor in
                     self.isReady = true
+                    try? await self.enableWebKit()
                     self.delegate.onReady()
                 }
+            } else if channel == "debug" {
+                let message = message["message"] as? String
+                if let message = message {
+                    debug("JS Message: " + message)
+                }
+            } else if channel == "updateNodes" {
+                debug("updateNodes")
+                Task {
+                    try? await self.delegate.onUpdateNodes(EditorNode.getEditorNodesFromData(message, reason: "Editor", verbose: false))
+                }
+            } else if channel == "updateArticle" {
+                debug("updateArticle")
+            } else {
+                debug("收到 WebView 消息: \(String(describing: message))")
             }
+        } else {
+            errorLog("Invalid message: \(String(describing: message))")
         }
     }
 
