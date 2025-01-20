@@ -2,30 +2,11 @@ import SwiftUI
 
 public extension Editor {
     func closeDraw() async throws -> Any {
-        try await run("api.app.closeDraw()")
+        try await run("window.editor.closeDraw()")
     }
-
-    public func getContent() async throws -> String {
-        guard let result = try await run("window.editor.getContent()") as? String else {
-            throw EditorError.invalidResponse
-        }
-        return result
-    }
-
+    
     public func createArticle(_ title: String) async throws {
         try await run("window.editor.createArticle('\(title)')")
-    }
-
-    func hideEditor() async throws {
-        try await run("window.editor.hideEditor()")
-    }
-
-    func hideToolbar() async throws {
-        try await run("window.editor.hideToolbar()")
-    }
-
-    func showToolbar() async throws {
-        try await run("window.editor.showToolbar()")
     }
 
     func disableBubbleMenu() async throws {
@@ -50,6 +31,25 @@ public extension Editor {
 
     func enableFloatingMenu() async throws {
         try await run("window.editor.enableFloatingMenu()")
+    }
+    
+    public func getContent() async throws -> String {
+        guard let result = try await run("window.editor.getContent()") as? String else {
+            throw EditorError.invalidResponse
+        }
+        return result
+    }
+
+    func hideEditor() async throws {
+        try await run("window.editor.hideEditor()")
+    }
+
+    func hideToolbar() async throws {
+        try await run("window.editor.hideToolbar()")
+    }
+
+    func showToolbar() async throws {
+        try await run("window.editor.showToolbar()")
     }
 
     func insertTable() async throws {

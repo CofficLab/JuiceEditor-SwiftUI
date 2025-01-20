@@ -80,8 +80,12 @@ public final class Editor: ObservableObject {
                 if verbose {
                     debug("updateArticle")
                 }
+            } else if channel == "updateSelectionType" {
+                if verbose {
+                    debug("updateSelectionType")
+                }
             } else {
-                debug("收到 WebView 消息: \(String(describing: message))")
+                warning("收到 WebView 消息: \(String(describing: message))")
             }
         } else {
             errorLog("Invalid message: \(String(describing: message))")
