@@ -62,6 +62,7 @@ public final class Editor: ObservableObject {
                 Task { @MainActor in
                     self.isReady = true
                     try? await self.enableWebKit()
+                    try? await self.setChatApi(self.server.chatApi)
                     self.delegate.onReady()
                 }
             } else if channel == "debug" {
