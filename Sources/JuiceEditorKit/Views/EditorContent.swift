@@ -19,6 +19,25 @@ public struct EditorContent: View {
 
     public var body: some View {
         VStack(spacing: 0) {
+            if let errorMessage = editor.errorMessage {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.white)
+                    Text(errorMessage)
+                        .foregroundColor(.white)
+                    Spacer()
+                    Button(action: {
+                        editor.setErrorMessageNil()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding()
+                .background(Color.red.opacity(0.8))
+            }
+
             if topBarVisible {
                 EditorToolbar(editor: editor)
             }

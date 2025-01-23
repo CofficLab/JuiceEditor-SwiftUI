@@ -1,10 +1,16 @@
 import SwiftUI
 
 public extension Editor {
+    /// 关闭绘图功能
+    /// - Returns: 操作结果
+    /// - Throws: 执行过程中可能抛出的错误
     func closeDraw() async throws -> Any {
         try await run("window.editor.closeDraw()")
     }
     
+    /// 创建一篇新文章
+    /// - Parameter title: 文章标题
+    /// - Throws: 执行过程中可能抛出的错误
     public func createArticle(_ title: String) async throws {
         try await run("window.editor.createArticle('\(title)')")
     }
@@ -33,6 +39,9 @@ public extension Editor {
         try await run("window.editor.enableFloatingMenu()")
     }
     
+    /// 获取编辑器当前内容
+    /// - Returns: 编辑器内容的字符串表示
+    /// - Throws: 如果响应无效则抛出EditorError.invalidResponse错误
     public func getContent() async throws -> String {
         guard let result = try await run("window.editor.getContent()") as? String else {
             throw EditorError.invalidResponse
@@ -99,6 +108,10 @@ public extension Editor {
         await v ? try showToolbar() : try hideToolbar()
     }
 
+    /// 设置编辑器是否可编辑
+    /// - Parameter v: true表示可编辑，false表示不可编辑
+    /// - Returns: 操作结果
+    /// - Throws: 执行过程中可能抛出的错误
     @discardableResult
     func setEditable(_ v: Bool) async throws -> Any {
         await v ? try enableEdit() : try disableEdit()
@@ -108,6 +121,10 @@ public extension Editor {
         await v ? try showEditor() : try hideEditor()
     }
 
+    /// 设置聊天API的地址
+    /// - Parameter s: API地址字符串
+    /// - Returns: 操作结果
+    /// - Throws: 执行过程中可能抛出的错误
     @discardableResult
     func setChatApi(_ s: String) async throws -> Any {
         info("setChatApi 🛜🛜🛜 -> \(s)")
@@ -115,6 +132,10 @@ public extension Editor {
         return try await run("window.editor.setChatApi(`\(s)`)")
     }
 
+    /// 设置绘图功能的链接
+    /// - Parameter link: 绘图功能的链接地址
+    /// - Returns: 操作结果
+    /// - Throws: 执行过程中可能抛出的错误
     @discardableResult
     func setDrawLink(_ link: String) async throws -> Any {
         try await run("window.editor.setDrawLink('\(link)')")
@@ -339,6 +360,9 @@ public extension Editor {
         }
     }
 
+    /// 根据UUID设置编辑器内容
+    /// - Parameter uuid: 内容的唯一标识符
+    /// - Throws: 执行过程中可能抛出的错误
     public func setContent(_ uuid: String) async throws {
         try await run("window.editor.setContent('\(uuid)')")
     }

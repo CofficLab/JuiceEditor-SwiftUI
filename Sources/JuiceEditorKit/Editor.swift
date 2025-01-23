@@ -9,6 +9,7 @@ public final class Editor: ObservableObject {
     @Published public private(set) var isReady = false
     @Published public private(set) var isServerStarted = false
     @Published public private(set) var webView: MagicWebView?
+    @Published public private(set) var errorMessage: String?
 
     // MARK: - Private Properties
 
@@ -46,7 +47,9 @@ public final class Editor: ObservableObject {
             }
 
             self.webView = self.server.baseURL
-                .makeWebView(onCustomMessage: {
+                .makeWebView(onJavaScriptError: { s,i,ss in
+                    self.setErrorMessage("JavaScript Error: \(s) \(i) \(ss)")
+                }, onCustomMessage: {
                     self.onCustomMessage($0)
                 })
                 .showLogView(false)
@@ -62,6 +65,7 @@ public final class Editor: ObservableObject {
                 Task { @MainActor in
                     self.isReady = true
                     try? await self.enableWebKit()
+                    try? await self.disableDebugBar()
                     try? await self.setChatApi(self.server.chatApi)
                     self.delegate.onReady()
                 }
@@ -104,6 +108,18 @@ public final class Editor: ObservableObject {
             showTopBar: showTopBar,
             showLogView: showLogView
         )
+    }
+}
+
+// MARK: Set
+
+extension Editor {
+    func setErrorMessage(_ message: String) {
+        self.errorMessage = message
+    }
+
+    func setErrorMessageNil() {
+        self.errorMessage = nil
     }
 }
 
