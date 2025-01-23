@@ -360,7 +360,7 @@ public extension Editor {
         }
     }
 
-    private func setContent(_ content: String) async throws {
+    func setContent(_ content: String) async throws {
         try await run("window.editor.setContent('\(content)')")
     }
 
