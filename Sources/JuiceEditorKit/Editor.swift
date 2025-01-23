@@ -109,6 +109,13 @@ public final class Editor: ObservableObject {
             showLogView: showLogView
         )
     }
+
+    public func updateContent(uuid: String) async throws {
+        try await self.setContentFromWeb(
+            self.server.baseURL.absoluteString + "/api/node/" + uuid + "/html",
+            uuid: uuid
+        )
+    }
 }
 
 // MARK: Set

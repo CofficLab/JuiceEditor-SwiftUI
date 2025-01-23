@@ -360,11 +360,8 @@ public extension Editor {
         }
     }
 
-    /// 根据UUID设置编辑器内容
-    /// - Parameter uuid: 内容的唯一标识符
-    /// - Throws: 执行过程中可能抛出的错误
-    public func setContent(_ uuid: String) async throws {
-        try await run("window.editor.setContent('\(uuid)')")
+    private func setContent(_ content: String) async throws {
+        try await run("window.editor.setContent('\(content)')")
     }
 
     // MARK: Show
